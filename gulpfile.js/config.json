@@ -19,10 +19,9 @@
     "js": {
       "src": "javascripts",
       "dest": "javascripts",
-      "extractSharedJs": true,
+      "extractSharedJs": false,
       "entries": {
-        "app": ["./app.js"],
-        "page": ["./page.js"]
+        "app": ["./app.js"]
       },
       "extensions": ["js"]
     },
@@ -34,7 +33,11 @@
         "browsers": ["last 3 version"]
       },
       "sass": {
-        "indentedSyntax": true
+        "indentedSyntax": false,
+        "outputStyle": "compressed"
+      },
+      "cssimport": {
+
       },
       "extensions": ["sass", "scss", "css"]
     },

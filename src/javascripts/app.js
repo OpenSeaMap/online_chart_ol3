@@ -1,19 +1,13 @@
-import './asyncModules'
-import exclaimify from './exclaimify'
 
-const button = document.getElementById('button')
+var $ = require('jquery');
 
-const alertAsyncMessage = function() {
-  // CommonJS async syntax webpack magic
-  require.ensure([], function() {
-    const message = require("./asyncMessage")
-    alert(exclaimify(message))
-  })
-}
 
-console.log(`
-  asset references like this one:
-    images/gulp.png
-  get updated in js too!`)
+var Main = require('main');
 
-button.addEventListener('click', alertAsyncMessage)
+
+$(function() {
+
+  var map = new Main();
+  console.log(map);
+
+});

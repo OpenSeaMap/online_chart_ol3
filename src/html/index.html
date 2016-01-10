@@ -7,12 +7,80 @@
 {% extends 'layouts/application.html' %}
 
 {% block content %}
-  <img src="images/gulp.png" alt="gulp.js">
-  <h4>Ubiquitous Social Icons!</h4>
-  {% include "shared/social-icons-font.html" %}
-  {% include "shared/social-icons-svg.html" %}
-  <button id="button">Manually Load Async Module</button>
-  <p data-module="Highlight">An auto-loaded async module highlighted this!</p>
+  <div id="map" class="sidebar-map reset-box-sizing">
+
+        <div id="sidebar" class="sidebar collapsed reset-box-sizing">
+          <!-- Nav tabs -->
+          <div class="sidebar-tabs">
+            <ul role="tablist">
+              <li>
+                <a href="#nav" role="tab">
+                  <span class="glyphicon glyphicon-menu-hamburger" aria-hidden="true"></span>
+                </a>
+              </li>
+
+              <li>
+                <a href="#settings" role="tab">
+                  <span class="glyphicon glyphicon-cog" aria-hidden="true"></span>
+                </a>
+              </li>
+              <li class="">
+                <a href="#details" role="tab">
+                  <span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span>
+                </a>
+              </li>
+            </ul>
+
+          </div>
+
+          <!-- Tab panes -->
+          <div class="sidebar-content set-box-sizing">
+            <div class="sidebar-pane" id="nav">
+              <h1 class="sidebar-header">
+                Online chart test
+                <div class="sidebar-close">
+                  <span class="glyphicon glyphicon-menu-left" aria-hidden="true"></span>
+                </div>
+              </h1>
+
+              <p>A new online chart for
+                <strong>OpenSeaMap</strong>.</p>
+
+            </div>
+
+            <div class="sidebar-pane" id="settings">
+              <h1 class="sidebar-header">Settings
+                <div class="sidebar-close">
+                  <span class="glyphicon glyphicon-menu-left" aria-hidden="true">
+                </div>
+              </h1>
+              <div id="sidebar-settings-content">
+
+                <div data-bind="foreach: chartLayers">
+
+                  <div class="checkbox">
+                    <label>
+                      <input type="checkbox" data-bind="bootstrapToggle: visible">
+                      <span data-bind="text: name"></span>
+                    </label>
+                  </div>
+                </div>
+
+              </div>
+
+            </div>
+            <div class="sidebar-pane" id="details">
+              <h1 class="sidebar-header">Taginfo for OSM objects
+                <div class="sidebar-close">
+                  <span class="glyphicon glyphicon-menu-left" aria-hidden="true">
+                </div>
+              </h1>
+              <div id="sidebar-details-content">
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
 {% endblock %}
 
 {% block javascript %}

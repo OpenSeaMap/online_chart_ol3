@@ -1,0 +1,58 @@
+// Include this if using an Icon Font
+@import "generated/icons";
+
+@import "base/colors";
+
+
+$icon-font-path: '../fonts/';
+@import "bower_components/bootstrap-sass/assets/stylesheets/_bootstrap.scss";
+@import "bootstrap-callout";
+
+
+$tab-active-bg: $brand-primary;
+@import "bower_components/sidebar-v2/scss/ol3-sidebar.scss";
+
+
+@import "/node_modules/openlayers/css/ol.css";
+@import "/bower_components/bootstrap-toggle/css/bootstrap-toggle.css";
+
+.ol-scale-line-nautical.ol-unselectable {
+  margin-bottom: 25px;
+}
+
+
+body {
+    padding: 0;
+    margin: 0;
+    overflow: hidden;
+}
+html, body, #map {
+    height: 100%;
+            font: 10pt "Helvetica Neue", Arial, Helvetica, sans-serif;
+}
+
+.sidebar-header{
+  margin-bottom: 10px;
+}
+.sidebar-pane{
+  padding-left: 10px;
+  padding-right: 10px;
+}
+
+.reset-box-sizing,
+.reset-box-sizing *,
+.reset-box-sizing *:before,
+.reset-box-sizing *:after {
+  -webkit-box-sizing: content-box;
+     -moz-box-sizing: content-box;
+          box-sizing: content-box;
+}
+
+.set-box-sizing,
+.set-box-sizing *,
+.set-box-sizing *:before,
+.set-box-sizing *:after {
+  -webkit-box-sizing: border-box;
+     -moz-box-sizing: border-box;
+          box-sizing: border-box;
+}

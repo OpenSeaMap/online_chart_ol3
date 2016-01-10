@@ -12,7 +12,9 @@ var paths = {
 }
 
 var fontsTask = function() {
-  return gulp.src(paths.src)
+  return gulp.src(require('main-bower-files')({
+    filter: '**/*.{eot,svg,ttf,woff,woff2}'
+  }).concat(paths.src))
     .pipe(changed(paths.dest)) // Ignore unchanged files
     .pipe(gulp.dest(paths.dest))
     .pipe(browserSync.stream())

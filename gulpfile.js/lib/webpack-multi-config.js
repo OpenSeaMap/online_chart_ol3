@@ -16,18 +16,38 @@ module.exports = function(env) {
 
   var webpackConfig = {
     context: jsSrc,
-    plugins: [],
+    plugins: [
+      new webpack.ProvidePlugin({
+          $: "jquery",
+          jQuery: "jquery",
+          "window.jQuery": "jquery"
+      })
+    ],
     resolve: {
       root: jsSrc,
-      extensions: [''].concat(extensions)
+      extensions: [''].concat(extensions),
+      modulesDirectories: ['bower_components', "node_modules"],
+        alias:{
+          knockout: 'knockout/dist/knockout.debug.js',
+          jquerySidebar: 'sidebar-v2/js/jquery-sidebar.js',
+
+          bootstrap: 'bootstrap-sass/assets/javascripts/bootstrap/',
+          loadimage: 'javascript-load-image/js/load-image.js',
+          'bootstrap-toggle': 'bootstrap-toggle/js/bootstrap-toggle.js',
+          'knockout-bootstrap-toggle': 'knockout-bootstrap-toggle/ko.bindingHandlers.bootstrapToggle.js',
+        }
     },
     module: {
       loaders: [
         {
           test: /\.js$/,
           loader: 'babel-loader?stage=1',
-          exclude: /node_modules/
+          exclude: [/node_modules/, /bower_components/]
         }
+        /*,{
+          test: require.resolve('jquerySidebar'),
+          loader: 'imports?$=jquery!'
+        }*/
       ]
     }
   }
