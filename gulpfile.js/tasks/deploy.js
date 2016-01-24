@@ -5,18 +5,21 @@ var open    = require('open')
 var os      = require('os')
 var package = require('../../package.json')
 var path    = require('path')
+var sftp = require('gulp-sftp');
 
 var settings = {
   url: package.homepage,
   src: path.join(config.root.dest, '/**/*'),
-  ghPages: {
-    cacheDir: path.join(os.tmpdir(), package.name)
+  sftp: {
+    host: '222142.webhosting69.1blu.de',
+    user: 'ftp222142-2697028',
+    remotePath: '/hp/cn/ac/fs/www/osm-dev-map'
   }
 }
 
 var deployTask = function() {
   return gulp.src(settings.src)
-    .pipe(ghPages(settings.ghPages))
+    .pipe(sftp(settings.sftp))
     .on('end', function(){
       open(settings.url)
     })
