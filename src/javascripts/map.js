@@ -14,6 +14,7 @@ var DepthMv = require('./layers/germany_mv_depth');
 var Scuba = require('./layers/scubaDiving');
 var Seamarks = require('./layers/seamarks');
 var SeamarksDebug = require('./layers/seamarkDebug');
+var Int1base = require('./layers/int1base');
 
 ol.control.Sidebar = function(optOptions) {
   var options = optOptions || {};
@@ -59,6 +60,7 @@ module.exports = function(context) {
   var controls = addedControls.extend(defaultControls);
 
   var map = new ol.Map({
+    renderer: 'webgl',
     target: 'map',
     view: new ol.View({
       center: ol.proj.fromLonLat([lon, lat]),
@@ -119,14 +121,19 @@ module.exports = function(context) {
 
   }, null, 'arrayChange');
 
-  self.viewModel.chartLayers.push(new OpenStreetMapBase(context, {
-    visible: true
-  }));
+    self.viewModel.chartLayers.push(new OpenStreetMapBase(context, {
+      visible: true
+    }));
+      self.viewModel.chartLayers.push(new Int1base(context, {
+        visible: false
+      }));
 
   self.viewModel.chartLayers.push(new DepthMv(context, {
+    visible: false
+  }));
+  self.viewModel.chartLayers.push(new Seamarks(context, {
     visible: true
   }));
-  self.viewModel.chartLayers.push(new Seamarks(context));
   self.viewModel.chartLayers.push(new SeamarksDebug(context, {
     visible: false
   }));
