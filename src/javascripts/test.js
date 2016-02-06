@@ -1,10 +1,11 @@
 'use strict';
 var ReactDOM = require('react-dom');
 var React = require('react');
+var Button = require('react-bootstrap').Button;
 
 module.exports = function() {
 
-  ReactDOM.render( <h1> Hello, world! < /h1>,
+  ReactDOM.render( <Button bsStyle="primary">Right</Button>,
     document.getElementById('example')
   );
 }
