@@ -16,8 +16,8 @@
       "pragma": "React" // Pragma to use, default to "React"
     }
   },
+  "extends": "eslint:recommended",
   "rules": {
-    extends: "eslint:recommended",
     "quotes": [
       2,
       "single"
@@ -38,7 +38,7 @@
     "react/jsx-no-literals": 1,
     "react/jsx-no-undef": 1,
     "react/jsx-pascal-case": 1,
-    "react/jsx-quotes": 1,
+    "jsx-quotes": 1,
     "react/jsx-sort-prop-types": 1,
     "react/jsx-sort-props": 1,
     "react/jsx-uses-react": 1,

@@ -41,7 +41,7 @@ module.exports = function(env) {
       loaders: [
         {
           test: /\.js$/,
-          loader: 'babel-loader?stage=1',
+          loader: 'babel-loader',
           exclude: [/node_modules/, /bower_components/]
         }
         /*,{
