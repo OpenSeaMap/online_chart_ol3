@@ -34,6 +34,17 @@ module.exports = function(context) {
   var lat = 53.615;
   var zoom = 14;
 
+  if (window.location.hash !== '') {
+    // try to restore center, zoom-level and rotation from the URL
+    var hash = window.location.hash.replace('#map=', '');
+    var parts = hash.split('/');
+    if (parts.length === 3) {
+      zoom = parseInt(parts[0], 10);
+      lon = parseFloat(parts[1]);
+      lat = parseFloat(parts[2]);
+    }
+  }
+
   var attribution = new ol.control.Attribution({
     collapsible: false
   });
@@ -60,7 +71,7 @@ module.exports = function(context) {
   var controls = addedControls.extend(defaultControls);
 
   var map = new ol.Map({
-    renderer: 'webgl',
+    renderer: 'dom',
     target: 'map',
     view: new ol.View({
       center: ol.proj.fromLonLat([lon, lat]),
@@ -78,6 +89,40 @@ module.exports = function(context) {
   window.addEventListener('resize', checkSize);
   checkSize();
 
+  var shouldUpdate = true;
+  var view = map.getView();
+  var updatePermalink = function() {
+    if (!shouldUpdate) {
+      // do not update the URL when the view was changed in the 'popstate' handler
+      shouldUpdate = true;
+      return;
+    }
+
+    var center = ol.proj.toLonLat(view.getCenter());
+    var newHash = '#map=' +
+      view.getZoom() + '/' +
+      Math.round(center[0] * 1000) / 1000 + '/' +
+      Math.round(center[1] * 1000) / 1000;
+    var state = {
+      zoom: view.getZoom(),
+      center: view.getCenter(),
+      rotation: view.getRotation()
+    };
+    window.history.pushState(state, 'map', newHash);
+  };
+
+  map.on('moveend', updatePermalink);
+
+  // restore the view state when navigating through the history, see
+  // https://developer.mozilla.org/en-US/docs/Web/API/WindowEventHandlers/onpopstate
+  window.addEventListener('popstate', function(event) {
+    if (event.state === null) {
+      return;
+    }
+    map.getView().setCenter(ol.proj.fromLonLat(event.state.center));
+    map.getView().setZoom(event.state.zoom);
+    shouldUpdate = false;
+  });
 
   $('.ol-zoom-in, .ol-zoom-out').tooltip({
     placement: 'right'
@@ -121,12 +166,12 @@ module.exports = function(context) {
 
   }, null, 'arrayChange');
 
-    self.viewModel.chartLayers.push(new OpenStreetMapBase(context, {
-      visible: true
-    }));
-      self.viewModel.chartLayers.push(new Int1base(context, {
-        visible: false
-      }));
+  self.viewModel.chartLayers.push(new OpenStreetMapBase(context, {
+    visible: true
+  }));
+  self.viewModel.chartLayers.push(new Int1base(context, {
+    visible: false
+  }));
 
   self.viewModel.chartLayers.push(new DepthMv(context, {
     visible: false
