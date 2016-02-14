@@ -1,5 +1,4 @@
 'use strict';
-var $ = require('jquery');
 var ol = require('openlayers');
 
 var OverpassApi = require('ol-source-overpassApi');
@@ -8,9 +7,9 @@ var ChartLayer = require('chartlayer');
 module.exports = function(context, options) {
 
   var defaults = {
-    name: 'SeaMark debug'
+    nameKey: 'layer-name-seamarks-debug'
   };
-  $.extend(defaults, options);
+  Object.assign(defaults, options);
 
   var styles = {
     'seamark:type': {
@@ -97,5 +96,5 @@ module.exports = function(context, options) {
   };
 
 
-  return new ChartLayer(context, $.extend(defaults, objects));
+  return new ChartLayer(context, Object.assign(defaults, objects));
 };

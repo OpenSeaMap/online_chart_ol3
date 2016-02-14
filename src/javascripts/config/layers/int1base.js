@@ -1,7 +1,6 @@
 'use strict';
 
 var ol = require('openlayers');
-var $ = require('jquery');
 
 var ChartLayer = require('chartlayer');
 
@@ -24,7 +23,7 @@ for (var z = 0; z < zoomLevels; ++z) {
 
 module.exports = function(context, options) {
   var defaults = {
-    name: 'Int1 basemap',
+    nameKey: 'layer-name-int1_base',
     layer: new ol.layer.Group({
       opacity: 0.5,
       layers: [
@@ -72,5 +71,5 @@ module.exports = function(context, options) {
       ]
     })
   };
-  return new ChartLayer(context, $.extend(defaults, options));
+  return new ChartLayer(context, Object.assign(defaults, options));
 };

@@ -1,5 +1,4 @@
 'use strict';
-var $ = require('jquery');
 var ol = require('openlayers');
 
 var SimpleImageStyle = require('ol-style-simpleImageStyle');
@@ -9,10 +8,10 @@ var ChartLayer = require('chartlayer');
 module.exports = function(context, options) {
 
   var defaults = {
-    name: 'Scuba diving',
+    nameKey: 'layer-name-scuba_diving',
     iconSize: 32
   };
-  $.extend(defaults, options);
+  Object.assign(defaults, options);
 
   var styles = {
     'sport': {
@@ -91,5 +90,5 @@ module.exports = function(context, options) {
   };
 
 
-  return new ChartLayer(context, $.extend(defaults, objects));
+  return new ChartLayer(context, Object.assign(defaults, objects));
 };

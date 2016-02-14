@@ -66,7 +66,14 @@ const messages={
 
   'sidebar-main': 'Online map',
   'sidebar-settings': 'Settings',
-  'sidebar-details': 'Details'
+  'sidebar-details': 'Details',
+
+  'layer-name-seamarks':'OpenSeaMap seamarks',
+  'layer-name-depth-geodaten_mv':'Official depth data for Germany/MV',
+  'layer-name-int1_base':'INT1 style basemap',
+  'layer-name-openstreetmap-base':'OpenStreetMap basemap',
+  'layer-name-scuba_diving':'POIs for scuba diving',
+  'layer-name-seamarks-debug':'OpenSeaMap seamarks debug information',
 }
 
 ReactDOM.render(

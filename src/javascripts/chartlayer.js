@@ -1,19 +1,17 @@
 'use strict';
-var ko = require('knockout');
+var warning = require('fbjs/lib/warning');
 
 module.exports = function(context, options) {
   var self = {};
-  self.visible = ko.observable(false || options.visible);
-  self.name = ko.observable(options.name || 'New layer');
+  self.visibleDefault = false || options.visible;
+  self.nameKey = options.nameKey;
+  warning(self.nameKey, 'The layer has no key for the name.');
 
   self.layer = options.layer;
-  console.assert(self.layer);
+  warning(self.layer, 'The layer has no layer object.');
 
-  self.layer.setVisible(self.visible());
-
-  self.visible.subscribe(function(newValue) {
-    self.layer.setVisible(newValue);
-  });
+  self.index = options.index;
+  warning(self.index, 'The layer has no index set.');
 
   if (options.interactions) {
     self.interactions = options.interactions;

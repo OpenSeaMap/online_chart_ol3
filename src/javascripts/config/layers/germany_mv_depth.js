@@ -1,12 +1,11 @@
 'use strict';
-var $ = require('jquery');
 var ol = require('openlayers');
 
 var ChartLayer = require('chartlayer');
 
 module.exports = function(context, options) {
   var defaults = {
-    name: 'Germany: Depth data for lakes in MV',
+    nameKey: 'layer-name-depth-geodaten_mv',
     layer: new ol.layer.Tile({
       source: new ol.source.TileWMS({
         url: 'http://www.geodaten-mv.de/dienste/tiefenkarten_seen_wms?lang=ger&',
@@ -18,5 +17,5 @@ module.exports = function(context, options) {
       })
     })
   };
-  return new ChartLayer(context, $.extend(defaults, options));
+  return new ChartLayer(context, Object.assign(defaults, options));
 };

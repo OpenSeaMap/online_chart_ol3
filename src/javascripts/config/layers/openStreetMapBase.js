@@ -1,13 +1,12 @@
 'use strict';
 
 var ol = require('openlayers');
-var $ = require('jquery');
 
 var ChartLayer = require('chartlayer');
 
 module.exports = function(context, options) {
   var defaults = {
-    name: 'OpenStreetMap base map',
+    nameKey: 'layer-name-openstreetmap-base',
     layer: new ol.layer.Tile({
       source: new ol.source.OSM({
         url: 'http://{a-c}.tile.openstreetmap.org/{z}/{x}/{y}.png',
@@ -17,5 +16,5 @@ module.exports = function(context, options) {
       })
     })
   };
-  return new ChartLayer(context, $.extend(defaults, options));
+  return new ChartLayer(context, Object.assign(defaults, options));
 };
