@@ -6,7 +6,7 @@ require('jquerySidebar');
 var map = require('map');
 var taginfo = require('taginfo');
 
-var test = require('test');
+//var test = require('test');
 
 module.exports = function() {
 
@@ -26,7 +26,8 @@ module.exports = function() {
   var taginfoObj = taginfo(context);
   context.taginfo = function() { return taginfoObj; };
 
-  var testObj = test(context);
+//  var testObj = test(context);
+
 
   return context;
 };

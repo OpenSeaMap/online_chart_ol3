@@ -22,7 +22,7 @@
       2,
       "single"
     ],
-    "react/display-name": 1,
+    "react/display-name": 0,
     "react/forbid-prop-types": 1,
     "react/jsx-boolean-value": 1,
     "react/jsx-closing-bracket-location": 1,
@@ -30,7 +30,7 @@
     "react/jsx-equals-spacing": 1,
     "react/jsx-handler-names": 1,
     "react/jsx-indent-props": 1,
-    "react/jsx-indent": 1,
+    "react/jsx-indent": [1, 2],
     "react/jsx-key": 1,
     "react/jsx-max-props-per-line": 1,
     "react/jsx-no-bind": 1,
