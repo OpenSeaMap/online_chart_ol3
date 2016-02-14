@@ -5,9 +5,33 @@ import React from 'react'
 
 import {IntlProvider} from 'react-intl';
 
-import Sidebar from './Sidebar'
-
 import TagList from './taginfo2'
+import VisibleLayers from './visibleLayers'
+import LayerConfig from './layerConfig'
+
+import LayerList from './config/layerlist'
+
+
+import { createStore } from 'redux'
+import mapApp from './store/reducers'
+
+let store = createStore(mapApp)
+
+
+import { Provider } from 'react-redux'
+
+/*
+if (window.location.hash !== '') {
+  // try to restore center, zoom-level and rotation from the URL
+  var hash = window.location.hash.replace('#map=', '');
+  var parts = hash.split('/');
+  if (parts.length === 3) {
+    zoom = parseInt(parts[0], 10);
+    lon = parseFloat(parts[1]);
+    lat = parseFloat(parts[2]);
+  }
+}*/
+
 
 const taglist=[
   {
@@ -16,6 +40,7 @@ const taglist=[
   }
 ]
 
+import { setLayerVisible } from './store/actions'
 const tabs = [
   {
     name: 'main',
@@ -25,7 +50,7 @@ const tabs = [
   {
     name: 'settings',
     tabSymbol: 'cog',
-    content: <h1>Hello!</h1>
+    content: <LayerConfig />
   },
   {
     name: 'details',
@@ -50,15 +75,14 @@ ReactDOM.render(
       locale={locale}
       messages={messages}
   >
-    <div
-        className="sidebar-map reset-box-sizing"
-        id="map"
-    >
-      <Sidebar tabs={tabs} />
-    </div>
+    <Provider store={store}>
+      <VisibleLayers
+          sidebar_tabs = {tabs}
+      />
+    </Provider>
   </IntlProvider>
   ),
-  document.getElementById('app')
+  document.getElementById('map')
 );
 /*
 var $ = require('jquery');

@@ -13,10 +13,15 @@ class Sidebar extends React.Component{
   componentDidMount() {
     $(this._input).sidebar();
   }
+
+  getDomNode(){
+    return this._input;
+  }
+
   render() {
     return (
       <div
-          className="sidebar"
+          className="sidebar collapsed reset-box-sizing"
           ref={(c) => this._input = c}
       >
         <div className="sidebar-tabs">

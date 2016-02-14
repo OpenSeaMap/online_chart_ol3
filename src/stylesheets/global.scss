@@ -26,8 +26,9 @@ body {
     margin: 0;
     overflow: hidden;
 }
-html, body, #map {
+html, body, #map, .sidebar-map{
     height: 100%;
+    //width: 100%;
             font: 10pt "Helvetica Neue", Arial, Helvetica, sans-serif;
 }
 
