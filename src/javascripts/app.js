@@ -1,7 +1,7 @@
 'use strict';
 
 import ReactDOM from 'react-dom'
-import React from 'react'
+import React, {PropTypes} from 'react'
 
 import {IntlProvider} from 'react-intl';
 
@@ -9,14 +9,22 @@ import TagList from './taginfo2'
 import VisibleLayers from './visibleLayers'
 import LayerConfig from './layerConfig'
 
-import LayerList from './config/layerlist'
+import { createLayers } from './config/layerlist'
 
 
-import { createStore } from 'redux'
-import mapApp from './store/reducers'
+import configureStore from './store/reducers'
 
-let store = createStore(mapApp)
+import { initLayerVisible } from './store/actions'
 
+let store = configureStore()
+
+let layers = createLayers(store);
+
+let defaultVisibleList = {};
+layers.forEach(layer => {
+  defaultVisibleList[layer.index] = layer.visibleDefault;
+})
+store.dispatch(initLayerVisible(defaultVisibleList));
 
 import { Provider } from 'react-redux'
 
@@ -40,7 +48,6 @@ const taglist=[
   }
 ]
 
-import { setLayerVisible } from './store/actions'
 const tabs = [
   {
     name: 'main',
@@ -50,7 +57,7 @@ const tabs = [
   {
     name: 'settings',
     tabSymbol: 'cog',
-    content: <LayerConfig />
+    content: <LayerConfig/>
   },
   {
     name: 'details',
@@ -73,7 +80,27 @@ const messages={
   'layer-name-int1_base':'INT1 style basemap',
   'layer-name-openstreetmap-base':'OpenStreetMap basemap',
   'layer-name-scuba_diving':'POIs for scuba diving',
-  'layer-name-seamarks-debug':'OpenSeaMap seamarks debug information',
+  'layer-name-seamarks-debug':'OpenSeaMap seamarks debug information'
+}
+
+import {LayerType} from './chartlayer'
+
+class MapLayerProvider extends React.Component{
+  getChildContext() {
+    return {
+      layers: this.props.layers
+    }
+  }
+  render() {
+    return this.props.children;
+  }
+}
+MapLayerProvider.childContextTypes = {
+  layers: PropTypes.arrayOf(LayerType.isRequired).isRequired
+}
+MapLayerProvider.propTypes = {
+  children: PropTypes.node,
+  layers: PropTypes.arrayOf(LayerType.isRequired).isRequired
 }
 
 ReactDOM.render(
@@ -83,9 +110,11 @@ ReactDOM.render(
       messages={messages}
   >
     <Provider store={store}>
-      <VisibleLayers
-          sidebar_tabs = {tabs}
-      />
+      <MapLayerProvider layers={layers}>
+        <VisibleLayers
+            sidebar_tabs={tabs}
+        />
+      </MapLayerProvider>
     </Provider>
   </IntlProvider>
   ),

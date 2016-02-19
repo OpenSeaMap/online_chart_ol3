@@ -1,8 +1,7 @@
 'use strict';
 
-var ol = require('openlayers');
-
-var ChartLayer = require('chartlayer');
+import ol from 'openlayers'
+import ChartLayer from 'chartlayer'
 
 module.exports = function(context, options) {
   var defaults = {

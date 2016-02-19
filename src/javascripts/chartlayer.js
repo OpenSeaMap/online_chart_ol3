@@ -1,9 +1,9 @@
 'use strict';
 var warning = require('fbjs/lib/warning');
 
-module.exports = function(context, options) {
+export default function(context, options) {
   var self = {};
-  self.visibleDefault = false || options.visible;
+  self.visibleDefault = false || options.visibleDefault;
   self.nameKey = options.nameKey;
   warning(self.nameKey, 'The layer has no key for the name.');
 
@@ -11,7 +11,7 @@ module.exports = function(context, options) {
   warning(self.layer, 'The layer has no layer object.');
 
   self.index = options.index;
-  warning(self.index, 'The layer has no index set.');
+  warning(self.index !== undefined, 'The layer has no index set.');
 
   if (options.interactions) {
     self.interactions = options.interactions;
@@ -19,4 +19,16 @@ module.exports = function(context, options) {
     self.interactions = [];
   }
   return self;
-};
+}
+
+import {PropTypes} from 'react'
+
+export const LayerType = PropTypes.shape({
+    visibleDefault: PropTypes.bool.isRequired,
+    nameKey: PropTypes.string.isRequired,
+
+    layer: PropTypes.object.isRequired, //ol.layer subclass
+    interactions: PropTypes.arrayOf(
+      PropTypes.object.isRequired // ol.interaction subclass
+    )
+})

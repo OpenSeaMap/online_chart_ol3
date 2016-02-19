@@ -1,19 +1,16 @@
 
 import Seamarks from './layers/seamarks'
+import OsmBase from './layers/openStreetMapBase'
 
-var ol = require('openlayers');
-const layers = [
-  {
-    layer: new ol.layer.Tile({
-      source: new ol.source.OSM({
-        url: 'http://{a-c}.tile.openstreetmap.org/{z}/{x}/{y}.png',
-          //          url: 'http://t2.openseamap.org/tiles/base/{z}/{x}/{y}.png'
-
-          crossOrigin: 'Anonymous'
-      })
+export function createLayers(context){
+  return [
+    new OsmBase(context, {
+      index: 0,
+      visibleDefault: true
+    }),
+    new Seamarks(context, {
+      index: 1,
+      visibleDefault: true
     })
-  },
-  new Seamarks()
-]
-
-module.exports = layers;
+  ]
+}

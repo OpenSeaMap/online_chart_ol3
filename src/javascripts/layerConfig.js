@@ -1,20 +1,13 @@
 
-import React from 'react'
+import React, {PropTypes} from 'react'
 import Toggle from './BootstrapToggle'
-import LayerList from './config/layerlist'
 
+import {FormattedMessage} from 'react-intl';
 import { setLayerVisible } from './store/actions'
-
-const setLayersVisible = (layers, visibleList) => {
-  Object.keys(visibleList).forEach((index) => {
-    layers[index].layer.setVisible(visibleList[index].visible);
-  })
-  return layers;
-}
 
 const mapStateToProps = (state) => {
   return {
-    layers: setLayersVisible(LayerList, state.layerVisible)
+    layerVisiblility: state.layerVisible
   }
 }
 
@@ -26,19 +19,26 @@ const mapDispatchToProps = (dispatch) => {
   }
 }
 import { connect } from 'react-redux'
+import {LayerType} from './chartlayer'
 
-const ConfigList = ({layers, onChangeLayerVisible}) => (
+const ConfigList = ({layerVisiblility, onChangeLayerVisible}, context) => (
   <div>
-    {layers.map(layer =>
+    {context.layers.map(layer =>
       <Toggle
-          onToggled={(visible) => {onChangeLayerVisible(layers.indexOf(layer), visible)}}
-          checked={layer.layer.getVisible()}
+          checked={layerVisiblility[layer.index]}
+          key={layer.index}
+          onToggled={(visible) => {onChangeLayerVisible(layer.index, visible)}}
       >
-        {layer.name}
+        <FormattedMessage id={layer.nameKey} />
       </Toggle>
     )}
   </div>
 )
+ConfigList.contextTypes = {
+  layers: PropTypes.arrayOf(
+    LayerType.isRequired
+  ).isRequired
+}
 
 const VisibleLayers = connect(
   mapStateToProps,

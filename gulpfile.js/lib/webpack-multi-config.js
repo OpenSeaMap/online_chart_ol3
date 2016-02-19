@@ -29,7 +29,6 @@ module.exports = function(env) {
       modulesDirectories: ['bower_components', "node_modules"],
         alias:{
           openlayers: 'openlayers/dist/ol-debug.js',
-            knockout: 'knockout/dist/knockout.debug.js',
           jquerySidebar: 'sidebar-v2/js/jquery-sidebar.js',
 
           bootstrap: 'bootstrap-sass/assets/javascripts/bootstrap/',

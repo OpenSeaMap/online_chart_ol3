@@ -4,9 +4,7 @@
   "dependencies": {
     "bootstrap-sass": "~3.3.5",
     "sidebar-v2": "https://github.com/Turbo87/sidebar-v2.git#ab01ecff31dc033e3f00ae554a36e945d03a89aa",
-    "knockout": "~3.4.0",
     "bootstrap-toggle": "https://github.com/aaxee/bootstrap-toggle.git#9a154f9fac8616975883187f73bf46c2a007122f",
-    "knockout-bootstrap-toggle": "*",
     "javascript-load-image": "https://github.com/blueimp/JavaScript-Load-Image.git#dfadfa3b9a471b941040c33675a527f24a6db827"
   },
   "overrides": {

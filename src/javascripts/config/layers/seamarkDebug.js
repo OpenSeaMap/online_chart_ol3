@@ -1,8 +1,8 @@
 'use strict';
-var ol = require('openlayers');
+import ol from 'openlayers'
+import ChartLayer from 'chartlayer'
 
 var OverpassApi = require('ol-source-overpassApi');
-var ChartLayer = require('chartlayer');
 
 module.exports = function(context, options) {
 

@@ -10,10 +10,11 @@ export default class BootstrapToggle extends React.Component{
   componentDidMount() {
     $(this._input).bootstrapToggle();
     this.setBootstrapToggleState(this._input, this.props.checked);
-    $(this._input).on('change', (e) => {
-      //e.preventDefault();
+    $(this._input).on('change', () => {
+      if(this.changeFromSelf)
+        return;
       this.props.onToggled(!this.props.checked);
-//      this.setBootstrapToggleState(this._input, this.props.checked);
+      this.setBootstrapToggleState(this._input, this.props.checked);
     })
   }
   componentWillReceiveProps(nextProps) {
@@ -21,11 +22,9 @@ export default class BootstrapToggle extends React.Component{
   }
 
   setBootstrapToggleState(element, value) {
-    var disabled = $(element).prop('disabled');
-    $(element).bootstrapToggle('enable');
-    $(element).bootstrapToggle(value ? 'on' : 'off');
-    if (disabled)
-      $(element).bootstrapToggle('disable');
+    this.changeFromSelf = true;
+    $(element).prop('checked', value).change()
+    this.changeFromSelf = false;
   }
 
   render() {

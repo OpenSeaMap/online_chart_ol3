@@ -55,7 +55,8 @@ class Map extends React.Component{
         altShiftDragRotate: false,
         pinchRotate: false
       });
-      this.props.layers.forEach((layer) => {
+      this.context.layers.forEach((layer) => {
+        layer.layer.setVisible(this.props.layerVisiblility[layer.index]);
         layers.push(layer.layer);
 
         if(layer.interactions && layer.interactions.length > 0)
@@ -63,7 +64,7 @@ class Map extends React.Component{
       });
 
 
-      var map = new ol.Map({
+      this.map = new ol.Map({
         renderer: 'dom',
         target: this._input,
         view: new ol.View({
@@ -77,6 +78,11 @@ class Map extends React.Component{
         layers: layers,
         interactions: interactions
       });
+  }
+  componentWillReceiveProps(nextProps) {
+    this.context.layers.forEach((layer) => {
+      layer.layer.setVisible(nextProps.layerVisiblility[layer.index]);
+    });
   }
   render() {
     return (
@@ -103,19 +109,11 @@ Map.defaultProps = {
   }
 }
 
+import {LayerType} from './chartlayer'
+
 Map.propTypes = {
   children: PropTypes.node,
-  layers: PropTypes.arrayOf(
-    PropTypes.shape({
-      visible: PropTypes.bool,
-      name: PropTypes.string,
-
-      layer: PropTypes.object.isRequired, //ol.layer subclass
-      interactions: PropTypes.arrayOf(
-        PropTypes.object.isRequired // ol.interaction subclass
-      )
-    })
-  ).isRequired,
+  layerVisiblility: PropTypes.object.isRequired,
   renderer: PropTypes.string,
   sidebar_tabs: Sidebar.propTypes.tabs,
   viewPosition: PropTypes.shape({
@@ -123,5 +121,10 @@ Map.propTypes = {
     lat: PropTypes.number,
     zoom:PropTypes.number
   })
+}
+Map.contextTypes = {
+  layers: PropTypes.arrayOf(
+    LayerType.isRequired
+  ).isRequired
 }
 module.exports = Map;
