@@ -1,21 +1,8 @@
 'use strict';
 
 import React, {PropTypes} from 'react'
-import {FormattedMessage} from 'react-intl';
-var ol = require('openlayers');
-
+import ol from 'openlayers'
 import Sidebar from './Sidebar'
-
-ol.control.Sidebar = function(element, optOptions) {
-  var options = optOptions || {};
-
-  ol.control.Control.call(this, {
-    element: element,
-    target: options.target
-  });
-};
-ol.inherits(ol.control.Sidebar, ol.control.Control);
-
 
 class Map extends React.Component{
 
@@ -33,8 +20,25 @@ class Map extends React.Component{
         attribution: false
       });
 
+      // this is a dummy element that gets the same classes as the sidebar
+      // it is used to trigger the css for placing the other controls
+      // the real sidebar is placed in an different container to allow event propagation (this is required by react)
+      var sidebarLeftDummy = document.createElement('div');
+      sidebarLeftDummy.className = 'sidebar-left collapsed';
+
+      // update dummy sidebar container
+      let $sidebar = this._sidebar.getJSidebar();
+      $sidebar.on('opening', () => {
+        sidebarLeftDummy.className = 'sidebar-left'
+      })
+      $sidebar.on('closing', () => {
+        sidebarLeftDummy.className = 'sidebar-left collapsed'
+      })
+
       var addedControls = new ol.Collection([
-        new ol.control.Sidebar(this._sidebar.getDomNode()),
+        new ol.control.Control({ // the dummy has to be the first control, otherwise the css does not work
+          element: sidebarLeftDummy
+        }),
         attribution,
         new ol.control.FullScreen(),
         new ol.control.Zoom(),
@@ -78,6 +82,12 @@ class Map extends React.Component{
         layers: layers,
         interactions: interactions
       });
+
+      // this places the sidebar container outside of the openlayers controlled ones
+      this.map.addControl(new ol.control.Control({
+        element: this._sidebar.getDomNode(),
+        target: this.map.getViewport()
+      }));
   }
   componentWillReceiveProps(nextProps) {
     this.context.layers.forEach((layer) => {

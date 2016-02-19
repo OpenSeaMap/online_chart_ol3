@@ -11,11 +11,14 @@ require('jquerySidebar');
 class Sidebar extends React.Component{
 
   componentDidMount() {
-    $(this._input).sidebar();
+    this.jSidebar = $(this._input).sidebar();
   }
 
   getDomNode(){
     return this._input;
+  }
+  getJSidebar(){
+    return this.jSidebar;
   }
 
   render() {
@@ -52,6 +55,7 @@ class Sidebar extends React.Component{
                 </div>
               </h1>
               {tab.content}
+
             </div>
           )}
         </div>

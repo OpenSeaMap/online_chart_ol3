@@ -48,11 +48,12 @@ const taglist=[
   }
 ]
 
+import {Button} from 'react-bootstrap'
 const tabs = [
   {
     name: 'main',
     tabSymbol: 'menu-hamburger',
-    content: <h1>Hello!</h1>
+    content: <Button onClick={() => {console.trace()}}>Test</Button>
   },
   {
     name: 'settings',
