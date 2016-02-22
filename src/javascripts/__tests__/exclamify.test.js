@@ -5,3 +5,9 @@ describe('1 === 1', () => {
     (1).should.equal(1)
   })
 })
+describe('2 === 2', () => {
+
+  it('should be true', () => {
+    (2).should.equal(2)
+  })
+})
