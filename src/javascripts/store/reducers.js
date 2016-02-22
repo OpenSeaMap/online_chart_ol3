@@ -1,7 +1,11 @@
 
-import { combineReducers, createStore, compose } from 'redux'
+import { combineReducers, createStore, compose, applyMiddleware } from 'redux'
 
-import { SET_LAYER_VISIBLE, INIT_LAYER_VISIBLE } from './actions'
+import {
+  SET_LAYER_VISIBLE,
+  INIT_LAYER_VISIBLE,
+  SET_VIEW_POSITION
+ } from './actions'
 
 
 function layerVisible(state = {}, action){
@@ -19,12 +23,26 @@ function layerVisible(state = {}, action){
   }
 }
 
+function viewPosition(state = {}, action){
+  switch(action.type) {
+    case SET_VIEW_POSITION:
+      return Object.assign({}, state, action.position);
+
+    default:
+      return state;
+  }
+}
+
 const mapApp = combineReducers({
-  layerVisible
+  layerVisible,
+  viewPosition
 })
+
+import {writeToUrlHash} from './urlHashHandling'
 
 export default function configureStore(initialState) {
   const store = createStore(mapApp, initialState, compose(
+    applyMiddleware(writeToUrlHash),
     window.devToolsExtension ? window.devToolsExtension() : f => f
   ));
 

@@ -1,49 +1,8 @@
-#![Gulp Starter](src/images/gulp-starter-logo.png)
+# Online chart for [OpenSeaMap](http://openseamap.org)
 
-Gulp Starter is a delicious blend of tasks and build tools poured into [Gulp](http://gulpjs.com/) to form a full-featured modern asset pipeline. It can be used as-is as a static site builder, or can be configured and integrated into your own development environment and site or app structure. Checkout [`gulpfile.js/extras`](/gulpfile.js/extras) for Rails and Craft configurations.
+A new online chart based on [OpenLayers 3](http://openlayers.org/), [React](https://facebook.github.io/react/) and [Redux](http://redux.js.org/).
 
-[![Build Status](https://travis-ci.org/vigetlabs/gulp-starter.svg?branch=static-server)](https://travis-ci.org/vigetlabs/gulp-starter)
-
-```bash
-git clone https://github.com/vigetlabs/gulp-starter.git MyApp
-cd MyApp
-npm install
-npm run gulp
-```
-
-**Demo compiled with gulp-starter:** http://vigetlabs.github.io/gulp-starter/
-
-(view files on [gh-pages](https://github.com/vigetlabs/gulp-starter/tree/gh-pages) branch)
-
-## Features
-- **CSS:** [Sass](http://sass-lang.com/) (indented, scss, or both)
-  - Libsass (node-sass) for super fast compiles
-  - Autoprefixer
-- **JS:** Modular ES6 with [Babel](http://babeljs.io/) and [Webpack](http://webpack.github.io/)
-  - Async requires
-  - Multiple bundles
-  - Shared modules
-  - Source Maps
-- **HTML**: Static templating with [Nunjucks](https://mozilla.github.io/nunjucks/) and [gulp-data](https://github.com/colynb/gulp-data)
-- **Images:**
-  - **SVG Sprites**: Compiles a spritesheet from a folder of SVGs
-  - Compression with image-min
-- **Fonts:**
-  - **Icon Fonts:** Generate from a folder of SVGs
-  - Folder and `.sass` mixin for including WebFonts
-- **Development Mode:**
-  - File Watching and Live Reloading with [BrowserSync](http://www.browsersync.io/)
-  - Source Maps
-- **Production Builds:**
-  - JS and CSS are uglified and minified
-  - All filneames are revisioned with an md5 hash, a `rev-manifest.json` file is genrearted and all asset references are updated in html, css, and js
-  - File size reporting
-  - Local production sever for testing
-- **Testing:**
-  - JS test examples with Karma, Mocha, Chai, Sinon
-  - Travis CI integration
-- **Deployment:**
-  - Quickly deploy `public` folder to gh-pages (`gulp deploy` task)
+The build system is based on [Gulp Starter](https://github.com/vigetlabs/gulp-starter).
 
 # Basic Usage
 Make sure Node 0.12.x is installed. I recommend using [NVM](https://github.com/creationix/nvm) to manage versions.
@@ -51,6 +10,7 @@ Make sure Node 0.12.x is installed. I recommend using [NVM](https://github.com/c
 #### Install Dependencies
 ```
 npm install
+bower install
 ```
 
 #### Start compiling, serving, and watching files
@@ -60,9 +20,9 @@ npm run gulp
 
 (or `npm run development`)
 
-This runs `gulp` from `./node_modules/bin`, using the version installed with this project, rather than a globally installed instance. All commands in the package.json `scripts` work this way. The `gulp` command runs the `default` task, defined in `gulpfile.js/tasks/default.js`. 
+This runs `gulp` from `./node_modules/bin`, using the version installed with this project, rather than a globally installed instance. All commands in the package.json `scripts` work this way. The `gulp` command runs the `default` task, defined in `gulpfile.js/tasks/default.js`.
 
-All files will compile in development mode (uncompressed with source maps). [BrowserSync](http://www.browsersync.io/) will serve up files to `localhost:3000` and will stream live changes to the code and assets to all connected browsers. Don't forget about the additional BrowserSync tools available on `localhost:3001`!
+All files will compile in development mode (uncompressed with source maps). [BrowserSync](http://www.browsersync.io/) will serve up files to [localhost:3000](http://localhost:3000) and will stream live changes to the code and assets to all connected browsers. Don't forget about the additional BrowserSync tools available on [localhost:3001](http://localhost:3001)!
 
 To run any other existing task, simply add the task name after the `gulp` command. Example:
 
@@ -71,9 +31,9 @@ npm run gulp production
 ```
 
 #### Configuration
-Directory and top level settings are convienently exposed in `gulpfile.js/config.json`. All task configuration objects have `src` and `dest` directories specfied. These are relative to `root.src` and `root.dest` respectively. Each configuration also has an extensions array. This is used for file watching, and file deleting/replacing. 
+Directory and top level settings are convienently exposed in `gulpfile.js/config.json`. All task configuration objects have `src` and `dest` directories specfied. These are relative to `root.src` and `root.dest` respectively. Each configuration also has an extensions array. This is used for file watching, and file deleting/replacing.
 
-If there is a feature you do not wish to use on your project, simply delete the configuration, and the task will be skipped. 
+If there is a feature you do not wish to use on your project, simply delete the configuration, and the task will be skipped.
 
 ### Run JavaScript Tests
 ```
@@ -87,7 +47,7 @@ Test files located in `__tests__` folders are picked up and run using
 npm run production
 ```
 
-This will compile revisioned and compressed files to `./public`. To build production files and preview them localy, run 
+This will compile revisioned and compressed files to `./public`. To build production files and preview them localy, run
 
 ```
 npm run demo

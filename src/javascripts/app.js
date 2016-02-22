@@ -5,7 +5,7 @@ import React, {PropTypes} from 'react'
 
 import {IntlProvider} from 'react-intl';
 
-import TagList from './taginfo2'
+import TagList from './taginfo'
 import VisibleLayers from './visibleLayers'
 import LayerConfig from './layerConfig'
 
@@ -16,7 +16,13 @@ import configureStore from './store/reducers'
 
 import { initLayerVisible } from './store/actions'
 
-let store = configureStore()
+import {defaultViewPosition} from './config/layerlist'
+import {getStateFromUrlHash} from './store/urlHashHandling'
+
+
+let store = configureStore(getStateFromUrlHash({
+  viewPosition: defaultViewPosition
+}))
 
 let layers = createLayers(store);
 
@@ -26,20 +32,25 @@ layers.forEach(layer => {
 })
 store.dispatch(initLayerVisible(defaultVisibleList));
 
-import { Provider } from 'react-redux'
+import {positionsEqual} from './utils'
+import { setViewPosition } from './store/actions'
+function onHashChange() {
+  let oldState = store.getState()
+  let newState = getStateFromUrlHash(oldState);
 
-/*
-if (window.location.hash !== '') {
-  // try to restore center, zoom-level and rotation from the URL
-  var hash = window.location.hash.replace('#map=', '');
-  var parts = hash.split('/');
-  if (parts.length === 3) {
-    zoom = parseInt(parts[0], 10);
-    lon = parseFloat(parts[1]);
-    lat = parseFloat(parts[2]);
+  if(!positionsEqual(newState.viewPosition, oldState.viewPosition)) {
+    store.dispatch(setViewPosition(newState.viewPosition))
   }
-}*/
 
+  if(oldState.layerVisible !== newState.layerVisible) {
+    store.dispatch(initLayerVisible(newState.layerVisible));
+  }
+}
+
+// Handle browser navigation events
+window.addEventListener('hashchange', onHashChange, false);
+
+import { Provider } from 'react-redux'
 
 const taglist=[
   {
@@ -48,12 +59,11 @@ const taglist=[
   }
 ]
 
-import {Button} from 'react-bootstrap'
 const tabs = [
   {
     name: 'main',
     tabSymbol: 'menu-hamburger',
-    content: <Button onClick={() => {console.trace()}}>Test</Button>
+    content: <h1>Hello World</h1>
   },
   {
     name: 'settings',

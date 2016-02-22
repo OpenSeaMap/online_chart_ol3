@@ -3,12 +3,13 @@
 import React, {PropTypes} from 'react'
 import ol from 'openlayers'
 import Sidebar from './Sidebar'
+import {positionsEqual} from './utils'
 
 class Map extends React.Component{
 
   constructor(props){
     super(props);
-
+    this.updateView = this.updateView.bind(this)
   }
 
   componentDidMount() {
@@ -64,7 +65,9 @@ class Map extends React.Component{
         layers.push(layer.layer);
 
         if(layer.interactions && layer.interactions.length > 0)
-          interactions.push(layer.interactions);
+          layer.interactions.forEach(interaction =>{
+            interactions.push(interaction);
+          })
       });
 
 
@@ -88,12 +91,66 @@ class Map extends React.Component{
         element: this._sidebar.getDomNode(),
         target: this.map.getViewport()
       }));
+
+
+      this.map.on('moveend',function(){
+        this.map.beforeRender();
+        this.updateView();
+      }.bind(this));
+
+      this.map.getView().on('change:resolution',function(){
+        this.map.beforeRender();
+        this.updateView();
+      }.bind(this));
+
   }
   componentWillReceiveProps(nextProps) {
     this.context.layers.forEach((layer) => {
       layer.layer.setVisible(nextProps.layerVisiblility[layer.index]);
     });
+
+    var centre = ol.proj.transform(this.map.getView().getCenter(), 'EPSG:3857', 'EPSG:4326');
+    let position = {
+      lon: centre[0],
+      lat: centre[1],
+      zoom: this.map.getView().getZoom()
+    }
+    if(!positionsEqual(nextProps.viewPosition, position)) {
+      let view = this.map.getView();
+      let start = +new Date();
+      let pan = ol.animation.pan({
+        duration: 1000,
+        easing: ol.easing.linear,
+        source: view.getCenter(),
+        start: start
+      });
+      var bounce = ol.animation.bounce({
+        duration: 1000,
+        resolution: 2 * view.getResolution(),
+        start: start
+      });
+      this.map.beforeRender(pan, bounce);
+
+      view.setCenter(ol.proj.fromLonLat([
+        nextProps.viewPosition.lon,
+        nextProps.viewPosition.lat
+      ]));
+      view.setZoom(nextProps.viewPosition.zoom);
+    }
   }
+
+  updateView() {
+    var centre = ol.proj.transform(this.map.getView().getCenter(), 'EPSG:3857', 'EPSG:4326');
+    let position = {
+      lon: centre[0],
+      lat: centre[1],
+      zoom: this.map.getView().getZoom()
+    }
+    if(positionsEqual(position, this.props.viewPosition))
+      return;
+    this.props.onViewPositionChange(position)
+  }
+
   render() {
     return (
       <div
@@ -111,12 +168,7 @@ class Map extends React.Component{
 }
 
 Map.defaultProps = {
-  renderer: 'dom',
-  viewPosition: {
-    lon: 11.48,
-    lat: 53.615,
-    zoom: 14
-  }
+  renderer: 'dom'
 }
 
 import {LayerType} from './chartlayer'
@@ -124,6 +176,7 @@ import {LayerType} from './chartlayer'
 Map.propTypes = {
   children: PropTypes.node,
   layerVisiblility: PropTypes.object.isRequired,
+  onViewPositionChange: PropTypes.func.isRequired,
   renderer: PropTypes.string,
   sidebar_tabs: Sidebar.propTypes.tabs,
   viewPosition: PropTypes.shape({
