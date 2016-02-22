@@ -5,7 +5,8 @@ A new online chart based on [OpenLayers 3](http://openlayers.org/), [React](http
 The build system is based on [Gulp Starter](https://github.com/vigetlabs/gulp-starter).
 
 # Basic Usage
-Make sure Node 0.12.x is installed. I recommend using [NVM](https://github.com/creationix/nvm) to manage versions.
+Make sure Node 0.12.x is installed!
+We recommend using [NVM](https://github.com/creationix/nvm) or [n](https://github.com/tj/n) to manage node versions.
 
 #### Install Dependencies
 ```
