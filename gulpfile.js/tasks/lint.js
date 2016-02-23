@@ -1,12 +1,12 @@
 var config = require('../config')
 if(!config.tasks.js) return
 
-var gulp    = require('gulp')
-var path            = require('path')
+var gulp   = require('gulp')
+var path   = require('path')
 var eslint = require('gulp-eslint')
 
 var lint = function() {
-  return () => {
+  return function() {
     var jsSrc = path.resolve(config.root.src, config.tasks.js.src)
     return gulp.src(jsSrc + '/**/*.js')
       .pipe(eslint())
