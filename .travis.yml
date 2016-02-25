@@ -1,5 +1,7 @@
 language: node_js
-env: TRAVIS_CI=true
+env:
+  - TRAVIS_CI=true
+  - DISABLE_NOTIFIER=true
 node_js:
   - "0.12.2"
 before_script:
