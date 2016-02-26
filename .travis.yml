@@ -1,6 +1,6 @@
 language: node_js
 env:
-  - TRAVIS_CI=true
+  global:
   - DISABLE_NOTIFIER=true
 node_js:
   - "0.12.2"
