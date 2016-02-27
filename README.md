@@ -1,4 +1,5 @@
 # Online chart for [OpenSeaMap](http://openseamap.org)
+[![Build Status](https://travis-ci.org/aAXEe/online_chart_ol3.svg?branch=master)](https://travis-ci.org/aAXEe/online_chart_ol3)
 
 A new online chart based on [OpenLayers 3](http://openlayers.org/), [React](https://facebook.github.io/react/) and [Redux](http://redux.js.org/).
 
