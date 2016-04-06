@@ -1,16 +1,14 @@
 {
-  "name": "gulp-starter",
-  "version": "2.2.0",
-  "description": "A full featured configurable gulp asset pipeline and static site builder",
+  "name": "osm-map-ol3",
+  "version": "0.0.1",
+  "description": "OpenSeaMap charting framework",
+  "license": "AGPL-3.0",
   "engines": {
     "node": "0.12.2",
     "npm": "2.7.4"
   },
   "homepage": "http://dev-map.brasshack.de/",
-  "repository": {
-    "type": "git",
-    "url": "git://github.com/vigetlabs/gulp-starter.git"
-  },
+  "repository": "github:aAXEe/online_chart_ol3",
   "scripts": {
     "deploy": "gulp deploy",
     "production": "gulp production",
@@ -92,10 +90,10 @@
     "object-assign": "^4.0.1",
     "open": "0.0.5",
     "pretty-hrtime": "~1.0.0",
+    "raw-loader": "^0.5.1",
     "redux-devtools": "^3.1.0",
     "require-dir": "^0.3.0",
     "vinyl-source-stream": "~1.1.0",
     "webpack": "^1.10.1"
-  },
-  "license": "MIT"
+  }
 }
