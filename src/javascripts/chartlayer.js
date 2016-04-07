@@ -1,4 +1,9 @@
+/**
+* @license AGPL-3.0
+* @author aAXEe (https://github.com/aAXEe)
+*/
 'use strict';
+
 var warning = require('fbjs/lib/warning');
 
 export default function(context, options) {

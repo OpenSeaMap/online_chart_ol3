@@ -1,4 +1,7 @@
-
+/**
+* @license AGPL-3.0
+* @author aAXEe (https://github.com/aAXEe)
+*/
 import React, {PropTypes} from 'react'
 import Toggle from './BootstrapToggle'
 

@@ -1,3 +1,7 @@
+/**
+* @license AGPL-3.0
+* @author aAXEe (https://github.com/aAXEe)
+*/
 'use strict';
 var ol = require('openlayers');
 

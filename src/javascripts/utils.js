@@ -1,3 +1,7 @@
+/**
+* @license AGPL-3.0
+* @author aAXEe (https://github.com/aAXEe)
+*/
 
 export function floatEqual(num1, num2, eps = 0.0001){
   if(num1 === num2)
