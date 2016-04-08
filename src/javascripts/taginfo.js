@@ -72,7 +72,7 @@ class TagInfo extends React.Component {
             }
             readOnly
             type="text"
-            value={this.state.details}
+            value={tag.value}
         />
         {details}
       </form>
@@ -107,45 +107,3 @@ TagList.propTypes = {
   }).isRequired).isRequired
 }
 module.exports = TagList;
-/*
-const locale='en';
-const messages={
-  'test': 'key: {key} / value: {value}',
-  'tags': 'Tags'
-}
-module.exports = function(context) {
-  var self = {};
-
-  var taglist = [];
-
-
-  var ignoredTags = ['geometry'];
-
-  self.render = function(feature) {
-    taglist = [];
-    feature.getKeys().forEach(function(key) {
-      if ($.inArray(key, ignoredTags) > -1) {
-        return;
-      }
-      taglist.push({
-        key: key,
-        value: feature.get(key)
-      });
-    });
-
-
-      ReactDOM.render(
-        <IntlProvider
-            locale={locale}
-            messages={messages}
-        >
-          <TagList tags={taglist} />
-        </IntlProvider>,
-        context.sidebarDetailsContent().get(0)
-      );
-
-  };
-
-  return self;
-};
-*/
