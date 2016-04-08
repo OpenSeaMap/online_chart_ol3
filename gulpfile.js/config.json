@@ -85,7 +85,8 @@
             "ignoreRefs": true,
             "allowArrowFunctions": true,
             "allowBind": false
-          }]
+          }],
+          "react/jsx-curly-spacing": 0
         }
       }
     }
