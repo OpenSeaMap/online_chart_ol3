@@ -58,8 +58,13 @@ class Sidebar extends React.Component{
                   <Glyphicon glyph="menu-left"/>
                 </div>
               </h1>
-              {tab.content}
-
+              <div className="container-fluid">
+                <div className="row">
+                  <div className="col-xs-12">
+                    {tab.content}
+                  </div>
+                </div>
+              </div>
             </div>
           )}
         </div>
@@ -68,11 +73,14 @@ class Sidebar extends React.Component{
   }
 }
 
+export const SidebarTabType = PropTypes.arrayOf(PropTypes.shape({
+  name: PropTypes.string.isRequired,
+  tabSymbol: PropTypes.string.isRequired,
+  content: PropTypes.node
+}).isRequired)
+
 Sidebar.propTypes = {
-  tabs: PropTypes.arrayOf(PropTypes.shape({
-    name: PropTypes.string.isRequired,
-    tabSymbol: PropTypes.string.isRequired,
-    content: PropTypes.node
-  }).isRequired).isRequired
+  tabs: SidebarTabType.isRequired
 }
-module.exports = Sidebar;
+
+export default Sidebar

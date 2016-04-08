@@ -7,7 +7,8 @@ import { combineReducers, createStore, compose, applyMiddleware } from 'redux'
 import {
   SET_LAYER_VISIBLE,
   INIT_LAYER_VISIBLE,
-  SET_VIEW_POSITION
+  SET_VIEW_POSITION,
+  FEATURE_CLICKED
  } from './actions'
 
 
@@ -36,9 +37,22 @@ function viewPosition(state = {}, action){
   }
 }
 
+function selectedFeature(state = {hasFeature: false}, action){
+  switch(action.type) {
+    case FEATURE_CLICKED:
+      return {
+        hasFeature: true,
+        feature: action.feature
+      }
+    default:
+      return state;
+  }
+}
+
 const mapApp = combineReducers({
   layerVisible,
-  viewPosition
+  viewPosition,
+  selectedFeature
 })
 
 import {writeToUrlHash} from './urlHashHandling'
