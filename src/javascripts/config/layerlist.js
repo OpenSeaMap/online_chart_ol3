@@ -23,19 +23,19 @@ export function createLayers(context) {
       index: 2,
       visibleDefault: true
     }),
-/*    new SeamarksDebug(context, {
-      index: 3,
-      visibleDefault: true
-    }),*/
+    /*    new SeamarksDebug(context, {
+          index: 3,
+          visibleDefault: true
+        }),*/
 
     new DeMvDepth(context, {
       index: 4,
       visibleDefault: true
     })
-/*    new ScubaDiving(context, {
-      index: 5,
-      visibleDefault: true
-    })*/
+  /*    new ScubaDiving(context, {
+        index: 5,
+        visibleDefault: true
+      })*/
   ]
 }
 

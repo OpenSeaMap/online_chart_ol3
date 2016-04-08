@@ -7,7 +7,7 @@ const router = uniloc({
 
 let hashUrl = '';
 
-function compressPosition(position, numDecimals = 4){
+function compressPosition(position, numDecimals = 4) {
   return {
     lat: position.lat.toFixed(numDecimals),
     lon: position.lon.toFixed(numDecimals),
@@ -15,7 +15,7 @@ function compressPosition(position, numDecimals = 4){
   }
 }
 
-function compressVisibleLayers(visibleLayers){
+function compressVisibleLayers(visibleLayers) {
   let ids = Object.keys(visibleLayers);
   let arr = new Array(Math.max.apply(null, ids))
   arr.fill('-')
@@ -28,8 +28,8 @@ function compressVisibleLayers(visibleLayers){
 function decompressVisibleLayers(stringData) {
   let layers = {};
   let arr = stringData.split(''); // convert to array
-  for(let i=0; i<arr.length; i++){
-    switch(arr[i]){
+  for (let i = 0; i < arr.length; i++) {
+    switch (arr[i]) {
       case '1':
         layers[i] = true;
         break;
@@ -57,14 +57,14 @@ export const writeToUrlHash = store => next => action => {
   return result;
 }
 
-export function getStateFromUrlHash(defaults){
-  if(window.location.hash === hashUrl)
+export function getStateFromUrlHash(defaults) {
+  if (window.location.hash === hashUrl)
     return defaults;
 
   let res = router.lookup(window.location.hash.substring(1));
 
   let pos = {}
-  if(res.options.lon && res.options.lat && res.options.zoom) {
+  if (res.options.lon && res.options.lat && res.options.zoom) {
     pos = {
       viewPosition: {
         lon: parseFloat(res.options.lon),
@@ -74,12 +74,12 @@ export function getStateFromUrlHash(defaults){
     }
   }
 
-let layers = {}
-if(res.options.layers) {
-  layers = {
-    layerVisible: decompressVisibleLayers(res.options.layers)
+  let layers = {}
+  if (res.options.layers) {
+    layers = {
+      layerVisible: decompressVisibleLayers(res.options.layers)
+    }
   }
-}
 
   return Object.assign({}, defaults, pos, layers);
 }

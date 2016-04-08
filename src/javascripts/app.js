@@ -1,9 +1,9 @@
 'use strict';
 
 import ReactDOM from 'react-dom'
-import React, {PropTypes} from 'react'
+import React, { PropTypes } from 'react'
 
-import {IntlProvider} from 'react-intl';
+import { IntlProvider } from 'react-intl';
 
 import TagList from './components/tagList'
 import VisibleLayers from './visibleLayers'
@@ -16,8 +16,8 @@ import configureStore from './store/reducers'
 
 import { initLayerVisible } from './store/actions'
 
-import {defaultViewPosition} from './config/layerlist'
-import {getStateFromUrlHash} from './store/urlHashHandling'
+import { defaultViewPosition } from './config/layerlist'
+import { getStateFromUrlHash } from './store/urlHashHandling'
 
 
 let store = configureStore(getStateFromUrlHash({
@@ -32,17 +32,17 @@ layers.forEach(layer => {
 })
 store.dispatch(initLayerVisible(defaultVisibleList));
 
-import {positionsEqual} from './utils'
+import { positionsEqual } from './utils'
 import { setViewPosition } from './store/actions'
 function onHashChange() {
   let oldState = store.getState()
   let newState = getStateFromUrlHash(oldState);
 
-  if(!positionsEqual(newState.viewPosition, oldState.viewPosition)) {
+  if (!positionsEqual(newState.viewPosition, oldState.viewPosition)) {
     store.dispatch(setViewPosition(newState.viewPosition))
   }
 
-  if(oldState.layerVisible !== newState.layerVisible) {
+  if (oldState.layerVisible !== newState.layerVisible) {
     store.dispatch(initLayerVisible(newState.layerVisible));
   }
 }
@@ -52,7 +52,7 @@ window.addEventListener('hashchange', onHashChange, false);
 
 import { Provider } from 'react-redux'
 
-const taglist=[
+const taglist = [
   {
     key: 'sport',
     value: 'scuba_diving'
@@ -73,12 +73,12 @@ const tabs = [
   {
     name: 'details',
     tabSymbol: 'eye-open',
-    content: <TagList tags={taglist} />
+    content: <TagList tags={ taglist } />
   }
 ]
 
-const locale='en';
-const messages={
+const locale = 'en';
+const messages = {
   'test': 'key: {key} / value: {value}',
   'tags': 'Tags',
 
@@ -86,17 +86,17 @@ const messages={
   'sidebar-settings': 'Settings',
   'sidebar-details': 'Details',
 
-  'layer-name-seamarks':'OpenSeaMap seamarks',
-  'layer-name-depth-geodaten_mv':'Official depth data for Germany/MV',
-  'layer-name-int1_base':'INT1 style basemap',
-  'layer-name-openstreetmap-base':'OpenStreetMap basemap',
-  'layer-name-scuba_diving':'POIs for scuba diving',
-  'layer-name-seamarks-debug':'OpenSeaMap seamarks debug information'
+  'layer-name-seamarks': 'OpenSeaMap seamarks',
+  'layer-name-depth-geodaten_mv': 'Official depth data for Germany/MV',
+  'layer-name-int1_base': 'INT1 style basemap',
+  'layer-name-openstreetmap-base': 'OpenStreetMap basemap',
+  'layer-name-scuba_diving': 'POIs for scuba diving',
+  'layer-name-seamarks-debug': 'OpenSeaMap seamarks debug information'
 }
 
-import {LayerType} from './chartlayer'
+import { LayerType } from './chartlayer'
 
-class MapLayerProvider extends React.Component{
+class MapLayerProvider extends React.Component {
   getChildContext() {
     return {
       layers: this.props.layers
@@ -117,14 +117,11 @@ MapLayerProvider.propTypes = {
 ReactDOM.render(
   (
   <IntlProvider
-      locale={locale}
-      messages={messages}
-  >
-    <Provider store={store}>
-      <MapLayerProvider layers={layers}>
-        <VisibleLayers
-            sidebar_tabs={tabs}
-        />
+    locale={ locale }
+    messages={ messages }>
+    <Provider store={ store }>
+      <MapLayerProvider layers={ layers }>
+        <VisibleLayers sidebar_tabs={ tabs } />
       </MapLayerProvider>
     </Provider>
   </IntlProvider>

@@ -21,14 +21,14 @@ export default function(context, options) {
   return self;
 }
 
-import {PropTypes} from 'react'
+import { PropTypes } from 'react'
 
 export const LayerType = PropTypes.shape({
-    visibleDefault: PropTypes.bool.isRequired,
-    nameKey: PropTypes.string.isRequired,
+  visibleDefault: PropTypes.bool.isRequired,
+  nameKey: PropTypes.string.isRequired,
 
-    layer: PropTypes.object.isRequired, //ol.layer subclass
-    interactions: PropTypes.arrayOf(
-      PropTypes.object.isRequired // ol.interaction subclass
-    )
+  layer: PropTypes.object.isRequired, //ol.layer subclass
+  interactions: PropTypes.arrayOf(
+    PropTypes.object.isRequired // ol.interaction subclass
+  )
 })

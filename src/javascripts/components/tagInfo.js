@@ -1,12 +1,12 @@
 'use strict';
 
 var $ = require('jquery');
-import React, {PropTypes} from 'react'
+import React, { PropTypes } from 'react'
 import LanguageCodePropTypes from '../propTypes/langCodes'
-import {Button, Input, Glyphicon, ProgressBar, Label} from 'react-bootstrap'
+import { Button, Input, Glyphicon, ProgressBar, Label } from 'react-bootstrap'
 
 class TagInfo extends React.Component {
-  constructor(props){
+  constructor(props) {
     super(props);
 
     this.state = {
@@ -20,13 +20,19 @@ class TagInfo extends React.Component {
   }
 
   filterForLang(data, langCode) {
-    return data.find((d) => {return d.lang === langCode; });
+    return data.find((d) => {
+      return d.lang === langCode;
+    });
   }
 
   toggleDetails() {
-    this.setState({extended: !this.state.extended});
-    if(!this.state.details){
-      this.setState({detailsLoading: true});
+    this.setState({
+      extended: !this.state.extended
+    });
+    if (!this.state.details) {
+      this.setState({
+        detailsLoading: true
+      });
 
       $.getJSON('https://taginfo.openstreetmap.org/api/4/' + 'tag/wiki_pages?' + 'key=' + this.props.tag.key + '&value=' + this.props.tag.value, function(data) {
         let langData = this.filterForLang(data.data, this.props.locales);
@@ -41,18 +47,17 @@ class TagInfo extends React.Component {
   render() {
     const {tag} = this.props;
     const btnStyle = this.state.extended ? this.state.detailsLoading ?
-        'warning' : 'primary' : 'default';
+      'warning' : 'primary' : 'default';
 
     const loading = (
-      <ProgressBar
-          active
-          now={100}
-      />);
+    <ProgressBar
+      active
+      now={ 100 } />);
 
     const displayInfo = (
-      <Label>
-        { this.state.details != null ? this.state.details.description : 'invalid' }
-      </Label>);
+    <Label>
+      { this.state.details != null ? this.state.details.description : 'invalid' }
+    </Label>);
 
     const details = this.state.extended ?
       (this.state.detailsLoading ? loading : displayInfo) : null;
@@ -60,22 +65,20 @@ class TagInfo extends React.Component {
     return (
       <form>
         <Input
-            addonBefore={tag.key}
-            buttonAfter={
-              <Button
-                  bsStyle={btnStyle}
-                  onClick={this.toggleDetails}
-              >
-                <Glyphicon glyph="info-sign"/>
-              </Button>
-            }
-            readOnly
-            type="text"
-            value={this.state.details}
-        />
-        {details}
+          addonBefore={ tag.key }
+          buttonAfter={ (
+            <Button
+              bsStyle={ btnStyle }
+              onClick={ this.toggleDetails }>
+              <Glyphicon glyph="info-sign" />
+            </Button>
+          ) }
+          readOnly
+          type="text"
+          value={ this.state.details } />
+        { details }
       </form>
-    );
+      );
   }
 }
 
