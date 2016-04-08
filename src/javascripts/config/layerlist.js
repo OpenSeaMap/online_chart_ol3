@@ -1,3 +1,7 @@
+/**
+* @license AGPL-3.0
+* @author aAXEe (https://github.com/aAXEe)
+*/
 import Seamarks from './layers/seamarks'
 import OsmBase from './layers/openStreetMapBase'
 import Int1Base from './layers/int1base'

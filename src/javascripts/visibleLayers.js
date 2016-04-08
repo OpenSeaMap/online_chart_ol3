@@ -1,6 +1,8 @@
-
+/**
+* @license AGPL-3.0
+* @author aAXEe (https://github.com/aAXEe)
+*/
 import Map from './Map'
-
 
 import { setViewPosition } from './store/actions'
 const mapStateToProps = (state) => {

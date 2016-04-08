@@ -4,6 +4,7 @@ if(!config.tasks.js) return
 var path            = require('path')
 var webpack         = require('webpack')
 var webpackManifest = require('./webpackManifest')
+var licenseBanner   = require('../licenseBanner')
 
 module.exports = function(env) {
   var jsSrc = path.resolve(config.root.src, config.tasks.js.src)
@@ -21,7 +22,8 @@ module.exports = function(env) {
           $: "jquery",
           jQuery: "jquery",
           "window.jQuery": "jquery"
-      })
+      }),
+      new webpack.BannerPlugin(licenseBanner)
     ],
     resolve: {
       root: jsSrc,
@@ -42,6 +44,10 @@ module.exports = function(env) {
         {
           test: /\.js$/,
           loader: 'babel-loader',
+          exclude: [/node_modules/, /bower_components/]
+        },{
+          test: /\AUTHORS$/,
+          loader: 'raw-loader',
           exclude: [/node_modules/, /bower_components/]
         }
         /*,{

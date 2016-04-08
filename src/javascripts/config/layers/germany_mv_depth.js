@@ -1,4 +1,9 @@
+/**
+* @license AGPL-3.0
+* @author aAXEe (https://github.com/aAXEe)
+*/
 'use strict';
+
 import ol from 'openlayers'
 import ChartLayer from 'chartlayer'
 

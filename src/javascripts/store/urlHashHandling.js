@@ -1,4 +1,7 @@
-
+/**
+* @license AGPL-3.0
+* @author aAXEe (https://github.com/aAXEe)
+*/
 import uniloc from 'uniloc'
 
 const router = uniloc({
