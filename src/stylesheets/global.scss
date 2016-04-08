@@ -5,6 +5,7 @@
 
 
 $icon-font-path: '../fonts/';
+$grid-gutter-width: 20px;
 @import "bower_components/bootstrap-sass/assets/stylesheets/_bootstrap.scss";
 @import "bootstrap-callout";
 
@@ -34,9 +35,10 @@ html, body, #map, .sidebar-map{
 
 .sidebar-header{
   margin-bottom: 10px;
+  padding-left: 30px;
 }
 .sidebar-pane{
-  padding-left: 10px;
+  padding-left: 5px;
   padding-right: 10px;
 }
 
