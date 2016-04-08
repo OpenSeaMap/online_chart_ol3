@@ -76,6 +76,19 @@
       "src": "sprites",
       "dest": "images",
       "extensions": ["svg"]
+    },
+
+    "lint": {
+      "options": {
+        "rules": {
+          "react/jsx-no-bind": [1, {
+            "ignoreRefs": true,
+            "allowArrowFunctions": true,
+            "allowBind": false
+          }]
+        }
+      }
     }
+
   }
 }
