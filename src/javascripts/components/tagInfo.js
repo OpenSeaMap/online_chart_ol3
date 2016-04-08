@@ -2,7 +2,7 @@
 
 var $ = require('jquery');
 import React, {PropTypes} from 'react'
-import {FormattedMessage} from 'react-intl';
+import LanguageCodePropTypes from '../propTypes/langCodes'
 import {Button, Input, Glyphicon, ProgressBar, Label} from 'react-bootstrap'
 
 class TagInfo extends React.Component {
@@ -48,11 +48,14 @@ class TagInfo extends React.Component {
           active
           now={100}
       />);
-    const displayInfo = <Label>{this.state.details != null ?
-        this.state.details.description : 'invalid'}</Label>;
 
-    const details = this.state.extended ? this.state.detailsLoading ?
-        loading : displayInfo : null;
+    const displayInfo = (
+      <Label>
+        { this.state.details != null ? this.state.details.description : 'invalid' }
+      </Label>);
+
+    const details = this.state.extended ?
+      (this.state.detailsLoading ? loading : displayInfo) : null;
 
     return (
       <form>
@@ -77,71 +80,11 @@ class TagInfo extends React.Component {
 }
 
 TagInfo.propTypes = {
+  locales: LanguageCodePropTypes.iso638_1,
   tag: PropTypes.shape({
     key: PropTypes.string.isRequired,
     value: PropTypes.string.isRequired
   }).isRequired
 }
 
-const TagList = ({tags}) => (
-  <div>
-    <h2>
-      <FormattedMessage id="tags" />
-    </h2>
-    {tags.map(tag =>
-      <TagInfo
-          key={tag.key}
-          tag={tag}
-      />
-    )}
-  </div>
-)
-TagList.propTypes = {
-  tags: PropTypes.arrayOf(PropTypes.shape({
-    key: PropTypes.string.isRequired,
-    value: PropTypes.string.isRequired
-  }).isRequired).isRequired
-}
-module.exports = TagList;
-/*
-const locale='en';
-const messages={
-  'test': 'key: {key} / value: {value}',
-  'tags': 'Tags'
-}
-module.exports = function(context) {
-  var self = {};
-
-  var taglist = [];
-
-
-  var ignoredTags = ['geometry'];
-
-  self.render = function(feature) {
-    taglist = [];
-    feature.getKeys().forEach(function(key) {
-      if ($.inArray(key, ignoredTags) > -1) {
-        return;
-      }
-      taglist.push({
-        key: key,
-        value: feature.get(key)
-      });
-    });
-
-
-      ReactDOM.render(
-        <IntlProvider
-            locale={locale}
-            messages={messages}
-        >
-          <TagList tags={taglist} />
-        </IntlProvider>,
-        context.sidebarDetailsContent().get(0)
-      );
-
-  };
-
-  return self;
-};
-*/
+module.exports = TagInfo

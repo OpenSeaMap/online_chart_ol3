@@ -5,7 +5,7 @@ import React, {PropTypes} from 'react'
 
 import {IntlProvider} from 'react-intl';
 
-import TagList from './taginfo'
+import TagList from './components/tagList'
 import VisibleLayers from './visibleLayers'
 import LayerConfig from './layerConfig'
 
@@ -63,7 +63,7 @@ const tabs = [
   {
     name: 'main',
     tabSymbol: 'menu-hamburger',
-    content: <h1>Hello World</h1>
+    content: <h1>{ "Hello World" }</h1>
   },
   {
     name: 'settings',
