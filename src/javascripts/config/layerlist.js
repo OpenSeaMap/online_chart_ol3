@@ -6,7 +6,7 @@ import Seamarks from './layers/seamarks'
 import OsmBase from './layers/openStreetMapBase'
 import Int1Base from './layers/int1base'
 import DeMvDepth from './layers/germany_mv_depth'
-//import ScubaDiving from './layers/scubaDiving'
+import ScubaDiving from './layers/scubaDiving'
 //import SeamarksDebug from './layers/seamarkDebug'
 
 // layers with interaction do currently not work
@@ -34,12 +34,12 @@ export function createLayers(context) {
 
     new DeMvDepth(context, {
       index: 4,
-      visibleDefault: true
-    })
-/*    new ScubaDiving(context, {
+      visibleDefault: false
+    }),
+    new ScubaDiving(context, {
       index: 5,
       visibleDefault: true
-    })*/
+    })
   ]
 }
 
