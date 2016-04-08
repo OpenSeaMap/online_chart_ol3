@@ -86,7 +86,9 @@
             "allowArrowFunctions": true,
             "allowBind": false
           }],
-          "react/jsx-curly-spacing": 0
+          "react/jsx-curly-spacing": 0,
+          "react/jsx-handler-names": 0,
+          "react/no-set-state": 0
         }
       }
     }
