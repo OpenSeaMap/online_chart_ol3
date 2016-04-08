@@ -6,7 +6,7 @@
 
 import React, { PropTypes } from 'react'
 import ol from 'openlayers'
-import Sidebar from './SidebarStoreWrapper'
+import SidebarStore from './SidebarStoreWrapper'
 import { positionsEqual } from './utils'
 
 class Map extends React.Component {
@@ -158,9 +158,9 @@ class Map extends React.Component {
         className="sidebar-map reset-box-sizing"
         ref={ (c) => this._input = c }>
         <SidebarStore
-          ref={(c) => this._sidebar = c }
+          ref={ (c) => this._sidebar = c }
           tabs={ this.props.sidebar_tabs } />
-        {this.props.children}
+        { this.props.children }
       </div>
     )
   }
@@ -170,8 +170,8 @@ Map.defaultProps = {
   renderer: 'dom'
 }
 
-import {LayerType} from './chartlayer'
-import {SidebarTabType} from './Sidebar'
+import { LayerType } from './chartlayer'
+import { SidebarTabType } from './Sidebar'
 
 Map.propTypes = {
   children: PropTypes.node,

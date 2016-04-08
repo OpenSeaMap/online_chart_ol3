@@ -47,23 +47,18 @@ class Sidebar extends React.Component {
           { this.props.tabs.map(tab => (
               <div
                 className="sidebar-pane"
-                id={tab.name}
-                key={tab.name} >
-              <h1 className="sidebar-header">
-                <FormattedMessage id={'sidebar-' + tab.name} />
-                <div className="sidebar-close">
-                  <Glyphicon glyph="menu-left"/>
-                </div>
-              </h1>
-              <div className="container-fluid">
-                <div className="row">
-                  <div className="col-xs-12">
-                    {tab.content}
+                id={ tab.name }
+                key={ tab.name }>
+                <h1 className="sidebar-header"><FormattedMessage id={ 'sidebar-' + tab.name } /> <div className="sidebar-close"> <Glyphicon glyph="menu-left"/> </div></h1>
+                <div className="container-fluid">
+                  <div className="row">
+                    <div className="col-xs-12">
+                      { tab.content }
+                    </div>
                   </div>
                 </div>
               </div>
-            </div>
-          )}
+            )) }
         </div>
       </div>
     )

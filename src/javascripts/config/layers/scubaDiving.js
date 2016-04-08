@@ -10,9 +10,7 @@ import ChartLayer from 'chartlayer'
 var SimpleImageStyle = require('ol-style-simpleImageStyle');
 var OverpassApi = require('ol-source-overpassApi');
 
-import {
-  featureClicked
-} from '../../store/actions'
+import { featureClicked} from '../../store/actions'
 
 module.exports = function(context, options) {
 
