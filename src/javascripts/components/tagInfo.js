@@ -80,7 +80,7 @@ class TagInfo extends React.Component {
           ) }
           readOnly
           type="text"
-          value={ this.state.details } />
+          value={ tag.value } />
         { details }
       </form>
       );

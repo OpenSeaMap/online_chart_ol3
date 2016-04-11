@@ -9,7 +9,7 @@ import React, { PropTypes } from 'react'
 
 import { IntlProvider } from 'react-intl';
 
-import TagList from './components/tagList'
+import FeatureDetails from './featureDetails'
 import VisibleLayers from './visibleLayers'
 import LayerConfig from './layerConfig'
 
@@ -56,13 +56,6 @@ window.addEventListener('hashchange', onHashChange, false);
 
 import { Provider } from 'react-redux'
 
-const taglist = [
-  {
-    key: 'sport',
-    value: 'scuba_diving'
-  }
-]
-
 const tabs = [
   {
     name: 'main',
@@ -77,12 +70,14 @@ const tabs = [
   {
     name: 'details',
     tabSymbol: 'eye-open',
-    content: <TagList tags={ taglist } />
+    content: <FeatureDetails />
   }
 ]
 
-const locale = 'en';
-const messages = {
+// todo: wrap Sidebar by redux store and set visible tab based on state
+
+const locale='en';
+const messages={
   'test': 'key: {key} / value: {value}',
   'tags': 'Tags',
 
@@ -132,12 +127,3 @@ ReactDOM.render(
   ),
   document.getElementById('map')
 );
-/*
-var $ = require('jquery');
-var Main = require('main');
-
-$(function() {
-
-  var map = new Main();
-  console.log(map);
-});*/
