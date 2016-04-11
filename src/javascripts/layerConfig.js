@@ -2,10 +2,10 @@
 * @license AGPL-3.0
 * @author aAXEe (https://github.com/aAXEe)
 */
-import React, {PropTypes} from 'react'
+import React, { PropTypes } from 'react'
 import Toggle from './BootstrapToggle'
 
-import {FormattedMessage} from 'react-intl';
+import { FormattedMessage } from 'react-intl';
 import { setLayerVisible } from './store/actions'
 
 const mapStateToProps = (state) => {
@@ -22,19 +22,20 @@ const mapDispatchToProps = (dispatch) => {
   }
 }
 import { connect } from 'react-redux'
-import {LayerType} from './chartlayer'
+import { LayerType } from './chartlayer'
 
-const ConfigList = ({layerVisiblility, onChangeLayerVisible}, context) => (
+const ConfigList = ({layerVisiblility, onChangeLayerVisible} , context) => (
   <div>
-    {context.layers.map(layer =>
-      <Toggle
-          checked={layerVisiblility[layer.index]}
-          key={layer.index}
-          onToggled={(visible) => {onChangeLayerVisible(layer.index, visible)}}
-      >
-        <FormattedMessage id={layer.nameKey} />
-      </Toggle>
-    )}
+    { context.layers.map(layer => (
+        <Toggle
+          checked={ layerVisiblility[layer.index] }
+          key={ layer.index }
+          onToggled={ (visible) => {
+                        onChangeLayerVisible(layer.index, visible)
+                      } }>
+          <FormattedMessage id={ layer.nameKey } />
+        </Toggle>
+      )) }
   </div>
 )
 ConfigList.contextTypes = {

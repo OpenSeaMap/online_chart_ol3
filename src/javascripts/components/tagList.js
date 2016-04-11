@@ -1,21 +1,18 @@
 'use strict';
 
-import React, {PropTypes} from 'react'
+import React, { PropTypes } from 'react'
 import TagInfo from './tagInfo'
-import {FormattedMessage} from 'react-intl';
+import { FormattedMessage } from 'react-intl';
 
 const TagList = ({tags}) => (
   <div>
-    <h2>
-      <FormattedMessage id="tags" />
-    </h2>
-    { tags.map(tag =>
-      <TagInfo
-          key={tag.key}
+    <h2><FormattedMessage id="tags" /></h2>
+    { tags.map(tag => (
+        <TagInfo
+          key={ tag.key }
           locales="de"
-          tag={tag}
-      />
-    ) }
+          tag={ tag } />
+      )) }
   </div>
 )
 TagList.propTypes = {

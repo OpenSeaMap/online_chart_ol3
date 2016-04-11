@@ -4,18 +4,18 @@
 */
 'use strict';
 
-import React, {PropTypes} from 'react'
+import React, { PropTypes } from 'react'
 
 var $ = require('jquery');
 require('bootstrap-toggle');
 
-export default class BootstrapToggle extends React.Component{
+export default class BootstrapToggle extends React.Component {
 
   componentDidMount() {
     $(this._input).bootstrapToggle();
     this.setBootstrapToggleState(this._input, this.props.checked);
     $(this._input).on('change', () => {
-      if(this.changeFromSelf)
+      if (this.changeFromSelf)
         return;
       this.props.onToggled(!this.props.checked);
       this.setBootstrapToggleState(this._input, this.props.checked);
@@ -36,11 +36,10 @@ export default class BootstrapToggle extends React.Component{
       <div className="checkbox">
         <label>
           <input
-              data-toggle="toggle"
-              ref={(c) => this._input = c}
-              type="checkbox"
-          />
-          <span>{this.props.children}</span>
+            data-toggle="toggle"
+            ref={ (c) => this._input = c }
+            type="checkbox" />
+          <span>{ this.props.children }</span>
         </label>
       </div>
     )

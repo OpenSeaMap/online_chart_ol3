@@ -6,13 +6,13 @@ function checkISO639code(languageType) {
     var errorMsg = 'Invalid prop `' + propName +
       '` supplied to `' + componentName + '`. ';
 
-    switch(languageType.toUpperCase()) {
+    switch (languageType.toUpperCase()) {
       case 'ISO639-1':
         if (/^[a-zA-Z]{2}$/.test(propValue)) return;
-      break;
+        break;
       case 'ISO639-2':
         if (/^[a-zA-Z]{3}$/.test(propValue)) return;
-      break;
+        break;
       default:
         return new Error(errorMsg +
           'Unknown language code type: ' + languageType

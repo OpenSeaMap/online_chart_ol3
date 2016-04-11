@@ -3,14 +3,14 @@
 * @author aAXEe (https://github.com/aAXEe)
 */
 
-export function floatEqual(num1, num2, eps = 0.0001){
-  if(num1 === num2)
+export function floatEqual(num1, num2, eps = 0.0001) {
+  if (num1 === num2)
     return true;
   return Math.abs(num1 - num2) <= eps;
 }
 
-export function positionsEqual(pos1, pos2){
-  if(pos1 === pos2)
+export function positionsEqual(pos1, pos2) {
+  if (pos1 === pos2)
     return true;
   let epsilon = 0.0001;
   return floatEqual(pos1.lat, pos2.lat, epsilon)
