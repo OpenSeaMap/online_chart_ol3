@@ -1,3 +1,8 @@
+/**
+* @license AGPL-3.0
+* @author aAXEe (https://github.com/aAXEe)
+* @author mojoaxel (https://github.com/mojoaxel)
+*/
 'use strict';
 
 import React, { PropTypes } from 'react'
