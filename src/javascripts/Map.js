@@ -6,7 +6,7 @@
 
 import React, { PropTypes } from 'react'
 import ol from 'openlayers'
-import Sidebar from './Sidebar'
+import SidebarStore from './SidebarStoreWrapper'
 import { positionsEqual } from './utils'
 
 class Map extends React.Component {
@@ -74,7 +74,6 @@ class Map extends React.Component {
         })
     });
 
-
     this.map = new ol.Map({
       renderer: 'dom',
       target: this._input,
@@ -93,9 +92,8 @@ class Map extends React.Component {
     // this places the sidebar container outside of the openlayers controlled ones
     this.map.addControl(new ol.control.Control({
       element: this._sidebar.getDomNode(),
-      target: this.map.getViewport()
+      target: this.map.getTargetElement()
     }));
-
 
     this.map.on('moveend', function() {
       this.map.beforeRender();
@@ -159,7 +157,7 @@ class Map extends React.Component {
       <div
         className="sidebar-map reset-box-sizing"
         ref={ (c) => this._input = c }>
-        <Sidebar
+        <SidebarStore
           ref={ (c) => this._sidebar = c }
           tabs={ this.props.sidebar_tabs } />
         { this.props.children }
@@ -173,13 +171,14 @@ Map.defaultProps = {
 }
 
 import { LayerType } from './chartlayer'
+import { SidebarTabType } from './Sidebar'
 
 Map.propTypes = {
   children: PropTypes.node,
   layerVisiblility: PropTypes.object.isRequired,
   onViewPositionChange: PropTypes.func.isRequired,
   renderer: PropTypes.string,
-  sidebar_tabs: Sidebar.propTypes.tabs,
+  sidebar_tabs: SidebarTabType.isRequired,
   viewPosition: PropTypes.shape({
     lon: PropTypes.number,
     lat: PropTypes.number,
