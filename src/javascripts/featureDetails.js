@@ -13,7 +13,7 @@ const mapStateToProps = (state) => {
   const feature = state.selectedFeature.feature;
 
   let taglist = [];
-  if(state.selectedFeature.hasFeature){
+  if (state.selectedFeature.hasFeature) {
     feature.getKeys().forEach(function(key) {
       if ($.inArray(key, ignoredTags) > -1) {
         return;

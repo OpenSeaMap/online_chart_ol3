@@ -76,8 +76,8 @@ const tabs = [
 
 // todo: wrap Sidebar by redux store and set visible tab based on state
 
-const locale='en';
-const messages={
+const locale = 'en';
+const messages = {
   'test': 'key: {key} / value: {value}',
   'tags': 'Tags',
 

@@ -3,7 +3,7 @@
 * @author aAXEe (https://github.com/aAXEe)
 */
 import { combineReducers, createStore, compose, applyMiddleware } from 'redux'
-import { SET_LAYER_VISIBLE, INIT_LAYER_VISIBLE, SET_VIEW_POSITION, FEATURE_CLICKED} from './actions'
+import { SET_LAYER_VISIBLE, INIT_LAYER_VISIBLE, SET_VIEW_POSITION, FEATURE_CLICKED } from './actions'
 
 function layerVisible(state = {}, action) {
   switch (action.type) {
