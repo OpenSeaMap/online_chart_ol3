@@ -42,6 +42,8 @@
     "eslint": "^1.10.3",
     "eslint-config-es2015-react": "^0.1.2",
     "eslint-plugin-react": "^3.16.1",
+    "esformatter": "^0.9.3",
+    "esformatter-jsx": "^5.0.0",
     "estraverse": "^4.1.1",
     "express": "^4.13.1",
     "gulp": "^3.9.0",

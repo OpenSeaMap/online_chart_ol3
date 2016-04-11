@@ -31,9 +31,9 @@ module.exports = function(context, options) {
       opacity: 0.5,
       layers: [
         new ol.layer.Tile({
-//          maxResolution: 2500,
+          //          maxResolution: 2500,
           source: new ol.source.TileImage({
-            tileUrlFunction: function(tileCoord/*, pixelRatio, projection*/) {
+            tileUrlFunction: function(tileCoord /*, pixelRatio, projection*/ ) {
               var z = tileCoord[0];
               var x = tileCoord[1];
               var y = -tileCoord[2] - 1;

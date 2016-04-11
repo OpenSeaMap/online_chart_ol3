@@ -76,6 +76,53 @@
       "src": "sprites",
       "dest": "images",
       "extensions": ["svg"]
+    },
+
+    "lint": {
+      "options": {
+        "rules": {
+          "react/jsx-no-bind": [1, {
+            "ignoreRefs": true,
+            "allowArrowFunctions": true,
+            "allowBind": false
+          }],
+          "react/jsx-max-props-per-line": [1, {
+            "maximum": 2
+          }],
+          "react/jsx-closing-bracket-location": [1, {
+            "selfClosing": "after-props",
+            "nonEmpty": "after-props"
+          }],
+          "react/jsx-indent-props": [1, 2],
+          "react/jsx-curly-spacing": 0,
+          "react/jsx-handler-names": 0,
+          "react/no-set-state": 0,
+          "react/jsx-indent": 0,
+          "react/jsx-sort-props": 0
+        }
+      }
+    },
+
+    "prettify": {
+      "options": {
+        "lineBreak" : {
+          "before" : {
+            "BlockStatement" : ">=1",
+            "DoWhileStatementOpeningBrace" : 1
+          }
+        },
+        "jsx": {
+          "formatJSX": true,
+          "attrsOnSameLineAsTag": false,
+          "maxAttrsOnTag": 1,
+          "firstAttributeOnSameLine": false,
+          "formatJSXExpressions": true,
+          "JSXExpressionsSingleLine": true,
+          "alignWithFirstAttribute": false,
+          "spaceInJSXExpressionContainers": " "
+        }
+      }
     }
+
   }
 }

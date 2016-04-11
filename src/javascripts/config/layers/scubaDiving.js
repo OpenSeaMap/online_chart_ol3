@@ -10,6 +10,8 @@ import ChartLayer from 'chartlayer'
 var SimpleImageStyle = require('ol-style-simpleImageStyle');
 var OverpassApi = require('ol-source-overpassApi');
 
+import { featureClicked} from '../../store/actions'
+
 module.exports = function(context, options) {
 
   var defaults = {
@@ -54,32 +56,35 @@ module.exports = function(context, options) {
       return styleFunction(feature, resolution, 'clicked');
     }
   });
-
-  function showSidebar(features) {
-    var feature = features[0];
-    if (feature) {
-      context.taginfo().render(feature);
-      context.sidebar().open('details');
-    } else {
-      context.sidebar().close();
+  /*
+    function showSidebar(features) {
+      var feature = features[0];
+      if (feature) {
+        context.taginfo().render(feature);
+        context.sidebar().open('details');
+      } else {
+        context.sidebar().close();
+      }
     }
-  }
-
+  */
   selector.on('select', function(e) {
-    showSidebar(e.selected);
-  });
-
-  hoverer.on('select', function(e) {
-    var selected = e.target.getFeatures().getLength();
-    var map = context.map();
-    map.mapTargetJ().css('cursor', selected > 0 ? 'pointer' : '');
-
     var feature = e.selected[0];
     if (feature) {
-      context.taginfo().render(feature);
+      context.dispatch(featureClicked(feature));
     }
   });
+  /*
+    hoverer.on('select', function(e) {
+      var selected = e.target.getFeatures().getLength();
+      var map = context.map();
+      map.mapTargetJ().css('cursor', selected > 0 ? 'pointer' : '');
 
+      var feature = e.selected[0];
+      if (feature) {
+        context.taginfo().render(feature);
+      }
+    });
+  */
 
   var objects = {
     layer: new ol.layer.Vector({
