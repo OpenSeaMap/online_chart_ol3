@@ -95,6 +95,6 @@
     "redux-devtools": "^3.1.0",
     "require-dir": "^0.3.0",
     "vinyl-source-stream": "~1.1.0",
-    "webpack": "^1.10.1"
+    "webpack": "^1.12.15"
   }
 }
