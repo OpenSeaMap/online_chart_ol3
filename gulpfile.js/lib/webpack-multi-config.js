@@ -94,7 +94,9 @@ module.exports = function(env) {
       }),
       new webpack.optimize.DedupePlugin(),
       new webpack.optimize.UglifyJsPlugin({
-        'compress': false,
+        'compress': {
+          'warnings': false
+        },
         'mangle': true
       }),
       new webpack.NoErrorsPlugin()
