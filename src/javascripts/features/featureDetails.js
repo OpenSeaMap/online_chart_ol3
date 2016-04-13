@@ -5,7 +5,7 @@
 'use strict';
 
 var $ = require('jquery');
-import TagList from './components/tagList'
+import TagList from '../components/tagList'
 
 const ignoredTags = ['geometry'];
 
