@@ -6,7 +6,7 @@
 
 import React, { PropTypes } from 'react'
 import ol from 'openlayers'
-import SidebarStore from './SidebarStoreWrapper'
+import SidebarStore from './components/sidebar/SidebarStoreWrapper'
 import { positionsEqual } from './utils'
 
 class Map extends React.Component {
@@ -171,7 +171,7 @@ Map.defaultProps = {
 }
 
 import { LayerType } from './chartlayer'
-import { SidebarTabType } from './Sidebar'
+import { SidebarTabType } from './components/sidebar/Sidebar'
 
 Map.propTypes = {
   children: PropTypes.node,

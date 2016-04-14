@@ -11,16 +11,26 @@ class AuthorsList extends React.Component {
     var authors = this.props.authors;
     return (
       <ul className="authorsList">
-        { authors.map((author, i) =>
-          <li key={ i }><a href={ author.url }>{ author.name }</a></li>
-        ) }
+        { authors.map((author, i) => (
+            <li key={ i }>
+              <a href={ author.url }>
+                { author.name }
+              </a>
+            </li>
+          )) }
       </ul>
     )
   }
 }
 
+import { PropTypes } from 'react'
+
 AuthorsList.propTypes = {
-  authors: React.PropTypes.arrayOf(React.PropTypes.string).isRequired
+  authors: PropTypes.arrayOf(PropTypes.shape({
+    name: PropTypes.string,
+    email: PropTypes.string,
+    url: PropTypes.string
+  })).isRequired
 }
 
 export default AuthorsList

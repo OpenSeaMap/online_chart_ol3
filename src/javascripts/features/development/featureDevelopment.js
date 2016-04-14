@@ -24,47 +24,57 @@ class FeatureDevelopment extends React.Component {
 
     return (
       <article className="featureDevelopment">
-
         <section>
           <h2>{ 'Bugs & Features' }</h2>
           <div>
             { 'If you found a bug or if you have an idea for a new feature please file a new ' }
-            <a href={ PACKAGE.bugs.url }>{ 'github issue' }</a>:<br />
+            <a href={ PACKAGE.bugs.url }>
+              { 'github issue' }
+            </a>:
+            <br />
           </div>
           <div>
-            <Button id="newGHIssue" bsStyle="info"
+            <Button
+              id="newGHIssue"
+              bsStyle="info"
               href={ PACKAGE.bugs.url + '/new' }>
-                { 'Create a new Issue' }
+              { 'Create a new Issue' }
             </Button>
           </div>
         </section>
-
         <section>
           <h2>{ 'Source Code' }</h2>
           <div>
             { 'The sourcecode is availible on ' }
-            <a href={ repoUrl }>{ 'GitHub' }</a>
+            <a href={ repoUrl }>
+              { 'GitHub' }
+            </a>
             { ' and as a ' }
-            <a href={ repoUrl + '/releases' }>{ 'release-tarball' }</a>.
+            <a href={ repoUrl + '/releases' }>
+              { 'release-tarball' }
+            </a>.
           </div>
         </section>
-
         <section>
           <h2>License</h2>
           <div>
             { 'This Web-Application is ' }
-            <a href="http://www.gnu.org/philosophy/floss-and-foss.de.html">{ 'Free/Libre Open Source Software' }</a>
-            {' and licensed unter '}
-            <a href={ 'https://spdx.org/licenses/' + PACKAGE.license + '.html' }>{ PACKAGE.license }</a>.
+            <a href="http://www.gnu.org/philosophy/floss-and-foss.de.html">
+              { 'Free/Libre Open Source Software' }
+            </a>
+            { ' and licensed unter ' }
+            <a href={ 'https://spdx.org/licenses/' + PACKAGE.license + '.html' }>
+              { PACKAGE.license }
+            </a>.
           </div>
           <div>
-            { 'The authors:' }<br />
+            { 'The authors:' }
+            <br />
             <AuthorsList authors={ authorsParser(AUTHORS) } />
           </div>
         </section>
-
       </article>
-    );
+      );
   }
 }
 

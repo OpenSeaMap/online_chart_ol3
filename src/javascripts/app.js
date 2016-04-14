@@ -75,7 +75,7 @@ const tabs = [
   },
   {
     name: 'development',
-    tabSymbol: 'eye-open', //TODO 'git-branch',
+    tabSymbol: 'info-sign',
     content: <FeatureDevelopment />
   }
 ]
