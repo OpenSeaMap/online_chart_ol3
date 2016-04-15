@@ -22,7 +22,6 @@
   },
   "dependencies": {
     "fbjs": "^0.7.2",
-    "install": "^0.6.1",
     "jquery": "^2.2.0",
     "npm": "^3.8.6",
     "openlayers": "^3.3.0",
