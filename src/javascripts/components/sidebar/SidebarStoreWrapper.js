@@ -5,7 +5,7 @@
 'use strict';
 
 import React, { PropTypes } from 'react'
-import Sidebar from './Sidebar'
+import Sidebar, { SidebarTabType } from './Sidebar'
 
 class SidebarStore extends React.Component {
 
@@ -48,7 +48,6 @@ class SidebarStore extends React.Component {
     )
   }
 }
-import { SidebarTabType } from './Sidebar'
 
 SidebarStore.propTypes = {
   tabs: SidebarTabType.isRequired

@@ -1,0 +1,263 @@
+/**
+* @license MIT
+* @author Turbo87 (https://github.com/Turbo87)
+*/
+$threshold-lg: 1200px;
+$threshold-md: 992px;
+$threshold-sm: 768px;
+
+$width-lg: 460px;
+$width-md: 390px;
+$width-sm: 305px;
+$width-xs: 100%;
+
+$sidebar-z-index: 2000 !default;
+$sidebar-transition: 500ms !default;
+
+$tab-size: 40px !default;
+$tab-font-size: 12pt !default;
+$tab-bg: null !default;
+$tab-transition: 80ms !default;
+
+$header-fg: $tab-active-fg !default;
+$header-bg: $tab-active-bg !default;
+
+$content-bg: rgba(255, 255, 255, 0.95) !default;
+$content-padding-vertical: 10px !default;
+$content-padding-horizontal: 20px !default;
+
+$move-map-in-xs: true !default;
+
+.sidebar {
+    position: absolute;
+
+    top: 0;
+    bottom: 0;
+    width: $width-xs;
+
+    overflow: hidden;
+
+    z-index: $sidebar-z-index;
+
+    &.collapsed {
+        width: $tab-size;
+    }
+
+    @media(min-width:$threshold-sm) {
+        top: $sidebar-margins;
+        bottom: $sidebar-margins;
+
+        transition: width $sidebar-transition;
+    }
+
+    @media(min-width:$threshold-sm) and (max-width:$threshold-md - 1px) {
+        width: $width-sm;
+    }
+
+    @media(min-width:$threshold-md) and (max-width:$threshold-lg - 1px) {
+        width: $width-md;
+    }
+
+    @media(min-width:$threshold-lg) {
+        width: $width-lg;
+    }
+}
+
+.sidebar-left {
+    left: 0;
+
+    @media(min-width:$threshold-sm) {
+        left: $sidebar-margins;
+    }
+}
+
+.sidebar-right {
+    right: 0;
+
+    @media(min-width:$threshold-sm) {
+        right: $sidebar-margins;
+    }
+}
+
+.sidebar-tabs {
+    top: 0;
+    bottom: 0;
+    height: 100%;
+
+    .sidebar-left & {
+        left: 0;
+    }
+
+    .sidebar-right & {
+        right: 0;
+    }
+
+    background-color: $tabs-bg;
+
+    &, & > ul {
+        position: absolute;
+
+        width: $tab-size;
+
+        margin: 0;
+        padding: 0;
+
+        & > li {
+            width: 100%;
+            height: $tab-size;
+
+            color: $tab-fg;
+            @if $tab-bg { background: $tab-bg; }
+
+            font-size: $tab-font-size;
+
+            overflow: hidden;
+
+            transition: all $tab-transition;
+
+            &:hover {
+                color: $tab-hover-fg;
+                background-color: $tab-hover-bg;
+            }
+
+            &.active {
+                color: $tab-active-fg;
+                background-color: $tab-active-bg;
+            }
+
+            &.disabled {
+                color: fade-out($tab-fg, 0.6);
+
+                &:hover {
+                    @if $tab-bg {
+                        background: $tab-bg;
+                    } @else {
+                        background: transparent;
+                    }
+                }
+
+                & > a {
+                    cursor: default;
+                }
+            }
+
+            & > a {
+                display: block;
+
+                width: 100%;
+                height: 100%;
+
+                line-height: $tab-size;
+
+                color: inherit;
+                text-decoration: none;
+                text-align: center;
+            }
+        }
+    }
+
+    & > ul + ul {
+        bottom: 0;
+    }
+}
+
+.sidebar-content {
+    position: absolute;
+
+    .sidebar-left {
+        left: $tab-size;
+        right: 0;
+    }
+
+    .sidebar-right {
+        left: 0;
+        right: $tab-size;
+    }
+
+    top: 0;
+    bottom: 0;
+
+    background-color: $content-bg;
+
+    overflow-x: hidden;
+    overflow-y: auto;
+
+    .sidebar.collapsed > & {
+        overflow-y: hidden;
+    }
+}
+
+.sidebar-pane {
+    display: none;
+
+    left: 0;
+    right: 0;
+    box-sizing: border-box;
+
+    padding: $content-padding-vertical $content-padding-horizontal;
+
+    &.active {
+        display: block;
+    }
+
+    @media(min-width:$threshold-sm) and (max-width:$threshold-md - 1px) {
+        min-width: $width-sm - $tab-size;
+    }
+
+    @media(min-width:$threshold-md) and (max-width:$threshold-lg - 1px) {
+        min-width: $width-md - $tab-size;
+    }
+
+    @media(min-width:$threshold-lg) {
+        min-width: $width-lg - $tab-size;
+    }
+}
+
+.sidebar-header {
+    margin: (-$content-padding-vertical) (-$content-padding-horizontal) 0;
+    height: $tab-size;
+    padding: 0 $content-padding-horizontal;
+    line-height: $tab-size;
+    font-size: $tab-font-size * 1.2;
+    color: $header-fg;
+    background-color: $header-bg;
+
+    .sidebar-right & {
+        padding-left: $tab-size;
+    }
+}
+
+.sidebar-close {
+    position: absolute;
+    top: 0;
+    width: $tab-size;
+    height: $tab-size;
+    text-align: center;
+    cursor: pointer;
+
+    .sidebar-left & {
+        right: 0;
+    }
+
+    .sidebar-right & {
+        left: 0;
+    }
+}
+
+@if $move-map-in-xs {
+    .sidebar-left ~ .sidebar-map {
+        margin-left: $tab-size;
+
+        @media(min-width:$threshold-sm) {
+            margin-left: 0;
+        }
+    }
+
+    .sidebar-right ~ .sidebar-map {
+        margin-right: $tab-size;
+
+        @media(min-width:$threshold-sm) {
+            margin-right: 0;
+        }
+    }
+}
