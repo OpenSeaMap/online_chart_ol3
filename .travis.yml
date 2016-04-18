@@ -3,7 +3,7 @@ env:
   global:
   - DISABLE_NOTIFIER=true
 node_js:
-  - "0.12.2"
+  - "4.4.3"
 before_script:
   # http://docs.travis-ci.com/user/gui-and-headless-browsers/#Using-xvfb-to-Run-Tests-That-Require-GUI-(e.g.-a-Web-browser)
   - export DISPLAY=:99.0

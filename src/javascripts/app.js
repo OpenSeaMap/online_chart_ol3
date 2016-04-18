@@ -9,7 +9,8 @@ import React, { PropTypes } from 'react'
 
 import { IntlProvider } from 'react-intl';
 
-import FeatureDetails from './featureDetails'
+import FeatureDetails from './features/featureDetails'
+import FeatureDevelopment from './features/development/featureDevelopment'
 import VisibleLayers from './visibleLayers'
 import LayerConfig from './layerConfig'
 
@@ -71,6 +72,11 @@ const tabs = [
     name: 'details',
     tabSymbol: 'eye-open',
     content: <FeatureDetails />
+  },
+  {
+    name: 'development',
+    tabSymbol: 'info-sign',
+    content: <FeatureDevelopment />
   }
 ]
 
@@ -84,6 +90,7 @@ const messages = {
   'sidebar-main': 'Online map',
   'sidebar-settings': 'Settings',
   'sidebar-details': 'Details',
+  'sidebar-development': 'Development',
 
   'layer-name-seamarks': 'OpenSeaMap seamarks',
   'layer-name-depth-geodaten_mv': 'Official depth data for Germany/MV',
@@ -113,8 +120,7 @@ MapLayerProvider.propTypes = {
   layers: PropTypes.arrayOf(LayerType.isRequired).isRequired
 }
 
-ReactDOM.render(
-  (
+ReactDOM.render((
   <IntlProvider
     locale={ locale }
     messages={ messages }>
@@ -123,7 +129,6 @@ ReactDOM.render(
         <VisibleLayers sidebar_tabs={ tabs } />
       </MapLayerProvider>
     </Provider>
-  </IntlProvider>
-  ),
+  </IntlProvider>),
   document.getElementById('map')
 );

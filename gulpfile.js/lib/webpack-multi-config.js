@@ -49,11 +49,13 @@ module.exports = function(env) {
           test: /\AUTHORS$/,
           loader: 'raw-loader',
           exclude: [/node_modules/, /bower_components/]
+        },{
+          test: /\.json$/,
+          loader: 'json'
+        },{
+          test: /\.scss$/,
+          loaders: ['style', 'css', 'sass']
         }
-        /*,{
-          test: require.resolve('jquerySidebar'),
-          loader: 'imports?$=jquery!'
-        }*/
       ]
     }
   }
@@ -94,9 +96,7 @@ module.exports = function(env) {
       }),
       new webpack.optimize.DedupePlugin(),
       new webpack.optimize.UglifyJsPlugin({
-        'compress': {
-          'warnings': false
-        },
+        'compress': false,
         'mangle': true
       }),
       new webpack.NoErrorsPlugin()

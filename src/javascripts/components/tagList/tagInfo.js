@@ -7,7 +7,7 @@
 
 var $ = require('jquery');
 import React, { PropTypes } from 'react'
-import LanguageCodePropTypes from '../propTypes/langCodes'
+import LanguageCodePropTypes from '../../propTypes/langCodes'
 import { Button, Input, Glyphicon, ProgressBar, Label } from 'react-bootstrap'
 
 class TagInfo extends React.Component {
