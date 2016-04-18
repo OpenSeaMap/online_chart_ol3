@@ -39,6 +39,7 @@
     "browser-sync": "^2.9.11",
     "chai": "^3.5.0",
     "compression": "^1.5.1",
+    "css-loader": "^0.23.1",
     "del": "^2.0.2",
     "esformatter": "^0.9.3",
     "esformatter-jsx": "^5.0.0",
@@ -96,8 +97,10 @@
     "pretty-hrtime": "~1.0.0",
     "redux-devtools": "^3.1.0",
     "require-dir": "^0.3.0",
+    "sass-loader": "^3.1.1",
     "sinon": "^1.17.3",
     "sinon-chai": "^2.8.0",
+    "style-loader": "^0.13.1",
     "through2": "^2.0.1",
     "vinyl-source-stream": "~1.1.0",
     "webpack": "1.12.4"

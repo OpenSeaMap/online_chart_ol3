@@ -3,19 +3,50 @@
 * @author aAXEe (https://github.com/aAXEe)
 */
 'use strict';
+import './ol3-sidebar.scss'
 
 import React, { PropTypes } from 'react'
 
 import { FormattedMessage } from 'react-intl';
 import { Glyphicon } from 'react-bootstrap'
 
-var $ = require('jquery');
-require('jquerySidebar');
-
 class Sidebar extends React.Component {
 
+  constructor(props) {
+    super(props);
+    this.state = {
+      collapsed: true,
+      activePanel: null
+    };
+    this.closeSidebar.bind(this);
+    this.switchTab.bind(this);
+  }
+
+  open() {
+    this.setState({
+      collapsed: false,
+      activePanel: this.state.activePanel
+    });
+  }
+
+  close() {
+    this.setState({
+      collapsed: true,
+      activePanel: this.state.activePanel
+    });
+  }
+
+  switchTab(tabId) {
+    var activePanel = tabId || this.state.activePanel;
+    var collapsed = (activePanel == this.state.activePanel) ? !this.state.collapsed : false;
+    this.setState({
+      collapsed: collapsed,
+      activePanel: activePanel
+    });
+  }
+
   componentDidMount() {
-    this.jSidebar = $(this._input).sidebar();
+    this.jSidebar = this._input;
   }
 
   getDomNode() {
@@ -28,15 +59,15 @@ class Sidebar extends React.Component {
   render() {
     return (
       <div
-        className="sidebar collapsed reset-box-sizing"
+        className={'sidebar sidebar-left reset-box-sizing ' + (this.state.collapsed ? 'collapsed' : '')}
         ref={ (c) => this._input = c }>
         <div className="sidebar-tabs">
           <ul role="tablist">
             { this.props.tabs.map(tab => (
                 <li key={ tab.name }>
-                  <a
-                    role="tab"
-                    href={ '#' + tab.name }>
+                  <a role="tab"
+                    href={ '#' + tab.name }
+                    onClick={ () => this.switchTab(tab.name) }>
                     <Glyphicon glyph={ tab.tabSymbol } />
                   </a>
                 </li>
@@ -45,11 +76,16 @@ class Sidebar extends React.Component {
         </div>
         <div className="sidebar-content set-box-sizing">
           { this.props.tabs.map(tab => (
-              <div
-                className="sidebar-pane"
+              <div className={ 'sidebar-left sidebar-pane ' + (this.state.activePanel == tab.name ? 'active' : '')}
                 id={ tab.name }
                 key={ tab.name }>
-                <h1 className="sidebar-header"><FormattedMessage id={ 'sidebar-' + tab.name } /> <div className="sidebar-close"> <Glyphicon glyph="menu-left"/> </div></h1>
+                <h1 className="sidebar-header">
+                  <FormattedMessage id={ 'sidebar-' + tab.name }/>
+                  <div className="sidebar-close"
+                    onClick={ () => this.close() }>
+                    <Glyphicon glyph="menu-left"/>
+                  </div>
+                </h1>
                 <div className="container-fluid">
                   <div className="row">
                     <div className="col-xs-12">

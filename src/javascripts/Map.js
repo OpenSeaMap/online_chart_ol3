@@ -6,7 +6,10 @@
 
 import React, { PropTypes } from 'react'
 import ol from 'openlayers'
-import SidebarStore from './SidebarStoreWrapper'
+import { LayerType } from './chartlayer'
+import SidebarStore from './components/sidebar/SidebarStoreWrapper'
+import { SidebarTabType } from './components/sidebar/Sidebar'
+
 import { positionsEqual } from './utils'
 
 class Map extends React.Component {
@@ -30,15 +33,6 @@ class Map extends React.Component {
     // the real sidebar is placed in an different container to allow event propagation (this is required by react)
     var sidebarLeftDummy = document.createElement('div');
     sidebarLeftDummy.className = 'sidebar-left collapsed';
-
-    // update dummy sidebar container
-    let $sidebar = this._sidebar.getJSidebar();
-    $sidebar.on('opening', () => {
-      sidebarLeftDummy.className = 'sidebar-left'
-    })
-    $sidebar.on('closing', () => {
-      sidebarLeftDummy.className = 'sidebar-left collapsed'
-    })
 
     var addedControls = new ol.Collection([
       new ol.control.Control({ // the dummy has to be the first control, otherwise the css does not work
@@ -169,9 +163,6 @@ class Map extends React.Component {
 Map.defaultProps = {
   renderer: 'dom'
 }
-
-import { LayerType } from './chartlayer'
-import { SidebarTabType } from './Sidebar'
 
 Map.propTypes = {
   children: PropTypes.node,
