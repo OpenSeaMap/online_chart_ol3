@@ -20,7 +20,7 @@ class SidebarStore extends React.Component {
   }
 
   handleEvent() {
-    let sidebar = this.getJSidebar();
+    let sidebar = this.getDomNode();
     let state = this.context.store.getState();
 
     if (this.lastState.selectedFeature !== state.selectedFeature) {
@@ -35,9 +35,6 @@ class SidebarStore extends React.Component {
 
   getDomNode() {
     return this._sidebar.getDomNode();
-  }
-  getJSidebar() {
-    return this._sidebar.getJSidebar();
   }
 
   render() {

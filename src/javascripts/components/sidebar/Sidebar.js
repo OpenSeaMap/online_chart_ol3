@@ -18,7 +18,7 @@ class Sidebar extends React.Component {
       collapsed: true,
       activePanel: null
     };
-    this.closeSidebar.bind(this);
+    this.close.bind(this);
     this.switchTab.bind(this);
   }
 
@@ -45,22 +45,15 @@ class Sidebar extends React.Component {
     });
   }
 
-  componentDidMount() {
-    this.jSidebar = this._input;
-  }
-
   getDomNode() {
-    return this._input;
-  }
-  getJSidebar() {
-    return this.jSidebar;
+    return this._domNode;
   }
 
   render() {
     return (
       <div
         className={'sidebar sidebar-left reset-box-sizing ' + (this.state.collapsed ? 'collapsed' : '')}
-        ref={ (c) => this._input = c }>
+        ref={ (c) => this._domNode = c }>
         <div className="sidebar-tabs">
           <ul role="tablist">
             { this.props.tabs.map(tab => (

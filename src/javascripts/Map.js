@@ -20,24 +20,24 @@ class Map extends React.Component {
   }
 
   componentDidMount() {
+    var defaultView = new ol.View({
+      center: ol.proj.fromLonLat([
+        this.props.viewPosition.lon,
+        this.props.viewPosition.lat
+      ]),
+      zoom: this.props.viewPosition.zoom
+    });
+
+    var sidebar = new ol.control.Control({
+      element: this._sidebar.getDomNode()
+    });
+
     var attribution = new ol.control.Attribution({
       collapsible: false
     });
 
-    var defaultControls = ol.control.defaults({
-      attribution: false
-    });
-
-    // this is a dummy element that gets the same classes as the sidebar
-    // it is used to trigger the css for placing the other controls
-    // the real sidebar is placed in an different container to allow event propagation (this is required by react)
-    var sidebarLeftDummy = document.createElement('div');
-    sidebarLeftDummy.className = 'sidebar-left collapsed';
-
-    var addedControls = new ol.Collection([
-      new ol.control.Control({ // the dummy has to be the first control, otherwise the css does not work
-        element: sidebarLeftDummy
-      }),
+    var customControls = new ol.Collection([
+      sidebar,
       attribution,
       new ol.control.FullScreen(),
       new ol.control.Zoom(),
@@ -51,13 +51,16 @@ class Map extends React.Component {
       })
     ]);
 
-    var controls = addedControls.extend(defaultControls);
+    var controls = ol.control.defaults({
+      attribution: false
+    }).extend(customControls);
 
     var layers = [];
     var interactions = ol.interaction.defaults({
       altShiftDragRotate: false,
       pinchRotate: false
     });
+
     this.context.layers.forEach((layer) => {
       layer.layer.setVisible(this.props.layerVisiblility[layer.index]);
       layers.push(layer.layer);
@@ -70,24 +73,12 @@ class Map extends React.Component {
 
     this.map = new ol.Map({
       renderer: 'dom',
-      target: this._input,
-      view: new ol.View({
-        center: ol.proj.fromLonLat([
-          this.props.viewPosition.lon,
-          this.props.viewPosition.lat
-        ]),
-        zoom: this.props.viewPosition.zoom
-      }),
+      target: this._mapContainer,
+      view: defaultView,
       controls: controls,
       layers: layers,
       interactions: interactions
     });
-
-    // this places the sidebar container outside of the openlayers controlled ones
-    this.map.addControl(new ol.control.Control({
-      element: this._sidebar.getDomNode(),
-      target: this.map.getTargetElement()
-    }));
 
     this.map.on('moveend', function() {
       this.map.beforeRender();
@@ -99,15 +90,16 @@ class Map extends React.Component {
       this.updateView();
     }.bind(this));
   }
+
   componentWillReceiveProps(nextProps) {
     this.context.layers.forEach((layer) => {
       layer.layer.setVisible(nextProps.layerVisiblility[layer.index]);
     });
 
-    var centre = ol.proj.transform(this.map.getView().getCenter(), 'EPSG:3857', 'EPSG:4326');
+    var center = ol.proj.transform(this.map.getView().getCenter(), 'EPSG:3857', 'EPSG:4326');
     let position = {
-      lon: centre[0],
-      lat: centre[1],
+      lon: center[0],
+      lat: center[1],
       zoom: this.map.getView().getZoom()
     }
     if (!positionsEqual(nextProps.viewPosition, position)) {
@@ -135,10 +127,10 @@ class Map extends React.Component {
   }
 
   updateView() {
-    var centre = ol.proj.transform(this.map.getView().getCenter(), 'EPSG:3857', 'EPSG:4326');
+    var center = ol.proj.transform(this.map.getView().getCenter(), 'EPSG:3857', 'EPSG:4326');
     let position = {
-      lon: centre[0],
-      lat: centre[1],
+      lon: center[0],
+      lat: center[1],
       zoom: this.map.getView().getZoom()
     }
     if (positionsEqual(position, this.props.viewPosition))
@@ -150,10 +142,12 @@ class Map extends React.Component {
     return (
       <div
         className="sidebar-map reset-box-sizing"
-        ref={ (c) => this._input = c }>
+        ref={ (c) => this._mapContainer = c }>
+
         <SidebarStore
           ref={ (c) => this._sidebar = c }
           tabs={ this.props.sidebar_tabs } />
+
         { this.props.children }
       </div>
     )
