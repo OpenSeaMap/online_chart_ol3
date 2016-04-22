@@ -28,16 +28,15 @@ class Map extends React.Component {
       zoom: this.props.viewPosition.zoom
     });
 
-    var sidebar = new ol.control.Control({
-      element: this._sidebar.getDomNode()
-    });
-
     var attribution = new ol.control.Attribution({
       collapsible: false
     });
 
+    var defaultControls = ol.control.defaults({
+      attribution: false
+    });
+
     var customControls = new ol.Collection([
-      sidebar,
       attribution,
       new ol.control.FullScreen(),
       new ol.control.Zoom(),
@@ -51,9 +50,7 @@ class Map extends React.Component {
       })
     ]);
 
-    var controls = ol.control.defaults({
-      attribution: false
-    }).extend(customControls);
+    var controls = customControls.extend(defaultControls);
 
     var layers = [];
     var interactions = ol.interaction.defaults({

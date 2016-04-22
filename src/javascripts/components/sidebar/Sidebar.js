@@ -10,6 +10,8 @@ import React, { PropTypes } from 'react'
 import { FormattedMessage } from 'react-intl';
 import { Glyphicon } from 'react-bootstrap'
 
+import SidebarPanel from './SidebarPanel'
+
 class Sidebar extends React.Component {
 
   constructor(props) {
@@ -69,25 +71,13 @@ class Sidebar extends React.Component {
         </div>
         <div className="sidebar-content set-box-sizing">
           { this.props.tabs.map(tab => (
-              <div className={ 'sidebar-left sidebar-pane ' + (this.state.activePanel == tab.name ? 'active' : '')}
-                id={ tab.name }
-                key={ tab.name }>
-                <h1 className="sidebar-header">
-                  <FormattedMessage id={ 'sidebar-' + tab.name }/>
-                  <div className="sidebar-close"
-                    onClick={ () => this.close() }>
-                    <Glyphicon glyph="menu-left"/>
-                  </div>
-                </h1>
-                <div className="container-fluid">
-                  <div className="row">
-                    <div className="col-xs-12">
-                      { tab.content }
-                    </div>
-                  </div>
-                </div>
-              </div>
-            )) }
+            <SidebarPanel
+              key={ tab.name }
+              name={ tab.name }
+              isActive={ !!(this.state.activePanel == tab.name) }
+              content={ tab.content }
+              onClose={ () => this.close() } />
+          )) }
         </div>
       </div>
     )
