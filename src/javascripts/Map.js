@@ -36,7 +36,28 @@ class Map extends React.Component {
       attribution: false
     });
 
+
+    // this is a dummy element that gets the same classes as the sidebar
+    // it is used to trigger the css for placing the other controls
+    // the real sidebar is placed in an different container to allow event propagation (this is required by react)
+    var sidebarLeftDummy = document.createElement('div');
+    sidebarLeftDummy.className = 'sidebar sidebar-left reset-box-sizing';
+
+    // update dummy sidebar container
+    //let $sidebar = this._sidebarStore.getDomNode();
+    /*
+    $sidebar.on('opening', () => {
+      sidebarLeftDummy.className = 'sidebar-left'
+    })
+    $sidebar.on('closing', () => {
+      sidebarLeftDummy.className = 'sidebar-left collapsed'
+    })
+    */
+
     var customControls = new ol.Collection([
+      new ol.control.Control({ // the dummy has to be the first control, otherwise the css does not work
+        element: sidebarLeftDummy
+      }),
       attribution,
       new ol.control.FullScreen(),
       new ol.control.Zoom(),
@@ -76,6 +97,11 @@ class Map extends React.Component {
       layers: layers,
       interactions: interactions
     });
+
+    this.map.addControl(new ol.control.Control({
+      element: this._sidebarStore.getDomNode(),
+      target: this.map.getTargetElement()
+    }));
 
     this.map.on('moveend', function() {
       this.map.beforeRender();
@@ -142,7 +168,7 @@ class Map extends React.Component {
         ref={ (c) => this._mapContainer = c }>
 
         <SidebarStore
-          ref={ (c) => this._sidebar = c }
+          ref={ (c) => this._sidebarStore = c }
           tabs={ this.props.sidebar_tabs } />
 
         { this.props.children }

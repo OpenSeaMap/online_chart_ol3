@@ -7,7 +7,7 @@ import './ol3-sidebar.scss'
 
 import React, { PropTypes } from 'react'
 
-import { FormattedMessage } from 'react-intl';
+//import { FormattedMessage } from 'react-intl';
 import { Glyphicon } from 'react-bootstrap'
 
 import SidebarPanel from './SidebarPanel'
@@ -17,18 +17,16 @@ class Sidebar extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      collapsed: true,
-      activePanel: null
+      collapsed: false,
+      activePanel: 'main' //default panel
     };
     this.close.bind(this);
     this.switchTab.bind(this);
+    this.getDomNode.bind(this);
   }
 
   open() {
-    this.setState({
-      collapsed: false,
-      activePanel: this.state.activePanel
-    });
+    this.switchTab(this.state.activePanel)
   }
 
   close() {
@@ -39,6 +37,7 @@ class Sidebar extends React.Component {
   }
 
   switchTab(tabId) {
+    console.log('switchTab');
     var activePanel = tabId || this.state.activePanel;
     var collapsed = (activePanel == this.state.activePanel) ? !this.state.collapsed : false;
     this.setState({
@@ -57,8 +56,19 @@ class Sidebar extends React.Component {
         className={'sidebar sidebar-left reset-box-sizing ' + (this.state.collapsed ? 'collapsed' : '')}
         ref={ (c) => this._domNode = c }>
         <div className="sidebar-tabs">
-          <ul role="tablist">
-            { this.props.tabs.map(tab => (
+          <ul role="tablist" className="top">
+            { this.props.tabs.filter((tab) => !tab.position || tab.position == 'top').map(tab => (
+                <li key={ tab.name }>
+                  <a role="tab"
+                    href={ '#' + tab.name }
+                    onClick={ () => this.switchTab(tab.name) }>
+                    <Glyphicon glyph={ tab.tabSymbol } />
+                  </a>
+                </li>
+              )) }
+          </ul>
+          <ul role="tablist" className="bottom">
+            { this.props.tabs.filter((tab) => tab.position && tab.position == 'bottom').map(tab => (
                 <li key={ tab.name }>
                   <a role="tab"
                     href={ '#' + tab.name }

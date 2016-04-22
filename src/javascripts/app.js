@@ -76,6 +76,7 @@ const tabs = [
   {
     name: 'development',
     tabSymbol: 'info-sign',
+    position: 'bottom',
     content: <FeatureDevelopment />
   }
 ]
