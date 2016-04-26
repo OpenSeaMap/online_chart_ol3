@@ -1,13 +1,21 @@
 a[role="link"] {
 
-  &.external:after {
-    content: '⬆'
-  }
-
-  &.download:after {
-    content: ' \e025';
+  @mixin glyphicons {
+    font-size: 10px;
     font-family: 'Glyphicons Halflings';
     -webkit-font-smoothing: antialiased;
+  }
+
+  &.external:before {
+    @include glyphicons;
+    padding-right: 3px;
+    content: '\e144';
+  }
+
+  &.download:before {
+    @include glyphicons;
+    padding-right: 3px;
+    content: '\e025';
   }
 
 }

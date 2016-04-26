@@ -43,71 +43,46 @@ class FeatureDevelopment extends React.Component {
 
     return (
       <IntlProvider messages={ messages }>
-      <article className="featureDevelopment">
-        <section>
-          <h2><FormattedMessage id="issues-title" /></h2>
-          <div>
-            <FormattedMessage id="issues-bug-found"
-              values={{
-                linkGitHubIssues: (
-                  <ExternalLink href={ PACKAGE.bugs.url }>
-                    <FormattedMessage id="issues-bug-found-new" />
-                  </ExternalLink>
-                )
-              }}/>
-            <br />
-          </div>
-          <div>
-            <Button
-              id="newGHIssue"
-              bsStyle="info"
-              href={ PACKAGE.bugs.url + '/new' }>
-              <FormattedMessage id="issues-create-new" />
-            </Button>
-          </div>
-        </section>
-        <section>
-          <h2><FormattedMessage id="source-title" /></h2>
-          <div>
-            <FormattedMessage id="source-links"
-              values={{
-                linkGithub:(
-                  <ExternalLink href={ 'repoUrl' }>
-                    <FormattedMessage id="source-links-github" />
-                  </ExternalLink>
-                ),
-                linkDownload:(
-                  <DownloadLink href={ repoUrl + '/tarball/master' }>
-                    <FormattedMessage id="source-links-tarball" />
-                  </DownloadLink>
-                )
-              }}/>
-          </div>
-        </section>
-        <section>
-          <h2><FormattedMessage id="license-title" /></h2>
-          <div>
-            <FormattedMessage id="license-links"
-              values={{
-                linkFoss:(
-                  <ExternalLink href={ messages["license-links-foss-link"] }>
-                    <FormattedMessage id="license-links-foss-text" />
-                  </ExternalLink>
-                ),
-                linkLicense:(
-                  <ExternalLink href={ 'https://spdx.org/licenses/' + PACKAGE.license + '.html' }>
-                    { PACKAGE.license }
-                  </ExternalLink>
-                )
-              }}/>
-          </div>
-          <div>
-            <FormattedMessage id="license-authors" />
-            <br />
-            <AuthorsList authors={ authorsParser(AUTHORS) } />
-          </div>
-        </section>
-      </article>
+        <article className="featureDevelopment">
+          <section>
+            <h2><FormattedMessage id="issues-title" /></h2>
+            <div>
+              <FormattedMessage
+                id="issues-bug-found"
+                values={ { linkGitHubIssues: ( <ExternalLink href={ PACKAGE.bugs.url }><FormattedMessage id="issues-bug-found-new"/></ExternalLink> ) } } />
+              <br />
+            </div>
+            <div>
+              <Button
+                id="newGHIssue"
+                bsStyle="info"
+                href={ PACKAGE.bugs.url + '/new' }>
+                <FormattedMessage id="issues-create-new" />
+              </Button>
+            </div>
+          </section>
+          <section>
+            <h2><FormattedMessage id="source-title" /></h2>
+            <div>
+              <FormattedMessage
+                id="source-links"
+                values={ { linkGithub: ( <ExternalLink href={ 'repoUrl' }><FormattedMessage id="source-links-github"/></ExternalLink>), linkDownload: (<DownloadLink href={ repoUrl + '/tarball/master' }><FormattedMessage id="source-links-tarball" /></DownloadLink> ) } } />
+            </div>
+          </section>
+          <section>
+            <h2><FormattedMessage id="license-title" /></h2>
+            <div>
+              <FormattedMessage
+                id="license-links"
+                values={ { linkFoss: ( <ExternalLink href={ messages['license-links-foss-link'] }><FormattedMessage id="license-links-foss-text" /></ExternalLink>), linkLicense: (<ExternalLink href={ 'https://spdx.org/licenses/' + PACKAGE.license + '.html' }>{ PACKAGE.license }</ExternalLink> ) } } />
+            </div>
+            <div>
+              <FormattedMessage id="license-authors" />
+              <br />
+              <AuthorsList authors={ authorsParser(AUTHORS) } />
+            </div>
+          </section>
+        </article>
       </IntlProvider>
       );
   }
