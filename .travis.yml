@@ -12,6 +12,8 @@ before_script:
 branches:
   except:
     - gh-pages
+cache:
+  - npm
 
 after_success: npm run deploy
 env:
