@@ -13,7 +13,8 @@ branches:
   except:
     - gh-pages
 cache:
-  - npm
+  directories:
+    - node_modules
 
 after_success: npm run deploy
 env:
