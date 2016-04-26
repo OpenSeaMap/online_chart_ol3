@@ -19,8 +19,8 @@ cache:
 script:
 - npm test
 
-after_success: npm run deploy
- - test $TRAVIS_BRANCH = "master" && npm run deploy
+after_success: 
+  - test $TRAVIS_BRANCH = "master" && npm run deploy
 
 env:
   global:
