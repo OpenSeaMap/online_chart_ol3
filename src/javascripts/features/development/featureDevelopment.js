@@ -66,7 +66,7 @@ class FeatureDevelopment extends React.Component {
             <div>
               <FormattedMessage
                 id="source-links"
-                values={ { linkGithub: ( <ExternalLink href={ 'repoUrl' }><FormattedMessage id="source-links-github"/></ExternalLink>), linkDownload: (<DownloadLink href={ repoUrl + '/tarball/master' }><FormattedMessage id="source-links-tarball" /></DownloadLink> ) } } />
+                values={ { linkGithub: ( <ExternalLink href={ repoUrl }><FormattedMessage id="source-links-github"/></ExternalLink>), linkDownload: (<DownloadLink href={ repoUrl + '/tarball/master' }><FormattedMessage id="source-links-tarball" /></DownloadLink> ) } } />
             </div>
           </section>
           <section>
