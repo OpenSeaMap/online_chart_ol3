@@ -12,7 +12,7 @@ import { IntlProvider } from 'react-intl';
 import FeatureDetails from './features/featureDetails'
 import FeatureDevelopment from './features/development/featureDevelopment'
 import VisibleLayers from './visibleLayers'
-import LayerConfig from './layerConfig'
+import LayerConfig from './features/layerConfig/featureLayerConfig'
 
 import { createLayers } from './config/layerlist'
 
