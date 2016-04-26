@@ -15,11 +15,12 @@ branches:
 cache:
   directories:
     - node_modules
+    - bower_components
 
 script:
 - npm test
 
-after_success: 
+after_success:
   - test $TRAVIS_BRANCH = "master" && npm run deploy
 
 env:
