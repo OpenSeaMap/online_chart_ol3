@@ -4,7 +4,8 @@
 */
 'use strict';
 
-import React from 'react'
+import React, { PropTypes } from 'react'
+import { ExternalLink } from '../../components/misc/Links'
 
 class AuthorsList extends React.Component {
   render() {
@@ -13,17 +14,15 @@ class AuthorsList extends React.Component {
       <ul className="authorsList">
         { authors.map((author, i) => (
             <li key={ i }>
-              <a href={ author.url }>
+              <ExternalLink href={ author.url }>
                 { author.name }
-              </a>
+              </ExternalLink>
             </li>
           )) }
       </ul>
     )
   }
 }
-
-import { PropTypes } from 'react'
 
 AuthorsList.propTypes = {
   authors: PropTypes.arrayOf(PropTypes.shape({

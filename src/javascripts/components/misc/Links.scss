@@ -1,0 +1,13 @@
+a[role="link"] {
+
+  &.external:after {
+    content: '⬆'
+  }
+
+  &.download:after {
+    content: ' \e025';
+    font-family: 'Glyphicons Halflings';
+    -webkit-font-smoothing: antialiased;
+  }
+
+}

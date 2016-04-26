@@ -81,8 +81,9 @@
     "lint": {
       "options": {
         "rules": {
+          "react/jsx-no-literals": 2,
+
           "no-console": 1,
-          "react/no-set-state": 0,
           "react/jsx-no-bind": [1, {
             "ignoreRefs": true,
             "allowArrowFunctions": true,
@@ -96,11 +97,12 @@
             "nonEmpty": "after-props"
           }],
           "react/jsx-indent-props": [1, 2],
+
+          "react/no-set-state": 0,
           "react/jsx-curly-spacing": 0,
           "react/jsx-handler-names": 0,
           "react/jsx-indent": 0,
-          "react/jsx-sort-props": 0,
-          "react/jsx-no-literals": 0
+          "react/jsx-sort-props": 0
         }
       }
     },
