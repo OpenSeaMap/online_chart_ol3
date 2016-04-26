@@ -7,7 +7,7 @@
     "node": "4.4.3",
     "npm": "2.15.1"
   },
-  "homepage": "http://dev-map.brasshack.de/",
+  "homepage": "http://aaxee.github.io/online_chart_ol3",
   "repository": "https://github.com/aAXEe/online_chart_ol3",
   "bugs": {
     "url": "https://github.com/aAXEe/online_chart_ol3/issues"
