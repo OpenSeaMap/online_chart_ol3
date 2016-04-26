@@ -5,10 +5,10 @@ before_script:
 - export DISPLAY=:99.0
 - sh -e /etc/init.d/xvfb start
 - bower install
-- git config --global user.email "your@gmail.com"
-- git config --global user.name "your name"
+- git config --global user.email "travis@openseamap.org"
+- git config --global user.name "TravisCI"
 - git remote rm origin
-- git remote add origin https://aAXEe:${GH_TOKEN}@github.com/user/repo.git
+- git remote add origin https://aAXEe:${GH_TOKEN}@github.com/aAXEe/online_chart_ol3
 branches:
   except:
     - gh-pages
