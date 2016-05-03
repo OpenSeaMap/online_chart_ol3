@@ -15,7 +15,6 @@ $tab-active-bg: $brand-primary;
 
 
 @import "/node_modules/openlayers/css/ol.css";
-@import "/bower_components/bootstrap-toggle/css/bootstrap-toggle.css";
 
 .ol-scale-line-nautical.ol-unselectable {
   margin-bottom: 25px;
@@ -27,10 +26,13 @@ body {
     margin: 0;
     overflow: hidden;
 }
-html, body, #map, .sidebar-map{
+html, body, #map, .sidebar-map {
     height: 100%;
     width: 100%;
-            font: 10pt "Helvetica Neue", Arial, Helvetica, sans-serif;
+    font-family: "Helvetica Neue", Arial, Helvetica, sans-serif;
+    font-size: 12pt;
+    line-height: 12pt;
+    font-weight: normal;
 }
 
 .sidebar-header{
@@ -58,4 +60,8 @@ html, body, #map, .sidebar-map{
   -webkit-box-sizing: border-box;
      -moz-box-sizing: border-box;
           box-sizing: border-box;
+}
+
+label {
+  font-weight: normal;
 }

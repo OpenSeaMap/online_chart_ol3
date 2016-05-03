@@ -1,0 +1,12 @@
+.toggle {
+  .react-toggle {
+    &.react-toggle--checked .react-toggle-track {
+        background-color: #006400;
+    }
+  }
+
+  .toggle-label {
+    position: absolute;
+    margin: 2px 7px;
+  }
+}

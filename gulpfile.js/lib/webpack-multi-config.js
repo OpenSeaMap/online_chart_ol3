@@ -55,6 +55,9 @@ module.exports = function(env) {
         },{
           test: /\.scss$/,
           loaders: ['style', 'css', 'sass']
+        },{
+          test: /\.css$/,
+          loaders: ['style', 'css']
         }
       ]
     }
