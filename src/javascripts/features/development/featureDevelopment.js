@@ -43,13 +43,13 @@ class FeatureDevelopment extends React.Component {
 
     return (
       <IntlProvider messages={ messages }>
-        <article className="featureDevelopment">
+        <div className="featureDevelopment">
           <section>
             <h2><FormattedMessage id="issues-title" /></h2>
             <div>
               <FormattedMessage
                 id="issues-bug-found"
-                values={ { linkGitHubIssues: ( <ExternalLink href={ PACKAGE.bugs.url }><FormattedMessage id="issues-bug-found-new"/></ExternalLink> ) } } />
+                values={ { linkGitHubIssues: ( <ExternalLink href={ PACKAGE.bugs.url }> <FormattedMessage id="issues-bug-found-new" /> </ExternalLink> ) } } />
               <br />
             </div>
             <div>
@@ -66,7 +66,7 @@ class FeatureDevelopment extends React.Component {
             <div>
               <FormattedMessage
                 id="source-links"
-                values={ { linkGithub: ( <ExternalLink href={ repoUrl }><FormattedMessage id="source-links-github"/></ExternalLink>), linkDownload: (<DownloadLink href={ repoUrl + '/tarball/master' }><FormattedMessage id="source-links-tarball" /></DownloadLink> ) } } />
+                values={ { linkGithub: ( <ExternalLink href={ repoUrl }> <FormattedMessage id="source-links-github" /> </ExternalLink>), linkDownload: (<DownloadLink href={ repoUrl + '/tarball/master' }> <FormattedMessage id="source-links-tarball" /> </DownloadLink> ) } } />
             </div>
           </section>
           <section>
@@ -74,15 +74,59 @@ class FeatureDevelopment extends React.Component {
             <div>
               <FormattedMessage
                 id="license-links"
-                values={ { linkFoss: ( <ExternalLink href={ messages['license-links-foss-link'] }><FormattedMessage id="license-links-foss-text" /></ExternalLink>), linkLicense: (<ExternalLink href={ 'https://spdx.org/licenses/' + PACKAGE.license + '.html' }>{ PACKAGE.license }</ExternalLink> ) } } />
+                values={ { linkFoss: ( <ExternalLink href={ messages['license-links-foss-link'] }> <FormattedMessage id="license-links-foss-text" /> </ExternalLink>), linkLicense: (<ExternalLink href={ 'https://spdx.org/licenses/' + PACKAGE.license + '.html' }> { PACKAGE.license } </ExternalLink> ) } } />
             </div>
+          </section>
+          <section>
+            <h2><FormattedMessage id="license-authors" /></h2>
             <div>
-              <FormattedMessage id="license-authors" />
-              <br />
               <AuthorsList authors={ authorsParser(AUTHORS) } />
             </div>
           </section>
-        </article>
+          <section>
+            <div>
+              <h2>{ 'Additional Licenses' }</h2>
+              <ul>
+                <li>
+                  <ExternalLink href="https://www.google.com/design/icons/">
+                    { 'Material Design Icons by Google' }
+                  </ExternalLink>
+                  { ': ' }
+                  <ExternalLink href="https://github.com/google/material-design-icons/blob/master/LICENSE">
+                    { 'CC-BY 4.0' }
+                  </ExternalLink>
+                </li>
+                <li>
+                  <ExternalLink href="http://fontawesome.io">
+                    { 'Font Awesome by Dave Gandy' }
+                  </ExternalLink>
+                  { ': ' }
+                  <ExternalLink href="http://scripts.sil.org/OFL">
+                    { 'SIL OFL 1.1' }
+                  </ExternalLink>
+                </li>
+                <li>
+                  <ExternalLink href="http://typicons.com">
+                    { 'Typicons by Stephen Hutchings' }
+                  </ExternalLink>
+                  { ': ' }
+                  <ExternalLink href="http://creativecommons.org/licenses/by-sa/3.0/">
+                    { 'CC BY-SA' }
+                  </ExternalLink>
+                </li>
+                <li>
+                  <ExternalLink href="https://octicons.github.com">
+                    { 'Github Octicons icons by Github' }
+                  </ExternalLink>
+                  { ': ' }
+                  <ExternalLink href="https://github.com/github/octicons/blob/master/LICENSE.txt">
+                    { 'SIL OFL 1.1' }
+                  </ExternalLink>
+                </li>
+              </ul>
+            </div>
+          </section>
+        </div>
       </IntlProvider>
       );
   }

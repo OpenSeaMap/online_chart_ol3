@@ -1,5 +1,9 @@
 .toggle {
+  overflow: hidden;
+
   .react-toggle {
+    margin: 3px;
+
     &.react-toggle--checked .react-toggle-track {
         background-color: #006400;
     }
@@ -7,6 +11,13 @@
 
   .toggle-label {
     position: absolute;
-    margin: 2px 7px;
+    left: 60px;
+    right: 0px;
+    margin: 7px;
+
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    font-size: 14px;
   }
 }

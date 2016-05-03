@@ -17,3 +17,8 @@ export function positionsEqual(pos1, pos2) {
     && floatEqual(pos1.lan, pos2.lan, epsilon)
     && floatEqual(pos1.zoom, pos2.zoom, epsilon)
 }
+
+import viewSize from 'screen-size';
+export function isMobile() {
+  return (viewSize().x <= 768)
+}

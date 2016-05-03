@@ -23,6 +23,7 @@
   "dependencies": {
     "fbjs": "^0.7.2",
     "jquery": "^2.2.0",
+    "lodash": "^4.11.2",
     "npm": "^3.8.6",
     "openlayers": "^3.3.0",
     "parse-authors": "^0.2.4",
@@ -35,6 +36,7 @@
     "react-toggle": "~2.0.1",
     "redux": "^3.3.0",
     "repo-path-parse": "^1.0.1",
+    "screen-size": "^1.0.0",
     "uniloc": "^0.2.0"
   },
   "devDependencies": {
@@ -105,6 +107,7 @@
     "open": "0.0.5",
     "pretty-hrtime": "~1.0.0",
     "raw-loader": "^0.5.1",
+    "react-icons": "^2.0.1",
     "redux-devtools": "^3.1.0",
     "require-dir": "^0.3.0",
     "sass-loader": "3.1.1",

@@ -1,64 +1,35 @@
 /**
 * @license AGPL-3.0
 * @author aAXEe (https://github.com/aAXEe)
+* @author mojoaxel (https://github.com/mojoaxel
 */
 'use strict';
 
 import React, { PropTypes } from 'react'
 import ol from 'openlayers'
-import SidebarStore from './components/sidebar/SidebarStoreWrapper'
 import { positionsEqual } from './utils'
+
+import MetaControl from './controls/metaControl/MetaControl'
+import Sidebar from './controls/sidebar/Sidebar'
+import { OL3Attribution, OL3Fullscreen, OL3ScaleLine, OL3Zoom } from './controls/ol3/controls'
+
+import { Tabs } from './features/tabs'
 
 class Map extends React.Component {
 
-  constructor(props) {
+  constructor(props, {store}) {
     super(props);
-    this.updateView = this.updateView.bind(this)
+    this._store = store;
+    this.updateView = this.updateView.bind(this);
+
+    /* array of controls.
+     * this controls must be added/removed from the map.
+     *TODO: add functions to all/remove a control at a later time
+     */
+    this._controls = [];
   }
 
   componentDidMount() {
-    var attribution = new ol.control.Attribution({
-      collapsible: false
-    });
-
-    var defaultControls = ol.control.defaults({
-      attribution: false
-    });
-
-    // this is a dummy element that gets the same classes as the sidebar
-    // it is used to trigger the css for placing the other controls
-    // the real sidebar is placed in an different container to allow event propagation (this is required by react)
-    var sidebarLeftDummy = document.createElement('div');
-    sidebarLeftDummy.className = 'sidebar-left collapsed';
-
-    // update dummy sidebar container
-    let $sidebar = this._sidebar.getJSidebar();
-    $sidebar.on('opening', () => {
-      sidebarLeftDummy.className = 'sidebar-left'
-    })
-    $sidebar.on('closing', () => {
-      sidebarLeftDummy.className = 'sidebar-left collapsed'
-    })
-
-    var addedControls = new ol.Collection([
-      new ol.control.Control({ // the dummy has to be the first control, otherwise the css does not work
-        element: sidebarLeftDummy
-      }),
-      attribution,
-      new ol.control.FullScreen(),
-      new ol.control.Zoom(),
-      new ol.control.ScaleLine({
-        units: 'nautical',
-        className: 'ol-scale-line-nautical ol-scale-line'
-      }),
-      new ol.control.ScaleLine({
-        units: 'metric',
-        className: 'ol-scale-line-metric ol-scale-line'
-      })
-    ]);
-
-    var controls = addedControls.extend(defaultControls);
-
     var layers = [];
     var interactions = ol.interaction.defaults({
       altShiftDragRotate: false,
@@ -74,26 +45,29 @@ class Map extends React.Component {
         })
     });
 
-    this.map = new ol.Map({
+    this.map = this._store.map = new ol.Map({
       renderer: 'dom',
       target: this._input,
+      controls: [],
+      layers: layers,
+      interactions: interactions,
       view: new ol.View({
         center: ol.proj.fromLonLat([
           this.props.viewPosition.lon,
           this.props.viewPosition.lat
         ]),
         zoom: this.props.viewPosition.zoom
-      }),
-      controls: controls,
-      layers: layers,
-      interactions: interactions
+      })
     });
 
-    // this places the sidebar container outside of the openlayers controlled ones
+    /* add meta control to the map */
     this.map.addControl(new ol.control.Control({
-      element: this._sidebar.getDomNode(),
+      element: this._metaControl.getDomNode(),
       target: this.map.getTargetElement()
     }));
+
+    /* add all controls to the map */
+    this._controls.map((control) => this.map.addControl(control));
 
     this.map.on('moveend', function() {
       this.map.beforeRender();
@@ -105,6 +79,7 @@ class Map extends React.Component {
       this.updateView();
     }.bind(this));
   }
+
   componentWillReceiveProps(nextProps) {
     this.context.layers.forEach((layer) => {
       layer.layer.setVisible(nextProps.layerVisiblility[layer.index]);
@@ -140,6 +115,10 @@ class Map extends React.Component {
     }
   }
 
+  addControlToMap(control) {
+    this._controls.push(control);
+  }
+
   updateView() {
     var centre = ol.proj.transform(this.map.getView().getCenter(), 'EPSG:3857', 'EPSG:4326');
     let position = {
@@ -157,10 +136,34 @@ class Map extends React.Component {
       <div
         className="sidebar-map reset-box-sizing"
         ref={ (c) => this._input = c }>
-        <SidebarStore
-          ref={ (c) => this._sidebar = c }
-          tabs={ this.props.sidebar_tabs } />
-        { this.props.children }
+        <MetaControl ref={ (c) => this._metaControl = c }>
+          <Sidebar
+            id="sidebar"
+            position="sidebar left"
+            tabs={ Tabs } />
+          <OL3Attribution
+            id="ol3-attribution"
+            position="bottom right"
+            addControlToMap={ (c) => this.addControlToMap(c) } />
+          <OL3Fullscreen
+            id="ol3-fullscreen"
+            position="top right"
+            addControlToMap={ (c) => this.addControlToMap(c) } />
+          <OL3Zoom
+            id="ol3-zoom"
+            position="top left"
+            addControlToMap={ (c) => this.addControlToMap(c) } />
+          <OL3ScaleLine
+            id="ol3-scaleline-metric"
+            position="bottom left"
+            units="metric"
+            addControlToMap={ (c) => this.addControlToMap(c) } />
+          <OL3ScaleLine
+            id="ol3-scaleline-nautical"
+            position="bottom left"
+            units="nautical"
+            addControlToMap={ (c) => this.addControlToMap(c) } />
+        </MetaControl>
       </div>
     )
   }
@@ -170,24 +173,23 @@ Map.defaultProps = {
   renderer: 'dom'
 }
 
-import { LayerType } from './chartlayer'
-import { SidebarTabType } from './components/sidebar/Sidebar'
-
 Map.propTypes = {
   children: PropTypes.node,
   layerVisiblility: PropTypes.object.isRequired,
   onViewPositionChange: PropTypes.func.isRequired,
   renderer: PropTypes.string,
-  sidebar_tabs: SidebarTabType.isRequired,
   viewPosition: PropTypes.shape({
     lon: PropTypes.number,
     lat: PropTypes.number,
     zoom: PropTypes.number
   })
 }
+
+import { LayerType } from './chartlayer'
+
 Map.contextTypes = {
-  layers: PropTypes.arrayOf(
-    LayerType.isRequired
-  ).isRequired
+  layers: PropTypes.arrayOf(LayerType),
+  store: React.PropTypes.object
 }
-module.exports = Map;
+
+export default Map;
