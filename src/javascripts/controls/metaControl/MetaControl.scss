@@ -1,0 +1,158 @@
+.flbx-container {
+  position:absolute;
+  top: 0px;
+  left: 0px;
+  height: 100vh;
+  width: 100vw;
+  display: flex;
+  box-sizing: border-box;
+
+  /* allow padding zooming ect. through the mate control */
+  &, * {
+    pointer-events:none;
+  }
+
+  /* only for debugging
+  > * {
+    border: 1px dotted black;
+  }
+  */
+
+  .left {
+    justify-content: flex-start;
+    align-items: flex-start;
+  }
+  .right {
+    justify-content: flex-end;
+    align-items: flex-end;
+  }
+
+  .flbx-sidebar {
+    display: flex;
+    align-self: stretch;
+    pointer-events: auto;
+
+    &.right {
+      align-items: flex-start;
+    }
+  }
+
+  .flbx-center {
+    display: flex;
+    flex-grow: 1;
+    flex-direction: column;
+    justify-content: space-between;
+
+    .flbx-top, .flbx-bottom {
+      display: flex;
+      padding: 10px;
+
+      & > div {
+        padding: 0px;
+      }
+    }
+
+    .flbx-top {
+      align-self: space-between;
+
+      &.left {
+        flex-grow: 1;
+        & > * {
+          margin-right: 10px;
+        }
+      }
+
+      &.right {
+        flex-direction: column-reverse;
+        & > * {
+          margin-bottom: 10px;
+        }
+      }
+    } /* .flbx-top */
+
+    .flbx-bottom {
+      &.left {
+        flex-direction: column-reverse;
+        & > * {
+          margin-top: 10px;
+        }
+      }
+
+      &.right {
+        flex-grow: 1;
+        flex-direction: row-reverse;
+        justify-content: flex-start;
+        & > * {
+          margin-left: 10px;
+        }
+      }
+    } /* .flbx-bottom */
+  } /* .felx-center */
+
+  .flbx-control {
+    /* reenable pointer events for all child-elements */
+    &, * {
+      pointer-events: auto;
+    }
+
+    /* reset default positions of all OL3 controls, except uncollapsible attributions */
+    .ol-control:not(.ol-uncollapsible),
+    .ol-scale-line {
+      position: relative;
+      top: 0px;
+      left: 0px;
+      right: 0px;
+      bottom: 0px;
+      margin: 0px;
+    }
+  }
+} /* .felx-container */
+
+.flbx-sidebar {
+  pointer-events: auto;
+
+  &.right #sidebar {
+    margin: 10px 10px 10px 0px;
+  }
+
+  &.left #sidebar {
+    margin: 10px 0px 10px 10px;
+  }
+
+  @media screen and (max-width: 768px) {
+    &.right #sidebar, &.left #sidebar {
+      margin: 0px;
+      padding: 0px;
+    }
+    &.right #sidebar {
+      padding-left: 2px;
+      padding-right: 0px;
+    }
+    &.left #sidebar {
+      border-radius: 0px;
+      padding-right: 2px;
+    }
+
+  }
+
+  #sidebar {
+    align-self: stretch;
+    display: flex;
+
+    padding: 2px;
+    background-color: rgba(255,255,255,0.4);
+    border-radius: 4px;
+
+    & > div {
+      align-self: stretch;
+      margin: 1px;
+      padding: 5px;
+      border-radius: 2px;
+
+      @media screen and (max-width: 768px) {
+        margin: 0px;
+        border-radius: 0px;
+      }
+    }
+  }
+}

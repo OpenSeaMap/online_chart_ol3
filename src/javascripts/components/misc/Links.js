@@ -7,51 +7,50 @@ import './Links.scss'
 
 import React from 'react'
 
-/**
- * normal Link.
- */
-let NormalLink = (props) => (
-  <a
-    role="link"
-    href={ props.href }
-    title={ props.title || '' }
-    {...props}>
-      { props.children }
-  </a>
-)
-NormalLink.propTypes = {
-  children: React.PropTypes.node.isRequired,
+let LinkPropTypes = {
+  children: React.PropTypes.oneOfType([
+    React.PropTypes.arrayOf(React.PropTypes.node),
+    React.PropTypes.node
+  ]).isRequired,
   href: React.PropTypes.string.isRequired,
   title: React.PropTypes.string
 };
 
 /**
+ * normal Link.
+ */
+export const NormalLink = (props) => (
+  <a
+    role="link"
+    href={ props.href }
+    title={ props.title || '' }
+    {...props}>
+    { props.children }
+  </a>
+)
+NormalLink.propTypes = LinkPropTypes;
+
+/**
  * Link to external page.
  */
-let ExternalLink = (props) => (
+export const ExternalLink = (props) => (
   <NormalLink
     className="external"
     target="_blank"
     {...props}>
-      { props.children }
+    { props.children }
   </NormalLink>
 );
-ExternalLink.propTypes = NormalLink.propTypes;
+ExternalLink.propTypes = LinkPropTypes;
 
 /**
  * Link to file to download
  */
-let DownloadLink = (props) => (
+export const DownloadLink = (props) => (
   <ExternalLink
     className="download"
     {...props}>
-      { props.children }
+    { props.children }
   </ExternalLink>
 );
-DownloadLink.propTypes = NormalLink.propTypes;
-
-module.exports = {
-  NormalLink: NormalLink,
-  ExternalLink: ExternalLink,
-  DownloadLink: DownloadLink
-}
+DownloadLink.propTypes = LinkPropTypes;

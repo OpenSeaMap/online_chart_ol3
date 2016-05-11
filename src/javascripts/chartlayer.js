@@ -34,6 +34,6 @@ export const LayerType = PropTypes.shape({
 
   layer: PropTypes.object.isRequired, //ol.layer subclass
   interactions: PropTypes.arrayOf(
-    PropTypes.object.isRequired // ol.interaction subclass
+    PropTypes.object // ol.interaction subclass
   )
 })

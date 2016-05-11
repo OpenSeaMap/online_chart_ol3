@@ -9,8 +9,10 @@ import React, { PropTypes } from 'react'
 import TagInfo from './tagInfo'
 import { FormattedMessage } from 'react-intl';
 
+import './tagList.scss'
+
 const TagList = ({tags}) => (
-  <div>
+  <div className="tagList">
     <h2><FormattedMessage id="tags" /></h2>
     { tags.map(tag => (
         <TagInfo

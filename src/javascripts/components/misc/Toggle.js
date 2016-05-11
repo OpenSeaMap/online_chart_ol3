@@ -3,13 +3,13 @@
 * @author mojoaxel (https://github.com/mojoaxel)
 */
 'use strict';
-import React, { PropTypes } from 'react'
+import React from 'react'
 
 import Toggle from 'react-toggle'
 import 'react-toggle/style.css'
 import './Toggle.scss'
 
-class MyToggle extends React.Component {
+class OsmToggle extends React.Component {
   constructor(props) {
     super(props);
   }
@@ -20,22 +20,22 @@ class MyToggle extends React.Component {
         <Toggle
           id={ this.props.key }
           defaultChecked={ this.props.checked }
-          onChange={ (event) => {
-            this.props.onChange(event.target.checked)
-          }} />
-        <label className="toggle-label"
-          htmlFor={ this.props.key } >
+          onChange={ (event) => this.props.onChange(event.target.checked) } />
+        <label
+          className="toggle-label"
+          htmlFor={ this.props.key }>
           { this.props.label }
         </label>
       </div>
-    );
+      );
   }
 }
 
-MyToggle.propTypes = {
-  checked: PropTypes.bool.isRequired,
-  onChange: PropTypes.func.isRequired,
-  label: PropTypes.node.isRequired
+OsmToggle.propTypes = {
+  checked: React.PropTypes.bool.isRequired,
+  key: React.PropTypes.string.isRequired,
+  label: React.PropTypes.node.isRequired,
+  onChange: React.PropTypes.func.isRequired
 }
 
-module.exports = MyToggle
+export default OsmToggle

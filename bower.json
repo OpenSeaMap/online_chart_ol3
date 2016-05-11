@@ -4,7 +4,6 @@
   "license" : "AGPL-3.0",
   "dependencies": {
     "bootstrap-sass": "~3.3.5",
-    "sidebar-v2": "~0.3.0",
     "javascript-load-image": "https://github.com/blueimp/JavaScript-Load-Image.git#dfadfa3b9a471b941040c33675a527f24a6db827"
   },
   "overrides": {

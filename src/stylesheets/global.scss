@@ -1,7 +1,7 @@
 // Include this if using an Icon Font
 @import "generated/icons";
 
-@import "base/colors";
+@import "colors";
 
 
 $icon-font-path: '../fonts/';
@@ -9,18 +9,15 @@ $grid-gutter-width: 20px;
 @import "bower_components/bootstrap-sass/assets/stylesheets/_bootstrap.scss";
 @import "bootstrap-callout";
 
-
-$tab-active-bg: $brand-primary;
-@import "bower_components/sidebar-v2/scss/ol3-sidebar.scss";
-
-
 @import "/node_modules/openlayers/css/ol.css";
 
 .ol-scale-line-nautical.ol-unselectable {
   margin-bottom: 25px;
 }
 
-
+html {
+  background: #DDD;
+}
 body {
     padding: 0;
     margin: 0;

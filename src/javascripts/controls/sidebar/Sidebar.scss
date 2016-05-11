@@ -1,0 +1,191 @@
+@import '../../../stylesheets/colors';
+@import '../../../stylesheets/mixins';
+
+$sidebar-width: 40px;
+$border-radius: 3px;
+
+@mixin animate($attr) {
+  @media screen and (min-width: 768px) {
+    @include transition($attr 0.4s cubic-bezier(0,0,0.9,0.4));
+  }
+}
+
+.osm-sidebar {
+  position: relative;
+  overflow: hidden;
+  box-sizing: border-box;
+  border-radius: $border-radius;
+
+  color: $control-color;
+  &, &:hover {
+    background-color: $control-background;
+  }
+
+  @include animate(width);
+
+  &.open {
+    width: 20vw;
+    @media screen and (max-width: 768px) {
+      width: 100vw;
+    }
+  }
+
+  &.closed {
+    width: $sidebar-width;
+  }
+
+  &.left {
+    aside {
+      left: 0px;
+    }
+    main {
+      left: $sidebar-width;
+      right: 0px;
+    }
+  }
+
+  &.right {
+    aside {
+      right: 0px;
+    }
+    main {
+      left: 0px;
+      right: $sidebar-width;
+    }
+  }
+
+  aside {
+    position: absolute;
+    top: 0px;
+    bottom: 0px;
+    width: $sidebar-width;
+
+    button {
+      width: $sidebar-width;
+      height: $sidebar-width;
+      cursor: pointer;
+      &:focus {
+        outline: none;
+      }
+
+      box-sizing: border-box;
+      margin: 0;
+      padding: 3px;
+      border-radius: 0px;
+
+      background: transparent;
+
+      &:hover, &.active {
+        background: $control-background-hover;
+      }
+    }
+    
+    #openCloseBtn {
+      position: absolute;
+      top: 0px;
+      left: 0px;
+      padding: 0px;
+      border-top-left-radius: $border-radius;
+
+      background: $control-sidebar-header-background;
+      &:hover {
+        background: $control-background-hover;
+      }
+
+      svg {
+        width: 1.7em;
+        height: 1.7em;
+
+        @include animate(transform);
+
+        &.open {
+          @include rotate(180);
+        }
+      }
+    }
+
+    ul {
+      position: absolute;
+      list-style: none;
+      margin: 0px;
+      padding: 0px;
+
+      &.align-top {
+        top: $sidebar-width;
+      }
+
+      &.align-bottom {
+        bottom: 0px;
+
+        :last-child {
+          border-bottom-left-radius: $border-radius;
+        }
+      }
+
+      li {
+        margin: 0px;
+        padding: 0px;
+      }
+    }
+  }
+
+  main {
+    position: absolute;
+    top: 0px;
+    bottom: 0px;
+    border-right-radius: $border-radius;
+
+    background: white;
+    color: black;
+
+    article.sidebar-panel {
+      position: absolute;
+      top: 0px;
+      left: 0px;
+      bottom: 0px;
+      right: 0px;
+      border-right-radius: $border-radius;
+
+      display: none;
+      &.active {
+        display: block;
+      }
+
+      header {
+        display: block;
+        height: $sidebar-width;
+        box-sizing: border-box;
+        border-top-right-radius: $border-radius;
+
+        color: $control-color;
+        background: $control-sidebar-header-background;
+
+        margin: 0px;
+        padding: 0px;
+
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+
+        h1 {
+          font-size: 24px;
+          margin: 0px;
+          padding: 8px;
+        }
+      }
+
+      div.content {
+        position: absolute;
+        top: $sidebar-width;
+        left: 0px;
+        right: 0px;
+        bottom: 0px;
+
+        box-sizing: border-box;
+
+        overflow-x: hidden;
+        overflow-y: auto;
+      }
+    }
+  }
+}

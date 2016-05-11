@@ -1,6 +1,7 @@
 /**
 * @license AGPL-3.0
 * @author aAXEe (https://github.com/aAXEe)
+* @author mojoaxel (https://github.com/mojoaxel)
 */
 'use strict';
 
@@ -9,21 +10,12 @@ import React, { PropTypes } from 'react'
 
 import { IntlProvider } from 'react-intl';
 
-import FeatureDetails from './features/featureDetails'
-import FeatureDevelopment from './features/development/featureDevelopment'
 import VisibleLayers from './visibleLayers'
-import LayerConfig from './features/layerConfig/featureLayerConfig'
-
 import { createLayers } from './config/layerlist'
-
-
 import configureStore from './store/reducers'
-
 import { initLayerVisible } from './store/actions'
-
 import { defaultViewPosition } from './config/layerlist'
 import { getStateFromUrlHash } from './store/urlHashHandling'
-
 
 let store = configureStore(getStateFromUrlHash({
   viewPosition: defaultViewPosition
@@ -57,28 +49,7 @@ window.addEventListener('hashchange', onHashChange, false);
 
 import { Provider } from 'react-redux'
 
-const tabs = [
-  {
-    name: 'main',
-    tabSymbol: 'menu-hamburger',
-    content: <h1>{ "Hello World" }</h1>
-  },
-  {
-    name: 'settings',
-    tabSymbol: 'cog',
-    content: <LayerConfig/>
-  },
-  {
-    name: 'details',
-    tabSymbol: 'eye-open',
-    content: <FeatureDetails />
-  },
-  {
-    name: 'development',
-    tabSymbol: 'info-sign',
-    content: <FeatureDevelopment />
-  }
-]
+
 
 // todo: wrap Sidebar by redux store and set visible tab based on state
 
@@ -113,7 +84,8 @@ class MapLayerProvider extends React.Component {
   }
 }
 MapLayerProvider.childContextTypes = {
-  layers: PropTypes.arrayOf(LayerType.isRequired).isRequired
+  layers: PropTypes.arrayOf(LayerType.isRequired).isRequired,
+  store: React.PropTypes.object
 }
 MapLayerProvider.propTypes = {
   children: PropTypes.node,
@@ -126,7 +98,7 @@ ReactDOM.render((
     messages={ messages }>
     <Provider store={ store }>
       <MapLayerProvider layers={ layers }>
-        <VisibleLayers sidebar_tabs={ tabs } />
+        <VisibleLayers />
       </MapLayerProvider>
     </Provider>
   </IntlProvider>),
