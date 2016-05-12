@@ -29,15 +29,13 @@ const mapDispatchToProps = (dispatch) => {
 
 const ConfigList = ({layerVisiblility, onChangeLayerVisible} , context) => (
   <ul className="layerList">
-    { context.layers.map(layer => (
-                            <li key={ 'layer_' + layer.index }>
-                              <OsmToggle
-                                checked={ !!(layerVisiblility[layer.index]) }
-                                //key={ 'layer_' + layer.index }
-                                label={ <FormattedMessage id={ layer.nameKey } /> }
-                                onChange={ (visible) => onChangeLayerVisible(layer.index, visible) } />
-                            </li>
-                          )) }
+    { context.layers.map(layer => (<li key={ 'layer_' + layer.index }>
+                                     <OsmToggle
+                                       checked={ !!(layerVisiblility[layer.index]) }
+                                       label={ <FormattedMessage id={ layer.nameKey } /> }
+                                       onChange={ (visible) => onChangeLayerVisible(layer.index, visible) } />
+                                   </li>)
+      ) }
   </ul>
 )
 ConfigList.contextTypes = {

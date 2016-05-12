@@ -18,4 +18,18 @@ a[role="link"] {
     content: '\e025';
   }
 
+  &.button {
+    display: inline-block;
+    text-decoration: none;
+
+    padding: 10px; // TODO use global colors/styles
+    border: 1px solid gray; // TODO use global colors/styles
+    background: lightgray; // TODO use global colors/styles
+    border-radius: 5px; // TODO use global colors/styles
+
+    &:hover {
+      box-shadow: 1px 1px 6px gray; // TODO use global colors/styles
+    }
+  }
+
 }
