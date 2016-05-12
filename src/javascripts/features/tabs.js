@@ -20,7 +20,7 @@ export const Tabs = [{
   icon: <MdLayers />,
   content: <LayerConfig/>
 }, {
-  name: 'details',
+  name: 'tagDetails',
   align: 'top',
   icon: <FaTags />,
   content: <FeatureDetails />

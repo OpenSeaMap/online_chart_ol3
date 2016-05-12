@@ -11,6 +11,7 @@ var SimpleImageStyle = require('ol-style-simpleImageStyle');
 var OverpassApi = require('ol-source-overpassApi');
 
 import { featureClicked } from '../../store/actions'
+import { setSidebarOpen, setSidebarActiveTab } from '../../controls/sidebar/store'
 
 module.exports = function(context, options) {
 
@@ -71,6 +72,8 @@ module.exports = function(context, options) {
     var feature = e.selected[0];
     if (feature) {
       context.dispatch(featureClicked(feature));
+      context.dispatch(setSidebarActiveTab('tagDetails'));
+      context.dispatch(setSidebarOpen(true));
     }
   });
   /*
