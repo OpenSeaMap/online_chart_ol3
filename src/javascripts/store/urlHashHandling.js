@@ -28,20 +28,53 @@ function compressVisibleLayers(visibleLayers) {
   return arr.join(''); // convert to string
 }
 
-function decompressVisibleLayers(stringData) {
-  let layers = {};
-  let arr = stringData.split(''); // convert to array
-  for (let i = 0; i < arr.length; i++) {
-    switch (arr[i]) {
-      case '1':
-        layers[i] = true;
-        break;
-      case '0':
-        layers[i] = false;
-        break;
+function decompressVisibleLayers(layersString) {
+  /* e.g. layers=BFFFFTFFFTF0TFFFFTTTFT */
+  let layerFormat2013 = /^[BFT0]{5,}$/;
+  function decodeFormat2013(layersString) {
+    let layers = {};
+    let arr = layersString.split(''); // convert to array
+    for (let i = 1; i <= arr.length; i++) {
+      switch (arr[i]) {
+        case 'B':
+        case 'T':
+          layers[i] = true;
+          break;
+        case '0':
+        case 'F':
+          layers[i] = false;
+          break;
+      }
     }
+    return layers;
   }
-  return layers;
+
+  /* e.g. layers=01010 */
+  function decodeFormat2016(layersString) {
+    let layers = {};
+    let arr = layersString.split(''); // convert to array
+    for (let i = 0; i < arr.length; i++) {
+      switch (arr[i]) {
+        case '1':
+          layers[i] = true;
+          break;
+        case '0':
+          layers[i] = false;
+          break;
+      }
+    }
+    return layers;
+  }
+
+  if (/^[BFT0]{5,}$/.test(layersString)) {
+    console.warn('This layers format is depricated. Please update your url parameter to the new standart.')
+    return decode2013Format(layersString);
+  } else if (/^[01-]*$/.test(layersString)) {
+    return decode2016Format(layersString)
+  } else {
+    console.error('invalid layers format: ', layersString);
+    return {}
+  }
 }
 
 export const writeToUrlHash = store => next => action => {
