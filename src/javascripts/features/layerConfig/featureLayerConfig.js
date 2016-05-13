@@ -8,14 +8,14 @@ import { connect } from 'react-redux'
 import { FormattedMessage } from 'react-intl';
 
 import { setLayerVisible } from '../../store/actions'
-import { LayerType } from '../../chartlayer'
+import { LayerType } from '../../config/chartlayer'
 import OsmToggle from '../../components/misc/Toggle'
 
 import './featureLayerConfig.scss'
 
 const mapStateToProps = (state) => {
   return {
-    layerVisiblility: state.layerVisible
+    layerVisible: state.layerVisible
   }
 }
 
@@ -27,15 +27,16 @@ const mapDispatchToProps = (dispatch) => {
   }
 }
 
-const ConfigList = ({layerVisiblility, onChangeLayerVisible} , context) => (
+const ConfigList = ({layerVisible, onChangeLayerVisible} , context) => (
   <ul className="layerList">
-    { context.layers.map(layer => (<li key={ 'layer_' + layer.index }>
-                                     <OsmToggle
-                                       checked={ !!(layerVisiblility[layer.index]) }
-                                       label={ <FormattedMessage id={ layer.nameKey } /> }
-                                       onChange={ (visible) => onChangeLayerVisible(layer.index, visible) } />
-                                   </li>)
-      ) }
+    { context.layers.map(layer => (
+      <li key={ 'layer_' + layer.id }>
+        <OsmToggle
+          checked={ !!(layerVisible[layer.id]) }
+          label={ <FormattedMessage id={ layer.nameKey } /> }
+          onChange={ (visible) => onChangeLayerVisible(layer.id, visible) } />
+      </li>
+    )) }
   </ul>
 )
 ConfigList.contextTypes = {

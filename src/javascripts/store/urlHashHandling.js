@@ -3,6 +3,7 @@
 * @author aAXEe (https://github.com/aAXEe)
 */
 import uniloc from 'uniloc'
+import _ from 'lodash'
 
 const router = uniloc({
   default: 'GET /'
@@ -18,40 +19,50 @@ function compressPosition(position, numDecimals = 4) {
   }
 }
 
+import { availibleLayers } from '../config/layerlist'
 function compressVisibleLayers(visibleLayers) {
+  let arr = new Array(availibleLayers.length);
+  arr.fill('-');
   let ids = Object.keys(visibleLayers);
-  let arr = new Array(Math.max.apply(null, ids))
-  arr.fill('-')
   ids.forEach(id => {
-    arr[id] = visibleLayers[id] ? '1' : '0'
+    let layer = _.find(availibleLayers, { 'id': id })
+    arr[layer.urlIndex2016] = visibleLayers[id] ? '1' : '0'
   })
   return arr.join(''); // convert to string
 }
 
-function decompressVisibleLayers(stringData) {
+function decompressVisibleLayers(layersString) {
   let layers = {};
-  let arr = stringData.split(''); // convert to array
-  for (let i = 0; i < arr.length; i++) {
-    switch (arr[i]) {
-      case '1':
-        layers[i] = true;
-        break;
-      case '0':
-        layers[i] = false;
-        break;
+  let arr = layersString.split(''); // convert to array
+
+  if (/^[BFT0]{5,}$/.test(layersString)) {
+    /* e.g. layers=BFFFFTFFFTF0TFFFFTTTFT */
+    console.warn('This layers format is depricated. Please update your url parameter to the new standart.')
+    for (let i = 0; i <= arr.length; i++) {
+      let layer = _.find(availibleLayers, { 'urlIndex2013': i });
+      if (layer) layers[layer.id] = _.indexOf(['B','T'], arr[i]) >= 0;
     }
+    return layers
+  } else if (/^[01-]*$/.test(layersString)) {
+    /* e.g. layers=010-10 */
+    for (let i = 0; i <= arr.length; i++) {
+      let layer = _.find(availibleLayers, { 'urlIndex2016': i });
+      if (layer) layers[layer.id] = (arr[i] === '1');
+    }
+  } else {
+    console.error('invalid layers format: ', layersString);
   }
-  return layers;
+
+  return layers
 }
 
 export const writeToUrlHash = store => next => action => {
   let result = next(action);
   let state = store.getState();
+  console.log('state: ', state);
   let options = Object.assign({},
     compressPosition(state.viewPosition),
-    {
-      layers: compressVisibleLayers(state.layerVisible)
-    }
+    { layers: compressVisibleLayers(state.layerVisible) }
   )
 
   hashUrl = '#' + router.generate('default', options);

@@ -7,10 +7,10 @@
 export const SET_LAYER_VISIBLE = 'SET_LAYER_VISIBLE';
 
 export const INIT_LAYER_VISIBLE = 'INIT_LAYER_VISIBLE';
-export function setLayerVisible(index, visible) {
+export function setLayerVisible(id, visible) {
   return {
     type: SET_LAYER_VISIBLE,
-    index: index,
+    id: id,
     visible: visible
   }
 }

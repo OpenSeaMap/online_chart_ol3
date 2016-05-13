@@ -36,7 +36,7 @@ class Map extends React.Component {
       pinchRotate: false
     });
     this.context.layers.forEach((layer) => {
-      layer.layer.setVisible(this.props.layerVisiblility[layer.index]);
+      layer.layer.setVisible(!!(this.props.layerVisible[layer.id]));
       layers.push(layer.layer);
 
       if (layer.interactions && layer.interactions.length > 0)
@@ -45,7 +45,7 @@ class Map extends React.Component {
         })
     });
 
-    this.map = this._store.map = new ol.Map({
+    this.ol3Map = new ol.Map({
       renderer: 'dom',
       target: this._input,
       controls: [],
@@ -61,38 +61,38 @@ class Map extends React.Component {
     });
 
     /* add meta control to the map */
-    this.map.addControl(new ol.control.Control({
+    this.ol3Map.addControl(new ol.control.Control({
       element: this._metaControl.getDomNode(),
-      target: this.map.getTargetElement()
+      target: this.ol3Map.getTargetElement()
     }));
 
     /* add all controls to the map */
-    this._controls.map((control) => this.map.addControl(control));
+    this._controls.map((control) => this.ol3Map.addControl(control));
 
-    this.map.on('moveend', function() {
-      this.map.beforeRender();
+    this.ol3Map.on('moveend', function() {
+      this.ol3Map.beforeRender();
       this.updateView();
     }.bind(this));
 
-    this.map.getView().on('change:resolution', function() {
-      this.map.beforeRender();
+    this.ol3Map.getView().on('change:resolution', function() {
+      this.ol3Map.beforeRender();
       this.updateView();
     }.bind(this));
   }
 
   componentWillReceiveProps(nextProps) {
     this.context.layers.forEach((layer) => {
-      layer.layer.setVisible(nextProps.layerVisiblility[layer.index]);
+      layer.layer.setVisible(!!(nextProps.layerVisible[layer.id]));
     });
 
-    var centre = ol.proj.transform(this.map.getView().getCenter(), 'EPSG:3857', 'EPSG:4326');
+    var centre = ol.proj.transform(this.ol3Map.getView().getCenter(), 'EPSG:3857', 'EPSG:4326');
     let position = {
       lon: centre[0],
       lat: centre[1],
-      zoom: this.map.getView().getZoom()
+      zoom: this.ol3Map.getView().getZoom()
     }
     if (!positionsEqual(nextProps.viewPosition, position)) {
-      let view = this.map.getView();
+      let view = this.ol3Map.getView();
       let start = +new Date();
       let pan = ol.animation.pan({
         duration: 1000,
@@ -105,7 +105,7 @@ class Map extends React.Component {
         resolution: 2 * view.getResolution(),
         start: start
       });
-      this.map.beforeRender(pan, bounce);
+      this.ol3Map.beforeRender(pan, bounce);
 
       view.setCenter(ol.proj.fromLonLat([
         nextProps.viewPosition.lon,
@@ -120,11 +120,11 @@ class Map extends React.Component {
   }
 
   updateView() {
-    var centre = ol.proj.transform(this.map.getView().getCenter(), 'EPSG:3857', 'EPSG:4326');
+    var centre = ol.proj.transform(this.ol3Map.getView().getCenter(), 'EPSG:3857', 'EPSG:4326');
     let position = {
       lon: centre[0],
       lat: centre[1],
-      zoom: this.map.getView().getZoom()
+      zoom: this.ol3Map.getView().getZoom()
     }
     if (positionsEqual(position, this.props.viewPosition))
       return;
@@ -175,7 +175,7 @@ Map.defaultProps = {
 
 Map.propTypes = {
   children: PropTypes.node,
-  layerVisiblility: PropTypes.object.isRequired,
+  layerVisible: PropTypes.object.isRequired,
   onViewPositionChange: PropTypes.func.isRequired,
   renderer: PropTypes.string,
   viewPosition: PropTypes.shape({
@@ -185,7 +185,7 @@ Map.propTypes = {
   })
 }
 
-import { LayerType } from './chartlayer'
+import { LayerType } from './config/chartlayer'
 
 Map.contextTypes = {
   layers: PropTypes.arrayOf(LayerType),
