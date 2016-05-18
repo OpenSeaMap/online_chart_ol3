@@ -6,7 +6,6 @@
 import './featureDevelopment.scss'
 
 import React from 'react'
-import { Button } from 'react-bootstrap'
 import { IntlProvider, FormattedMessage } from 'react-intl';
 
 import AuthorsList from './AuthorsList'
@@ -23,6 +22,8 @@ const messages = {
   'issues-create-new': 'Create a new Issue',
   'issues-bug-found': 'If you found a bug or if you have an idea for a new feature please file a new { linkGitHubIssues }.',
   'issues-bug-found-new': 'github issue',
+  'issues-bug-found-new-title': 'Bug/Feature',
+  'issues-bug-found-new-body': 'Please describe how to reproduce any bugs!',
 
   'source-title': 'Source Code',
   'source-links': 'The sourcecode is availible on { linkGithub } and as a { linkDownload }.',
@@ -41,6 +42,11 @@ class FeatureDevelopment extends React.Component {
     const repoInfo = repoPathParse(PACKAGE.repository);
     const repoUrl = `https://github.com/${repoInfo.owner}/${repoInfo.repo}`;
 
+    const newIssueUrl = PACKAGE.bugs.url + '/new' +
+      '?title=' + encodeURIComponent(messages['issues-bug-found-new-title']) +
+      '&body=' + encodeURIComponent(messages['issues-bug-found-new-body']) +
+      '&labels=bug';
+
     return (
       <IntlProvider messages={ messages }>
         <div className="featureDevelopment">
@@ -53,12 +59,11 @@ class FeatureDevelopment extends React.Component {
               <br />
             </div>
             <div>
-              <Button
-                id="newGHIssue"
-                bsStyle="info"
-                href={ PACKAGE.bugs.url + '/new' }>
+              <ExternalLink
+                href={ newIssueUrl }
+                className="button">
                 <FormattedMessage id="issues-create-new" />
-              </Button>
+              </ExternalLink>
             </div>
           </section>
           <section>

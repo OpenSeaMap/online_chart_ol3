@@ -15,8 +15,11 @@ export default function(context, options) {
   self.layer = options.layer;
   warning(self.layer, 'The layer has no layer object.');
 
-  self.index = options.index;
-  warning(self.index !== undefined, 'The layer has no index set.');
+  self.id = options.id;
+  warning(self.id !== undefined, 'The layer has no ID set.');
+
+  self.urlIndex2013 = options.urlIndex2013 || -1;
+  self.urlIndex2016 = options.urlIndex2016 || -1;
 
   if (options.interactions) {
     self.interactions = options.interactions;

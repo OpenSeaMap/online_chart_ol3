@@ -5,7 +5,7 @@
 'use strict';
 
 import ol from 'openlayers'
-import ChartLayer from 'chartlayer'
+import ChartLayer from '../chartlayer'
 
 var SimpleImageStyle = require('ol-style-simpleImageStyle');
 var OverpassApi = require('ol-source-overpassApi');

@@ -1,7 +1,10 @@
 /**
 * @license AGPL-3.0
 * @author aAXEe (https://github.com/aAXEe)
+* @author mojoaxel (https://github.com/mojoaxel)
 */
+import _ from 'lodash'
+
 import Seamarks from './layers/seamarks'
 import OsmBase from './layers/openStreetMapBase'
 import Int1Base from './layers/int1base'
@@ -12,39 +15,77 @@ import ScubaDiving from './layers/scubaDiving'
 // layers with interaction do currently not work
 // the ui can not be updated
 
-export function createLayers(context) {
-  return [
-    new OsmBase(context, {
-      index: 0,
-      visibleDefault: true
-    }),
-    new Int1Base(context, {
-      index: 1,
-      visibleDefault: false
-    }),
+/**
+for the old (2013) layers format see:
+https://github.com/OpenSeaMap/online_chart/blob/master/index.php#L72
+var layer_mapnik;                      // 1
+var layer_marker;                      // 2
+var layer_seamark;                     // 3
+var layer_sport;                       // 4
+//var layer_gebco_deepshade;             // 5
+var layer_gebco_deeps_gwc;             // 6
+var layer_pois;                        // 7
+var layer_download;                    // 8
+var layer_nautical_route;              // 9
+var layer_grid;                        // 10
+var layer_wikipedia;                   // 11
+var layer_bing_aerial;                 // 12
+var layer_ais;                         // 13
+var layer_satpro;                      // 14
+// layer_disaster                        // 15
+var layer_tidalscale;                  // 16
+var layer_permalink;                   // 17
+var layer_waterdepth_trackpoints_100m; // 18
+var layer_elevation_profile_contours;  // 19
+var layer_elevation_profile_hillshade; // 20
+var layer_waterdepth_trackpoints_10m;  // 21
+var layer_waterdepth_contours;         // 22
+*/
 
-    new Seamarks(context, {
-      index: 2,
-      visibleDefault: true
-    }),
-    /*    new SeamarksDebug(context, {
-          index: 3,
-          visibleDefault: true
-        }),*/
+export const availibleLayers = [
+  {
+    layerConstructor: OsmBase,
+    id: 'base_osm_default',
+    urlIndex2016: 0,
+    urlIndex2013: 1,
+    visibleDefault: true
+  }, {
+    layerConstructor: Int1Base,
+    id: 'overlay_intl_base',
+    urlIndex2016: 1,
+    urlIndex2013: -1,
+    visibleDefault: false
+  }, {
+    layerConstructor: Seamarks,
+    id: 'overlay_osm_seamarks',
+    urlIndex2016: 2,
+    urlIndex2013: 3,
+    visibleDefault: false
+  }, /*{
+    layerConstructor: SeamarksDebug,
+    id: 'overlay_osm_seamarks_debug',
+    urlIndex2016: 3,
+    urlIndex2013: 3,
+    visibleDefault: false
+  },*/ {
+    layerConstructor: DeMvDepth,
+    id: 'overlay_demvdepth',
+    urlIndex2016: 4,
+    urlIndex2013: -1,
+    visibleDefault: false
+  }, {
+    layerConstructor: ScubaDiving,
+    id: 'overlay_osm_scubadiving',
+    urlIndex2016: 5,
+    urlIndex2013: 4,
+    visibleDefault: false
+  }
+]
 
-    new DeMvDepth(context, {
-      index: 4,
-      visibleDefault: false
-    }),
-    new ScubaDiving(context, {
-      index: 5,
-      visibleDefault: true
-    })
-  ]
-}
-
-export const defaultViewPosition = {
-  lon: 11.48,
-  lat: 53.615,
-  zoom: 14
+export function createLayers(store) {
+  let layers = [];
+  availibleLayers.forEach(function(layer) {
+    layers.push(new layer.layerConstructor(store, _.omit(layer, 'layerConstructor')));
+  });
+  return layers
 }

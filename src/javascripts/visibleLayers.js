@@ -7,7 +7,7 @@ import Map from './Map'
 import { setViewPosition } from './store/actions'
 const mapStateToProps = (state) => {
   return {
-    layerVisiblility: state.layerVisible,
+    layerVisible: state.layerVisible,
     viewPosition: state.viewPosition
   }
 }
