@@ -15,13 +15,11 @@ $grid-gutter-width: 20px;
   margin-bottom: 25px;
 }
 
-html {
-  background: #DDD;
-}
 body {
-    padding: 0;
-    margin: 0;
-    overflow: hidden;
+  padding: 0;
+  margin: 0;
+  overflow: hidden;
+  background: #CCE;
 }
 html, body, #map, .sidebar-map {
     height: 100%;

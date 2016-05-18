@@ -42,8 +42,7 @@ class FeatureDevelopment extends React.Component {
     const repoInfo = repoPathParse(PACKAGE.repository);
     const repoUrl = `https://github.com/${repoInfo.owner}/${repoInfo.repo}`;
 
-    const newIssueUrl =
-      PACKAGE.bugs.url + '/new' +
+    const newIssueUrl = PACKAGE.bugs.url + '/new' +
       '?title=' + encodeURIComponent(messages['issues-bug-found-new-title']) +
       '&body=' + encodeURIComponent(messages['issues-bug-found-new-body']) +
       '&labels=bug';
@@ -60,7 +59,8 @@ class FeatureDevelopment extends React.Component {
               <br />
             </div>
             <div>
-              <ExternalLink href={ newIssueUrl }
+              <ExternalLink
+                href={ newIssueUrl }
                 className="button">
                 <FormattedMessage id="issues-create-new" />
               </ExternalLink>

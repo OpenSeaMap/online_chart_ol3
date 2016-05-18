@@ -24,11 +24,13 @@ let store = configureStore(getStateFromUrlHash({
 
 let layers = createLayers(store);
 
+/*
 let defaultVisibleList = {};
 layers.forEach(layer => {
   defaultVisibleList[layer.id] = layer.visibleDefault;
 })
 store.dispatch(initLayerVisible(defaultVisibleList));
+*/
 
 import { positionsEqual } from './utils'
 import { setViewPosition } from './store/actions'

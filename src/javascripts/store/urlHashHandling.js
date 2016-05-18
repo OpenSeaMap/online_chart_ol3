@@ -25,7 +25,9 @@ function compressVisibleLayers(visibleLayers) {
   arr.fill('-');
   let ids = Object.keys(visibleLayers);
   ids.forEach(id => {
-    let layer = _.find(availibleLayers, { 'id': id })
+    let layer = _.find(availibleLayers, {
+      'id': id
+    })
     arr[layer.urlIndex2016] = visibleLayers[id] ? '1' : '0'
   })
   return arr.join(''); // convert to string
@@ -38,16 +40,22 @@ function decompressVisibleLayers(layersString) {
   if (/^[BFT0]{5,}$/.test(layersString)) {
     /* e.g. layers=BFFFFTFFFTF0TFFFFTTTFT */
     console.warn('This layers format is depricated. Please update your url parameter to the new standart.')
-    for (let i = 0; i <= arr.length; i++) {
-      let layer = _.find(availibleLayers, { 'urlIndex2013': i });
-      if (layer) layers[layer.id] = _.indexOf(['B','T'], arr[i]) >= 0;
+    for (let i = 0; i < arr.length; i++) {
+      let layer = _.find(availibleLayers, {
+        'urlIndex2013': i + 1
+      });
+      if (layer)
+        layers[layer.id] = _.indexOf(['B', 'T'], arr[i]) >= 0;
     }
     return layers
   } else if (/^[01-]*$/.test(layersString)) {
     /* e.g. layers=010-10 */
-    for (let i = 0; i <= arr.length; i++) {
-      let layer = _.find(availibleLayers, { 'urlIndex2016': i });
-      if (layer) layers[layer.id] = (arr[i] === '1');
+    for (let i = 0; i < arr.length; i++) {
+      let layer = _.find(availibleLayers, {
+        'urlIndex2016': i
+      });
+      if (layer)
+        layers[layer.id] = (arr[i] === '1');
     }
   } else {
     console.error('invalid layers format: ', layersString);
@@ -59,10 +67,11 @@ function decompressVisibleLayers(layersString) {
 export const writeToUrlHash = store => next => action => {
   let result = next(action);
   let state = store.getState();
-  console.log('state: ', state);
   let options = Object.assign({},
     compressPosition(state.viewPosition),
-    { layers: compressVisibleLayers(state.layerVisible) }
+    {
+      layers: compressVisibleLayers(state.layerVisible)
+    }
   )
 
   hashUrl = '#' + router.generate('default', options);

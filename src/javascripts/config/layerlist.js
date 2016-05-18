@@ -49,36 +49,36 @@ export const availibleLayers = [
     urlIndex2016: 0,
     urlIndex2013: 1,
     visibleDefault: true
-  },{
+  }, {
     layerConstructor: Int1Base,
     id: 'overlay_intl_base',
     urlIndex2016: 1,
     urlIndex2013: -1,
     visibleDefault: false
-  },{
+  }, {
     layerConstructor: Seamarks,
     id: 'overlay_osm_seamarks',
     urlIndex2016: 2,
     urlIndex2013: 3,
-    visibleDefault: true
-  },/*{
+    visibleDefault: false
+  }, /*{
     layerConstructor: SeamarksDebug,
     id: 'overlay_osm_seamarks_debug',
     urlIndex2016: 3,
     urlIndex2013: 3,
-    visibleDefault: true
-  },*/{
+    visibleDefault: false
+  },*/ {
     layerConstructor: DeMvDepth,
     id: 'overlay_demvdepth',
     urlIndex2016: 4,
     urlIndex2013: -1,
     visibleDefault: false
-  },{
+  }, {
     layerConstructor: ScubaDiving,
     id: 'overlay_osm_scubadiving',
     urlIndex2016: 5,
     urlIndex2013: 4,
-    visibleDefault: true
+    visibleDefault: false
   }
 ]
 

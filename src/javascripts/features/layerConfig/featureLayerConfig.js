@@ -13,6 +13,25 @@ import OsmToggle from '../../components/misc/Toggle'
 
 import './featureLayerConfig.scss'
 
+const ConfigList = ({layerVisible, onChangeLayerVisible} , context) => (
+  <ul className="layerList">
+    { context.layers.map(layer => (
+        <li key={ 'layer_' + layer.id + (layerVisible[layer.id] ? '_checked' : '_unchecked') }>
+          <OsmToggle
+            checked={ !!(layerVisible[layer.id]) }
+            layerId={ layer.id }
+            label={ <FormattedMessage id={ layer.nameKey } /> }
+            onChange={ (visible) => onChangeLayerVisible(layer.id, visible) } />
+        </li>
+      )) }
+  </ul>
+)
+ConfigList.contextTypes = {
+  layers: PropTypes.arrayOf(
+    LayerType.isRequired
+  ).isRequired
+}
+
 const mapStateToProps = (state) => {
   return {
     layerVisible: state.layerVisible
@@ -25,24 +44,6 @@ const mapDispatchToProps = (dispatch) => {
       dispatch(setLayerVisible(id, visible))
     }
   }
-}
-
-const ConfigList = ({layerVisible, onChangeLayerVisible} , context) => (
-  <ul className="layerList">
-    { context.layers.map(layer => (
-      <li key={ 'layer_' + layer.id }>
-        <OsmToggle
-          checked={ !!(layerVisible[layer.id]) }
-          label={ <FormattedMessage id={ layer.nameKey } /> }
-          onChange={ (visible) => onChangeLayerVisible(layer.id, visible) } />
-      </li>
-    )) }
-  </ul>
-)
-ConfigList.contextTypes = {
-  layers: PropTypes.arrayOf(
-    LayerType.isRequired
-  ).isRequired
 }
 
 const VisibleLayers = connect(
