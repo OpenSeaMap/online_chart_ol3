@@ -21,17 +21,19 @@ $border-radius: 3px;
     background-color: $control-background;
   }
 
-  @include animate(width);
+  width: $sidebar-width;
+  @include animate(min-width);
 
   &.open {
-    width: 20vw;
+    min-width: 350px;
     @media screen and (max-width: 768px) {
       width: 100vw;
+      min-width: 100vw;
     }
   }
 
   &.closed {
-    width: $sidebar-width;
+    min-width: $sidebar-width;
   }
 
   &.left {
@@ -79,7 +81,7 @@ $border-radius: 3px;
         background: $control-background-hover;
       }
     }
-    
+
     #openCloseBtn {
       position: absolute;
       top: 0px;
