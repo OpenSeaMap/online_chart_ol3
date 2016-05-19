@@ -10,9 +10,9 @@ import { sidebarIsOpen, sidebarSelectedTab } from '../controls/sidebar/store'
 function layerVisible(state = {}, action) {
   switch (action.type) {
     case SET_LAYER_VISIBLE:
-      let visi = {};
-      visi[action.index] = action.visible;
-      return Object.assign({}, state, visi);
+      var vis = {};
+      vis[action.id] = action.visible;
+      return Object.assign({}, state, vis);
 
     case INIT_LAYER_VISIBLE:
       return Object.assign({}, action.list);
@@ -64,7 +64,7 @@ export default function configureStore(initialState) {
 
   if (module.hot) {
     // Enable Webpack hot module replacement for reducers
-    module.hot.accept('../reducers', () => {
+    module.hot.accept('./reducers', () => {
       const nextReducer = require('../reducers');
       store.replaceReducer(nextReducer);
     });

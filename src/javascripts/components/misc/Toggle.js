@@ -5,7 +5,7 @@
 'use strict';
 import React from 'react'
 
-import Toggle from 'react-toggle'
+import ReactToggle from 'react-toggle'
 import 'react-toggle/style.css'
 import './Toggle.scss'
 
@@ -15,15 +15,16 @@ class OsmToggle extends React.Component {
   }
 
   render() {
+    var toggleId = 'toggle_' + this.props.layerId + (this.props.checked ? '_checked' : '_unchecked');
     return (
       <div className="toggle">
-        <Toggle
-          id={ this.props.key }
+        <ReactToggle
+          id={ toggleId }
           defaultChecked={ this.props.checked }
           onChange={ (event) => this.props.onChange(event.target.checked) } />
         <label
           className="toggle-label"
-          htmlFor={ this.props.key }>
+          htmlFor={ toggleId }>
           { this.props.label }
         </label>
       </div>
@@ -33,8 +34,8 @@ class OsmToggle extends React.Component {
 
 OsmToggle.propTypes = {
   checked: React.PropTypes.bool.isRequired,
-  key: React.PropTypes.string.isRequired,
   label: React.PropTypes.node.isRequired,
+  layerId: React.PropTypes.string.isRequired,
   onChange: React.PropTypes.func.isRequired
 }
 

@@ -5,7 +5,7 @@
 'use strict';
 
 import ol from 'openlayers'
-import ChartLayer from 'chartlayer'
+import ChartLayer from '../chartlayer'
 
 module.exports = function(context, options) {
   var defaults = {

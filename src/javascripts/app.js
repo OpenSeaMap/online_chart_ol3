@@ -14,8 +14,9 @@ import VisibleLayers from './visibleLayers'
 import { createLayers } from './config/layerlist'
 import configureStore from './store/reducers'
 import { initLayerVisible } from './store/actions'
-import { defaultViewPosition } from './config/layerlist'
 import { getStateFromUrlHash } from './store/urlHashHandling'
+
+import { defaultViewPosition } from './SETTINGS'
 
 let store = configureStore(getStateFromUrlHash({
   viewPosition: defaultViewPosition
@@ -25,14 +26,14 @@ let layers = createLayers(store);
 
 let defaultVisibleList = {};
 layers.forEach(layer => {
-  defaultVisibleList[layer.index] = layer.visibleDefault;
+  defaultVisibleList[layer.id] = layer.visibleDefault;
 })
 store.dispatch(initLayerVisible(defaultVisibleList));
 
 import { positionsEqual } from './utils'
 import { setViewPosition } from './store/actions'
 function onHashChange() {
-  let oldState = store.getState()
+  let oldState = store.getState();
   let newState = getStateFromUrlHash(oldState);
 
   if (!positionsEqual(newState.viewPosition, oldState.viewPosition)) {
@@ -71,7 +72,7 @@ const messages = {
   'layer-name-seamarks-debug': 'OpenSeaMap seamarks debug information'
 }
 
-import { LayerType } from './chartlayer'
+import { LayerType } from './config/chartlayer'
 
 class MapLayerProvider extends React.Component {
   getChildContext() {

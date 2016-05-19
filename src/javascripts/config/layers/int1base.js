@@ -5,7 +5,7 @@
 'use strict';
 
 import ol from 'openlayers'
-import ChartLayer from 'chartlayer'
+import ChartLayer from '../chartlayer'
 
 var projection = ol.proj.get('EPSG:3857');
 var projectionExtent = projection.getExtent();
