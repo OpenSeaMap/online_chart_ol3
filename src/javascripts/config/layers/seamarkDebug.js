@@ -9,6 +9,9 @@ import ChartLayer from '../chartlayer'
 
 var OverpassApi = require('ol-source-overpassApi');
 
+import { featureClicked } from '../../store/actions'
+import { setSidebarOpen, setSidebarActiveTab } from '../../controls/sidebar/store'
+
 module.exports = function(context, options) {
 
   var defaults = {
@@ -61,20 +64,15 @@ module.exports = function(context, options) {
     }
   });
 
-  function showSidebar(features) {
-    var feature = features[0];
-    if (feature) {
-      context.taginfo().render(feature);
-      context.sidebar().open('details');
-    } else {
-      context.sidebar().close();
-    }
-  }
-
   selector.on('select', function(e) {
-    showSidebar(e.selected);
+    var feature = e.selected[0];
+    if (feature) {
+      context.dispatch(featureClicked(feature));
+      context.dispatch(setSidebarActiveTab('tagDetails'));
+      context.dispatch(setSidebarOpen(true));
+    }
   });
-
+/*
   hoverer.on('select', function(e) {
     var selected = e.target.getFeatures().getLength();
     var map = context.map();
@@ -84,7 +82,7 @@ module.exports = function(context, options) {
     if (feature) {
       context.taginfo().render(feature);
     }
-  });
+  });*/
 
 
   var objects = {

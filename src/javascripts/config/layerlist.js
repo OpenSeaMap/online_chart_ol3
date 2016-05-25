@@ -10,10 +10,7 @@ import OsmBase from './layers/openStreetMapBase'
 import Int1Base from './layers/int1base'
 import DeMvDepth from './layers/germany_mv_depth'
 import ScubaDiving from './layers/scubaDiving'
-//import SeamarksDebug from './layers/seamarkDebug'
-
-// layers with interaction do currently not work
-// the ui can not be updated
+import SeamarksDebug from './layers/seamarkDebug'
 
 /**
 for the old (2013) layers format see:
@@ -61,13 +58,13 @@ export const availibleLayers = [
     urlIndex2016: 2,
     urlIndex2013: 3,
     visibleDefault: true
-  }, /*{
+  }, {
     layerConstructor: SeamarksDebug,
     id: 'overlay_osm_seamarks_debug',
     urlIndex2016: 3,
-    urlIndex2013: 3,
+    urlIndex2013: -1,
     visibleDefault: false
-  },*/ {
+  }, {
     layerConstructor: DeMvDepth,
     id: 'overlay_demvdepth',
     urlIndex2016: 4,
