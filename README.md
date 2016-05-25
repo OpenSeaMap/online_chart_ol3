@@ -5,6 +5,12 @@ A new online chart based on [OpenLayers 3](http://openlayers.org/), [React](http
 
 The build system is based on [Gulp Starter](https://github.com/vigetlabs/gulp-starter).
 
+# Online preview
+
+Latest development state: http://aaxee.github.io/online_chart_ol3
+
+On our main server: http://alpha.openseamap.org
+
 # Basic Usage
 Make sure Node 4.4.3 (lts) is installed!
 We recommend using [NVM](https://github.com/creationix/nvm) or [n](https://github.com/tj/n) to manage node versions.
