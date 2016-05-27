@@ -53,7 +53,7 @@ export function sidebarIsOpen(state, action) {
   }
 }
 
-export function sidebarSelectedTab(state = 'settings', action) {
+export function sidebarSelectedTab(state = 'sidebar-settings', action) {
   switch (action.type) {
     case SET_SIDEBAR_ACTIVE_TAB:
       return action.tabName;

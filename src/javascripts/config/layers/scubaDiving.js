@@ -72,7 +72,7 @@ module.exports = function(context, options) {
     var feature = e.selected[0];
     if (feature) {
       context.dispatch(featureClicked(feature));
-      context.dispatch(setSidebarActiveTab('tagDetails'));
+      context.dispatch(setSidebarActiveTab('sidebar-details'));
       context.dispatch(setSidebarOpen(true));
     }
   });

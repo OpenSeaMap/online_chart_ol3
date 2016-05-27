@@ -15,17 +15,17 @@ import FeatureDevelopment from './development/featureDevelopment'
 import { FaInfoCircle } from 'react-icons/lib/fa'
 
 export const Tabs = [{
-  name: 'settings',
+  name: 'sidebar-settings',
   align: 'top',
   icon: <MdLayers />,
   content: <LayerConfig/>
 }, {
-  name: 'tagDetails',
+  name: 'sidebar-details',
   align: 'top',
   icon: <FaTags />,
   content: <FeatureDetails />
 }, {
-  name: 'development',
+  name: 'sidebar-development',
   align: 'bottom',
   icon: <FaInfoCircle />,
   content: <FeatureDevelopment />

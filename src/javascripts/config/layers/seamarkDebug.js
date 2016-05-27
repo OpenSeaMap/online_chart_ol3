@@ -19,48 +19,45 @@ module.exports = function(context, options) {
   };
   Object.assign(defaults, options);
 
-  var styles = {
-    'seamark:type': {
-      '.*': new ol.style.Style({
-        image: new ol.style.Circle({
-          radius: 10,
-          fill: new ol.style.Fill({
-            color: 'rgba(246, 99, 79, 0.3)'
-          }),
-          stroke: new ol.style.Stroke({
-            color: 'rgba(246, 99, 79, 1.0)',
-            width: 1
-          })
-        })
-      })
-    }
-  };
-
   var styleFunction = function(feature, resolution, type) {
-    if (type === 'normal' || type === 'hovered' || type === 'clicked') {
-      for (var key in styles) {
-        var value = feature.get(key);
-        if (value !== undefined) {
-          for (var regexp in styles[key]) {
-            if (new RegExp(regexp).test(value)) {
-              return styles[key][regexp];
-            }
-          }
-        }
-      }
-    }
-    return null;
+    if(!feature.get('seamark:type'))
+      return null; // do not display such things
+
+    let name = feature.get('seamark:name') || feature.get('name');
+    let nameElement = new ol.style.Text({
+      font: type === 'hovered' ? 'bold 12px sans-serif' : '10px sans-serif',
+      offsetY: 12,
+      text: name,
+      textAlign: 'center',
+      textBaseline: 'top'
+    })
+
+    let image = new ol.style.Circle({
+      radius: 10,
+      fill: new ol.style.Fill({
+        color: 'rgba(16, 40, 68, 0.3)'
+      }),
+      stroke: new ol.style.Stroke({
+        color: 'rgba(16, 40, 68, 1)',
+        width: type === 'hovered' ? 3 : 1
+      })
+    })
+
+    return new ol.style.Style({
+      image: image,
+      text: nameElement
+    });
   };
 
   var selector = new ol.interaction.Select({
     style: function(feature, resolution) {
-      return styleFunction(feature, resolution, 'hovered');
+      return styleFunction(feature, resolution, 'clicked');
     }
   });
   var hoverer = new ol.interaction.Select({
     condition: ol.events.condition.pointerMove,
     style: function(feature, resolution) {
-      return styleFunction(feature, resolution, 'clicked');
+      return styleFunction(feature, resolution, 'hovered');
     }
   });
 
@@ -68,7 +65,7 @@ module.exports = function(context, options) {
     var feature = e.selected[0];
     if (feature) {
       context.dispatch(featureClicked(feature));
-      context.dispatch(setSidebarActiveTab('tagDetails'));
+      context.dispatch(setSidebarActiveTab('sidebar-details'));
       context.dispatch(setSidebarOpen(true));
     }
   });

@@ -59,7 +59,6 @@ const messages = {
   'test': 'key: {key} / value: {value}',
   'tags': 'Tags',
 
-  'sidebar-main': 'Online map',
   'sidebar-settings': 'Settings',
   'sidebar-details': 'Details',
   'sidebar-development': 'Development',
@@ -69,7 +68,7 @@ const messages = {
   'layer-name-int1_base': 'INT1 style basemap',
   'layer-name-openstreetmap-base': 'OpenStreetMap basemap',
   'layer-name-scuba_diving': 'POIs for scuba diving',
-  'layer-name-seamarks-debug': 'OpenSeaMap seamarks debug information'
+  'layer-name-seamarks-debug': 'Interactive Seamarks'
 }
 
 import { LayerType } from './config/chartlayer'

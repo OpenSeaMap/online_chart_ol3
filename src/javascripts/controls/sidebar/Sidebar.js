@@ -5,6 +5,7 @@
 'use strict';
 
 import React from 'react'
+import { FormattedMessage } from 'react-intl';
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 
@@ -81,7 +82,9 @@ class Sidebar extends React.Component {
                 key={ 'content_' + tab.name.trim() }
                 className={ 'sidebar-panel ' + this._getIsActiveClassName(tab.name) }>
                 <header>
-                  <h1>{ tab.name }</h1>
+                  <h1>
+                    <FormattedMessage id={tab.name} />
+                  </h1>
                 </header>
                 <div className="content">
                   { tab.content }
