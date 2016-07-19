@@ -39,7 +39,7 @@ class TagInfo extends React.Component {
         detailsLoading: true
       });
 
-      $.getJSON('https://taginfo.openstreetmap.org/api/4/' + 'tag/wiki_pages?' + 'key=' + this.props.tag.key + '&value=' + this.props.tag.value, function(data) {
+      $.getJSON('//taginfo.openstreetmap.org/api/4/' + 'tag/wiki_pages?' + 'key=' + this.props.tag.key + '&value=' + this.props.tag.value, function(data) {
         let langData = this.filterForLang(data.data, this.props.locales);
         this.setState({
           details: langData,

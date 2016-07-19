@@ -10,7 +10,7 @@ import { layerTileLoadStateChange } from '../../store/actions'
 
 module.exports = function(context, options) {
   let source = new ol.source.OSM({
-    url: 'http://mapproxy.195.37.132.70.xip.io/tiles/1.0.0/seamarks/osm_grid/{z}/{x}/{y}.png',
+    url: '//t1.openseamap.org/seamark/{z}/{x}/{y}.png',
     crossOrigin: 'Anonymous'
   });
 

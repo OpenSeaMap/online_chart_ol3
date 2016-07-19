@@ -10,7 +10,7 @@ import { layerTileLoadStateChange } from '../../store/actions'
 
 module.exports = function(context, options) {
   let source = new ol.source.TileWMS({
-    url: 'http://www.geodaten-mv.de/dienste/tiefenkarten_seen_wms?lang=ger&',
+    url: '//www.geodaten-mv.de/dienste/tiefenkarten_seen_wms?lang=ger&',
     params: {
       'LAYERS': 'tiefenlinien,uferlinien',
       'TILED': true

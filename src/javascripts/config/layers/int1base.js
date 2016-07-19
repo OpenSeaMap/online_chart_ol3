@@ -39,9 +39,9 @@ module.exports = function(context, options) {
         // to the correct sign
         x = x + n;
       }
-      var urlTemplateZ6 = 'http://tiles.openseamap.org/int1base/Z6-8/{x}/{y}.svgz';
-      var urlTemplateZ9 = 'http://tiles.openseamap.org/int1base/Z9-11/{x}/{y}.svgz';
-      var urlTemplateZ12 = 'http://tiles.openseamap.org/int1base/Z12-18/{x}/{y}.svgz';
+      var urlTemplateZ6 = '//tiles.openseamap.org/int1base/Z6-8/{x}/{y}.svgz';
+      var urlTemplateZ9 = '//tiles.openseamap.org/int1base/Z9-11/{x}/{y}.svgz';
+      var urlTemplateZ12 = '//tiles.openseamap.org/int1base/Z12-18/{x}/{y}.svgz';
       var temp;
       if (z >= 12) {
         temp = urlTemplateZ12;
