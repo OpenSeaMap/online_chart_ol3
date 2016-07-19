@@ -10,7 +10,7 @@ module.exports = function(query) {
     format: new ol.format.OSMXML(),
     url: function(extent, resolution, projection) {
       var epsg4326Extent = ol.proj.transformExtent(extent, projection, 'EPSG:4326');
-      var baseUrl = 'http://overpass-api.de/api/interpreter?';
+      var baseUrl = '//overpass-api.de/api/interpreter?';
       var queryComplete = 'data=' + encodeURIComponent(query) + '&bbox=' + epsg4326Extent.join(',');
       return baseUrl + queryComplete;
     },
