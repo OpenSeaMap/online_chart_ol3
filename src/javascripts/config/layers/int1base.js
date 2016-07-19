@@ -6,6 +6,7 @@
 
 import ol from 'openlayers'
 import ChartLayer from '../chartlayer'
+import { layerTileLoadStateChange } from '../../store/actions'
 
 var projection = ol.proj.get('EPSG:3857');
 var projectionExtent = projection.getExtent();
@@ -25,53 +26,54 @@ for (var z = 0; z < zoomLevels; ++z) {
 }
 
 module.exports = function(context, options) {
+  let source = new ol.source.TileImage({
+    tileUrlFunction: function(tileCoord /*, pixelRatio, projection*/ ) {
+      var z = tileCoord[0];
+      var x = tileCoord[1];
+      var y = -tileCoord[2] - 1;
+      // wrap the world on the X axis
+      var n = Math.pow(2, z + 1); // 2 tiles at z=0
+      x = x % n;
+      if (x * n < 0) {
+        // x and n differ in sign so add n to wrap the result
+        // to the correct sign
+        x = x + n;
+      }
+      var urlTemplateZ6 = 'http://tiles.openseamap.org/int1base/Z6-8/{x}/{y}.svgz';
+      var urlTemplateZ9 = 'http://tiles.openseamap.org/int1base/Z9-11/{x}/{y}.svgz';
+      var urlTemplateZ12 = 'http://tiles.openseamap.org/int1base/Z12-18/{x}/{y}.svgz';
+      var temp;
+      if (z >= 12) {
+        temp = urlTemplateZ12;
+      } else if (z >= 9) {
+        temp = urlTemplateZ9;
+      } else {
+        temp = urlTemplateZ6;
+      }
+      return temp
+        .replace('{z}', z.toString())
+        .replace('{y}', y.toString())
+        .replace('{x}', x.toString());
+    },
+    crossOrigin: 'Anonymous',
+    projection: projection,
+    tileGrid: new ol.tilegrid.TileGrid({
+      origin: ol.extent.getTopLeft(projectionExtent),
+      resolutions: resolutions,
+      //zoomlevel 0, 1,  2,  3,  4,   5,   6,   7,    8,   9,  10,   11,  12,  13,   14,   15,   16,   17,    18,    19
+      tileSizes: [4, 8, 16, 32, 64, 128, 256, 512, 1024, 256, 512, 1024, 256, 512, 1024, 2048, 4096, 8192, 16384, 32768]
+    })
+  })
+  source.on(['tileloadstart', 'tileloadend', 'tileloaderror'], function(ev) {
+    context.dispatch(layerTileLoadStateChange(options.id, ev));
+  });
+
   var defaults = {
     nameKey: 'layer-name-int1_base',
-    layer: new ol.layer.Group({
+    layer: new ol.layer.Tile({
+      //maxResolution: 2500,
       opacity: 0.5,
-      layers: [
-        new ol.layer.Tile({
-          //          maxResolution: 2500,
-          source: new ol.source.TileImage({
-            tileUrlFunction: function(tileCoord /*, pixelRatio, projection*/ ) {
-              var z = tileCoord[0];
-              var x = tileCoord[1];
-              var y = -tileCoord[2] - 1;
-              // wrap the world on the X axis
-              var n = Math.pow(2, z + 1); // 2 tiles at z=0
-              x = x % n;
-              if (x * n < 0) {
-                // x and n differ in sign so add n to wrap the result
-                // to the correct sign
-                x = x + n;
-              }
-              var urlTemplateZ6 = 'http://tiles.openseamap.org/int1base/Z6-8/{x}/{y}.svgz';
-              var urlTemplateZ9 = 'http://tiles.openseamap.org/int1base/Z9-11/{x}/{y}.svgz';
-              var urlTemplateZ12 = 'http://tiles.openseamap.org/int1base/Z12-18/{x}/{y}.svgz';
-              var temp;
-              if (z >= 12) {
-                temp = urlTemplateZ12;
-              } else if (z >= 9) {
-                temp = urlTemplateZ9;
-              } else {
-                temp = urlTemplateZ6;
-              }
-              return temp
-                .replace('{z}', z.toString())
-                .replace('{y}', y.toString())
-                .replace('{x}', x.toString());
-            },
-            crossOrigin: 'Anonymous',
-            projection: projection,
-            tileGrid: new ol.tilegrid.TileGrid({
-              origin: ol.extent.getTopLeft(projectionExtent),
-              resolutions: resolutions,
-              //zoomlevel 0, 1,  2,  3,  4,   5,   6,   7,    8,   9,  10,   11,  12,  13,   14,   15,   16,   17,    18,    19
-              tileSizes: [4, 8, 16, 32, 64, 128, 256, 512, 1024, 256, 512, 1024, 256, 512, 1024, 2048, 4096, 8192, 16384, 32768]
-            })
-          })
-        })
-      ]
+      source: source
     })
   };
   return new ChartLayer(context, Object.assign(defaults, options));

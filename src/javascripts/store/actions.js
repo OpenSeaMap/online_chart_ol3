@@ -36,3 +36,13 @@ export function featureClicked(feature) {
     feature: feature
   }
 }
+
+export const LAYER_TILE_LOAD_CHANGE = 'LAYER_TILE_LOAD_CHANGE';
+// loadEvent is of type ol.source.ImageEvent or ol.source.TileEvent
+export function layerTileLoadStateChange(id, loadEvent) {
+  return {
+    type: LAYER_TILE_LOAD_CHANGE,
+    id: id,
+    changeType: loadEvent.type
+  }
+}

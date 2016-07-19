@@ -11,19 +11,28 @@ import { setLayerVisible } from '../../store/actions'
 import { LayerType } from '../../config/chartlayer'
 import OsmToggle from '../../components/misc/Toggle'
 
+import LayerProgressBar from './layerProgressBar'
+
 import './featureLayerConfig.scss'
 
-const ConfigList = ({layerVisible, onChangeLayerVisible} , context) => (
+const ConfigList = ({layerVisible, layerLoadState, onChangeLayerVisible} , context) => (
   <ul className="layerList">
-    { context.layers.map(layer => (
-        <li key={ 'layer_' + layer.id + (layerVisible[layer.id] ? '_checked' : '_unchecked') }>
-          <OsmToggle
-            checked={ !!(layerVisible[layer.id]) }
-            layerId={ layer.id }
-            label={ <FormattedMessage id={ layer.nameKey } /> }
-            onChange={ (visible) => onChangeLayerVisible(layer.id, visible) } />
-        </li>
-      )) }
+    {context.layers.map(layer => {
+        let loadState = layerLoadState[layer.id] || {loading: 0, loaded: 0}
+        return (
+          <li key={'layer_' + layer.id + (layerVisible[layer.id] ? '_checked' : '_unchecked')}>
+            <LayerProgressBar
+                enabled={!!(layerVisible[layer.id])}
+                loadState={loadState}
+            />
+            <OsmToggle
+                checked={!!(layerVisible[layer.id])}
+                label={<FormattedMessage id={layer.nameKey} />}
+                layerId={layer.id}
+                onChange={(visible) => onChangeLayerVisible(layer.id, visible)}
+            />
+          </li>
+      )})}
   </ul>
 )
 ConfigList.contextTypes = {
@@ -34,7 +43,8 @@ ConfigList.contextTypes = {
 
 const mapStateToProps = (state) => {
   return {
-    layerVisible: state.layerVisible
+    layerVisible: state.layerVisible,
+    layerLoadState: state.layerTileLoadState
   }
 }
 

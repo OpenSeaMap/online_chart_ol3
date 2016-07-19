@@ -19,14 +19,17 @@ class OsmToggle extends React.Component {
     return (
       <div className="toggle">
         <ReactToggle
-          id={ toggleId }
-          defaultChecked={ this.props.checked }
-          onChange={ (event) => this.props.onChange(event.target.checked) } />
+            defaultChecked={this.props.checked}
+            id={toggleId}
+            onChange={(event) => this.props.onChange(event.target.checked)}
+        />
         <label
-          className="toggle-label"
-          htmlFor={ toggleId }>
-          { this.props.label }
+            className="toggle-label"
+            htmlFor={toggleId}
+        >
+            {this.props.label}
         </label>
+        {this.props.children}
       </div>
       );
   }
@@ -34,6 +37,10 @@ class OsmToggle extends React.Component {
 
 OsmToggle.propTypes = {
   checked: React.PropTypes.bool.isRequired,
+  children: React.PropTypes.oneOfType([
+    React.PropTypes.arrayOf(React.PropTypes.node),
+    React.PropTypes.node
+  ]),
   label: React.PropTypes.node.isRequired,
   layerId: React.PropTypes.string.isRequired,
   onChange: React.PropTypes.func.isRequired
