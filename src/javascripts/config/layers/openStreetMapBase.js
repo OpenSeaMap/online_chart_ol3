@@ -10,7 +10,8 @@ import { layerTileLoadStateChange } from '../../store/actions'
 
 module.exports = function(context, options) {
   let source = new ol.source.OSM({
-    url: '//mapproxy.195.37.132.70.xip.io/tiles/1.0.0/osm/osm_grid/{z}/{x}/{y}.png',
+    url: '//{a-c}.tile.openstreetmap.org/{z}/{x}/{y}.png',
+//    url: '//mapproxy.195.37.132.70.xip.io/tiles/1.0.0/osm/osm_grid/{z}/{x}/{y}.png',
     crossOrigin: 'Anonymous'
   });
   source.on(['tileloadstart', 'tileloadend', 'tileloaderror'], function(ev) {
