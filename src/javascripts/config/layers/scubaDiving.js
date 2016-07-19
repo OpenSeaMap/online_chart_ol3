@@ -10,7 +10,7 @@ import ChartLayer from '../chartlayer'
 var SimpleImageStyle = require('ol-style-simpleImageStyle');
 var OverpassApi = require('ol-source-overpassApi');
 
-import { featureClicked } from '../../store/actions'
+import { featureClicked, layerTileLoadStateChange } from '../../store/actions'
 import { setSidebarOpen, setSidebarActiveTab } from '../../controls/sidebar/store'
 
 module.exports = function(context, options) {
@@ -57,17 +57,7 @@ module.exports = function(context, options) {
       return styleFunction(feature, resolution, 'clicked');
     }
   });
-  /*
-    function showSidebar(features) {
-      var feature = features[0];
-      if (feature) {
-        context.taginfo().render(feature);
-        context.sidebar().open('details');
-      } else {
-        context.sidebar().close();
-      }
-    }
-  */
+
   selector.on('select', function(e) {
     var feature = e.selected[0];
     if (feature) {
@@ -76,22 +66,15 @@ module.exports = function(context, options) {
       context.dispatch(setSidebarOpen(true));
     }
   });
-  /*
-    hoverer.on('select', function(e) {
-      var selected = e.target.getFeatures().getLength();
-      var map = context.map();
-      map.mapTargetJ().css('cursor', selected > 0 ? 'pointer' : '');
 
-      var feature = e.selected[0];
-      if (feature) {
-        context.taginfo().render(feature);
-      }
-    });
-  */
+  let source = new OverpassApi('(node[sport=scuba_diving](bbox);node[amenity=dive_centre](bbox););out body qt;');
+  source.on(['tileloadstart', 'tileloadend', 'tileloaderror'], function(ev) {
+    context.dispatch(layerTileLoadStateChange(options.id, ev));
+  });
 
   var objects = {
     layer: new ol.layer.Vector({
-      source: new OverpassApi('(node[sport=scuba_diving](bbox);node[amenity=dive_centre](bbox););out body qt;'),
+      source: source,
       style: function(feature, resolution) {
         return styleFunction(feature, resolution, 'normal');
       }

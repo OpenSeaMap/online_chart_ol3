@@ -3,7 +3,7 @@
 * @author aAXEe (https://github.com/aAXEe)
 */
 import { combineReducers, createStore, compose, applyMiddleware } from 'redux'
-import { SET_LAYER_VISIBLE, INIT_LAYER_VISIBLE, SET_VIEW_POSITION, FEATURE_CLICKED } from './actions'
+import { SET_LAYER_VISIBLE, INIT_LAYER_VISIBLE, SET_VIEW_POSITION, FEATURE_CLICKED, LAYER_TILE_LOAD_CHANGE } from './actions'
 
 import { sidebarIsOpen, sidebarSelectedTab } from '../controls/sidebar/store'
 
@@ -46,12 +46,62 @@ function selectedFeature(state = {
   }
 }
 
+function layerTileLoadState(state = {}, action){
+  switch (action.type) {
+    case LAYER_TILE_LOAD_CHANGE: {
+      let count = state[action.id];
+
+      if(action.changeType === 'imageloadstart' || action.changeType === 'tileloadstart') {
+        count.loading++;
+      } else {
+        count.loaded++;
+      }
+
+      if(action.changeType.endsWith('error')) {
+        count.lastError = action.changeType
+      }
+
+      if(count.loading == count.loaded) {
+         count.loading = 0
+         count.loaded = 0
+      }
+
+      let obj = {};
+      obj[action.id] = count;
+      return Object.assign({}, state, obj);
+    }
+
+    case SET_LAYER_VISIBLE: {
+      let count = state[action.id];
+      count.lastError = ''
+      let obj = {};
+      obj[action.id] = count;
+      return Object.assign({}, state, obj);
+    }
+
+    case INIT_LAYER_VISIBLE: {
+      let obj = {};
+      Object.keys(action.list).forEach(id => {
+        obj[id] =  {
+          lastError: '',
+          loading: 0,
+          loaded: 0
+        }
+      })
+      return Object.assign({}, obj);
+    }
+    default:
+      return state;
+  }
+}
+
 const mapApp = combineReducers({
   sidebarIsOpen,
   sidebarSelectedTab,
   layerVisible,
   viewPosition,
-  selectedFeature
+  selectedFeature,
+  layerTileLoadState
 })
 
 import { writeToUrlHash } from './urlHashHandling'
