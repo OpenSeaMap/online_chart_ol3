@@ -68,6 +68,9 @@ const messages = {
   'sidebar-details': 'Details',
   'sidebar-development': 'Development',
 
+  'layerlist-baselayer': 'Base layers',
+  'layerlist-overlaylayer': 'Overlay layers',
+
   'layer-name-seamarks': 'OpenSeaMap seamarks',
   'layer-name-depth-geodaten_mv': 'Official depth data for Germany/MV',
   'layer-name-int1_base': 'INT1 style basemap',

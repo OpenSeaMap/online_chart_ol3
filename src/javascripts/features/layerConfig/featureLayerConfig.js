@@ -15,26 +15,88 @@ import LayerProgressBar from './layerProgressBar'
 
 import './featureLayerConfig.scss'
 
-const ConfigList = ({layerVisible, layerLoadState, onChangeLayerVisible} , context) => (
-  <ul className="layerList">
-    {context.layers.map(layer => {
-        let loadState = layerLoadState[layer.id] || {loading: 0, loaded: 0}
-        return (
-          <li key={'layer_' + layer.id + (layerVisible[layer.id] ? '_checked' : '_unchecked')}>
-            <LayerProgressBar
-                enabled={!!(layerVisible[layer.id])}
-                loadState={loadState}
-            />
-            <OsmToggle
-                checked={!!(layerVisible[layer.id])}
-                label={<FormattedMessage id={layer.nameKey} />}
-                layerId={layer.id}
-                onChange={(visible) => onChangeLayerVisible(layer.id, visible)}
-            />
-          </li>
-      )})}
-  </ul>
-)
+class ConfigList extends React.Component {
+  constructor(props) {
+    super(props);
+    this.currentBaseLayerId = this.currentBaseLayerId.bind(this);
+    this.selectBaseLayer = this.selectBaseLayer.bind(this);
+  }
+
+  currentBaseLayerId() {
+    let id = undefined;
+    this.context.layers.forEach(layer => {
+      if(!layer.isBaseLayer)
+        return
+      if(this.props.layerVisible[layer.id])
+        id = layer.id
+    }, this)
+    return id
+  }
+
+  selectBaseLayer(id, visible) {
+    let currentBase = this.currentBaseLayerId()
+    if(id === currentBase)
+      return  // do not deactivate the current base layer
+    if(currentBase)
+      this.props.onChangeLayerVisible(currentBase, false)
+    this.props.onChangeLayerVisible(id, true)
+  }
+
+  render() {
+    return (
+      <div>
+        <div>
+          <FormattedMessage id={'layerlist-baselayer'} />
+        </div>
+        <ul className="layerList base">
+          {this.context.layers.map(layer => {
+              let loadState = this.props.layerLoadState[layer.id] || {loading: 0, loaded: 0}
+              let layerVisible = !!this.props.layerVisible[layer.id]
+              if(!layer.isBaseLayer)
+                return
+              return (
+                <li key={'layer_' + layer.id}>
+                  <LayerProgressBar
+                      enabled={layerVisible}
+                      loadState={loadState}
+                  />
+                  <OsmToggle
+                      checked={layerVisible}
+                      label={<FormattedMessage id={layer.nameKey} />}
+                      layerId={layer.id}
+                      onChange={(visible) => this.selectBaseLayer(layer.id, visible)}
+                  />
+                </li>
+            )})}
+        </ul>
+        <div>
+          <FormattedMessage id={'layerlist-overlaylayer'} />
+        </div>
+        <ul className="layerList overlays">
+          {this.context.layers.map(layer => {
+              let loadState = this.props.layerLoadState[layer.id] || {loading: 0, loaded: 0}
+              let layerVisible = !!this.props.layerVisible[layer.id]
+              if(layer.isBaseLayer)
+                return
+              return (
+                <li key={'layer_' + layer.id}>
+                  <LayerProgressBar
+                      enabled={layerVisible}
+                      loadState={loadState}
+                  />
+                  <OsmToggle
+                      checked={layerVisible}
+                      label={<FormattedMessage id={layer.nameKey} />}
+                      layerId={layer.id}
+                      onChange={(visible) => this.props.onChangeLayerVisible(layer.id, visible)}
+                  />
+                </li>
+            )})}
+        </ul>
+      </div>
+    )
+  }
+}
 ConfigList.contextTypes = {
   layers: PropTypes.arrayOf(
     LayerType.isRequired
