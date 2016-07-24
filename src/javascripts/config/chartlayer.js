@@ -25,9 +25,9 @@ export default function(context, options) {
   if(!self.isBaseLayer)
     warning(self.urlIndex2016, 'The layer has no urlIndex2016.');
 
-  self.urlIndexBaseLayer = options.urlIndexBaseLayer;
+  self.urlIndex2016BaseLayer = options.urlIndex2016BaseLayer;
   if(self.isBaseLayer)
-    warning(self.urlIndexBaseLayer, 'The layer has no urlIndexBaseLayer.');
+    warning(self.urlIndex2016BaseLayer, 'The layer has no urlIndex2016BaseLayer.');
 
   self.layer = options.layer;
   warning(self.layer, 'The layer has no layer object.');
@@ -50,8 +50,8 @@ export const LayerType = PropTypes.shape({
   isBaseLayer: PropTypes.bool, // true if this is an base layer; defaults to false
 
   urlIndex2013: PropTypes.number, // index in url 2013 style
-  urlIndex2016: PropTypes.number, // index in url 2016 style (0 for all base layers)
-  urlIndexBaseLayer: PropTypes.string, // index letter for a base layer (required if isBaseLayer)
+  urlIndex2016: PropTypes.number, // index in url 2016 style (only for overlay layers)
+  urlIndex2016BaseLayer: PropTypes.string, // index letter for a base layer (required if isBaseLayer)
 
   layer: PropTypes.object.isRequired, //ol.layer subclass
   interactions: PropTypes.arrayOf(

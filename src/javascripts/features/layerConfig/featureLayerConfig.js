@@ -33,7 +33,7 @@ class ConfigList extends React.Component {
     return id
   }
 
-  selectBaseLayer(id, visible) {
+  selectBaseLayer(id) {
     let currentBase = this.currentBaseLayerId()
     if(id === currentBase)
       return  // do not deactivate the current base layer
@@ -64,7 +64,7 @@ class ConfigList extends React.Component {
                       checked={layerVisible}
                       label={<FormattedMessage id={layer.nameKey} />}
                       layerId={layer.id}
-                      onChange={(visible) => this.selectBaseLayer(layer.id, visible)}
+                      onChange={() => this.selectBaseLayer(layer.id)}
                   />
                 </li>
             )})}
@@ -101,6 +101,12 @@ ConfigList.contextTypes = {
   layers: PropTypes.arrayOf(
     LayerType.isRequired
   ).isRequired
+}
+
+ConfigList.propTypes = {
+  layerLoadState: PropTypes.object,
+  layerVisible: PropTypes.object,
+  onChangeLayerVisible: PropTypes.func
 }
 
 const mapStateToProps = (state) => {

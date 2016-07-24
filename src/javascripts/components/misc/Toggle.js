@@ -31,7 +31,7 @@ class OsmToggle extends React.Component {
         </label>
         {this.props.children}
       </div>
-      );
+    );
   }
 }
 
