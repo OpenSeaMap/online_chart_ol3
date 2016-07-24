@@ -18,16 +18,21 @@ import { getStateFromUrlHash } from './store/urlHashHandling'
 
 import { defaultViewPosition } from './SETTINGS'
 
-let store = configureStore(getStateFromUrlHash({
+let hashState = getStateFromUrlHash({
   viewPosition: defaultViewPosition
-}))
+})
+let store = configureStore(hashState)
 
 let layers = createLayers(store);
 
 let defaultVisibleList = {};
-layers.forEach(layer => {
-  defaultVisibleList[layer.id] = layer.visibleDefault;
-})
+if(hashState.layerVisible) { // use layer state from url if provided
+  defaultVisibleList = hashState.layerVisible
+} else {
+  layers.forEach(layer => {
+    defaultVisibleList[layer.id] = layer.visibleDefault;
+  })
+}
 store.dispatch(initLayerVisible(defaultVisibleList));
 
 import { positionsEqual } from './utils'

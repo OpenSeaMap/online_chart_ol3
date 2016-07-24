@@ -174,7 +174,6 @@ Map.defaultProps = {
 }
 
 Map.propTypes = {
-  children: PropTypes.node,
   layerVisible: PropTypes.object.isRequired,
   onViewPositionChange: PropTypes.func.isRequired,
   renderer: PropTypes.string,
@@ -189,7 +188,7 @@ import { LayerType } from './config/chartlayer'
 
 Map.contextTypes = {
   layers: PropTypes.arrayOf(LayerType),
-  store: React.PropTypes.object
+  store: PropTypes.object
 }
 
 export default Map;
