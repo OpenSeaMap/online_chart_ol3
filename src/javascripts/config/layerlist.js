@@ -43,14 +43,17 @@ export const availibleLayers = [
   {
     layerConstructor: OsmBase,
     id: 'base_osm_default',
+    isBaseLayer: true,
     urlIndex2016: 0,
     urlIndex2013: 1,
+    urlIndexBaseLayer: 'A',
     visibleDefault: true
   }, {
     layerConstructor: Int1Base,
     id: 'overlay_intl_base',
-    urlIndex2016: 1,
-    urlIndex2013: -1,
+    isBaseLayer: true,
+    urlIndex2016: 0,
+    urlIndexBaseLayer: 'B',
     visibleDefault: false
   }, {
     layerConstructor: Seamarks,
