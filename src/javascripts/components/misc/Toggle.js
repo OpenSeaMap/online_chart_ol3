@@ -19,7 +19,7 @@ class OsmToggle extends React.Component {
     return (
       <div className="toggle">
         <ReactToggle
-            defaultChecked={this.props.checked}
+            checked={this.props.checked}
             id={toggleId}
             onChange={(event) => this.props.onChange(event.target.checked)}
         />
