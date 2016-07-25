@@ -93,7 +93,7 @@
         "rules": {
           "react/jsx-no-literals": 2,
 
-          "no-console": 1,
+          "no-console": 0,
           "react/jsx-no-bind": [1, {
             "ignoreRefs": true,
             "allowArrowFunctions": true,
