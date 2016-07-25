@@ -57,15 +57,13 @@ class ConfigList extends React.Component {
               return (
                 <li key={'layer_' + layer.id}>
                   <LayerProgressBar
-                      enabled={layerVisible}
-                      loadState={loadState}
-                  />
+                    enabled={layerVisible}
+                    loadState={loadState} />
                   <OsmToggle
-                      checked={layerVisible}
-                      label={<FormattedMessage id={layer.nameKey} />}
-                      layerId={layer.id}
-                      onChange={() => this.selectBaseLayer(layer.id)}
-                  />
+                    checked={layerVisible}
+                    label={<FormattedMessage id={layer.nameKey} />}
+                    layerId={layer.id}
+                    onChange={() => this.selectBaseLayer(layer.id)} />
                 </li>
             )})}
         </ul>
@@ -81,15 +79,13 @@ class ConfigList extends React.Component {
               return (
                 <li key={'layer_' + layer.id}>
                   <LayerProgressBar
-                      enabled={layerVisible}
-                      loadState={loadState}
-                  />
+                    enabled={layerVisible}
+                    loadState={loadState} />
                   <OsmToggle
-                      checked={layerVisible}
-                      label={<FormattedMessage id={layer.nameKey} />}
-                      layerId={layer.id}
-                      onChange={(visible) => this.props.onChangeLayerVisible(layer.id, visible)}
-                  />
+                    checked={layerVisible}
+                    label={<FormattedMessage id={layer.nameKey} />}
+                    layerId={layer.id}
+                    onChange={(visible) => this.props.onChangeLayerVisible(layer.id, visible)} />
                 </li>
             )})}
         </ul>
