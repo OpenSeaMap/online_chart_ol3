@@ -80,6 +80,16 @@
 
     "lint": {
       "options": {
+        "plugins": [
+          "react"
+        ],
+        "parserOptions": {
+          "sourceType": "module",
+          "ecmaFeatures": {
+              "jsx": true,
+              "modules": true
+          }
+        },
         "rules": {
           "react/jsx-no-literals": 2,
 
