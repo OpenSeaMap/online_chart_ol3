@@ -35,10 +35,9 @@ const LayerProgressBar = ({loadState, enabled}) => {
   return (
     <div style={circleContainerStyle}>
       <CircleProgressBar
-          percent={progress}
-          strokeColor={color}
-          strokeWidth="25"
-      />
+        percent={progress}
+        strokeColor={color}
+        strokeWidth="25" />
     </div>
   )
 }

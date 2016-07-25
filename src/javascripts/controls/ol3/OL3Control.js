@@ -31,7 +31,7 @@ class OL3Control extends React.Component {
     )
   }
 }
-OL3Control.PropTypes = {
+OL3Control.propTypes = {
   addControlToMap: React.PropTypes.func.isRequired,
   className: React.PropTypes.string,
   id: React.PropTypes.string.isRequired,
