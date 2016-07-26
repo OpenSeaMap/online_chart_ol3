@@ -31,11 +31,11 @@ class OL3Control extends React.Component {
     )
   }
 }
-OL3Control.propTypes = {
+OL3Control.propTypes = React.PropTypes.shape({
   addControlToMap: React.PropTypes.func.isRequired,
   className: React.PropTypes.string,
   id: React.PropTypes.string.isRequired,
   position: React.PropTypes.string.isRequired
-}
+})
 
 export default OL3Control;

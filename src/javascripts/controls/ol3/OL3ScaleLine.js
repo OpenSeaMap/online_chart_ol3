@@ -18,7 +18,7 @@ class OL3ScaleLine extends OL3Control {
     })
   }
 }
-OL3ScaleLine.PropTypes = _.extend(OL3Control.PropTypes, {
+OL3ScaleLine.propTypes = _.extend(OL3Control.propTypes, {
   units: React.PropTypes.string.isRequired
 });
 
