@@ -7,6 +7,13 @@
   "plugins": [
     "react"
   ],
+  "parserOptions": {
+      "ecmaVersion": 6,
+      "sourceType": "module",
+      "ecmaFeatures": {
+          "jsx": true
+      }
+  },
   "ecmaFeatures": {
     "modules": true,
     "jsx": true
@@ -39,7 +46,7 @@
     "react/jsx-no-undef": 1,
     "react/jsx-pascal-case": 1,
     "jsx-quotes": 1,
-    "react/jsx-sort-prop-types": 1,
+    "react/sort-prop-types": 1,
     "react/jsx-sort-props": 1,
     "react/jsx-uses-react": 1,
     "react/jsx-uses-vars": 1,
