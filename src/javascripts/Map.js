@@ -132,6 +132,18 @@ class Map extends React.Component {
   }
 
   render() {
+    let names = new Set()
+    let additionalTabs = []
+    this.context.layers.forEach(layer => {
+      if(!this.props.layerVisible[layer.id])
+        return
+      if(!layer.additionalTab)
+        return
+      if(names.has(layer.additionalTab.name))
+        return
+      additionalTabs.push(layer.additionalTab)
+      names.add(layer.additionalTab.name)
+    })
     return (
       <div
         className="sidebar-map reset-box-sizing"
@@ -140,7 +152,7 @@ class Map extends React.Component {
           <Sidebar
             id="sidebar"
             position="sidebar left"
-            tabs={ Tabs } />
+            tabs={ Tabs.concat(additionalTabs) } />
           <OL3Attribution
             id="ol3-attribution"
             position="bottom right"

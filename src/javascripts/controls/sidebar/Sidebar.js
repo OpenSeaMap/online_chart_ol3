@@ -97,18 +97,15 @@ class Sidebar extends React.Component {
   }
 }
 
+import {TabType} from 'features/tabs'
+
 Sidebar.propTypes = {
   isOpen: React.PropTypes.bool.isRequired,
   position: React.PropTypes.string.isRequired,
   setSidebarActiveTab: React.PropTypes.func.isRequired,
   setSidebarOpen: React.PropTypes.func.isRequired,
   sidebarSelectedTab: React.PropTypes.string.isRequired,
-  tabs: React.PropTypes.arrayOf(React.PropTypes.shape({
-    align: React.PropTypes.string.isRequired,
-    content: React.PropTypes.node.isRequired,
-    icon: React.PropTypes.node.isRequired,
-    name: React.PropTypes.string.isRequired
-  })).isRequired
+  tabs: React.PropTypes.arrayOf(TabType).isRequired
 }
 
 function mapStateToProps(state) {

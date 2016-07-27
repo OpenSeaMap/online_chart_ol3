@@ -76,7 +76,9 @@ const messages = {
   'layer-name-int1_base': 'INT1 style basemap',
   'layer-name-openstreetmap-base': 'OpenStreetMap basemap',
   'layer-name-scuba_diving': 'POIs for scuba diving',
-  'layer-name-seamarks-debug': 'Interactive Seamarks'
+  'layer-name-seamarks-debug': 'Interactive Seamarks',
+
+  'click-on-markers': 'click on markers to see details'
 }
 
 import { LayerType } from './config/chartlayer'
