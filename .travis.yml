@@ -21,7 +21,7 @@ script:
 - npm test
 
 after_success:
-  - test $TRAVIS_BRANCH = "master" && npm run deploy
+  - test $TRAVIS_BRANCH = "master" && test $TRAVIS_PULL_REQUEST = "false" && npm run deploy
 
 env:
   global:
