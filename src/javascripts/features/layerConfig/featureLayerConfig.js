@@ -110,8 +110,8 @@ ConfigList.contextTypes = {
 }
 
 ConfigList.propTypes = {
-  layerLoadState: PropTypes.object,
-  layerVisible: PropTypes.object,
+  layerLoadState: PropTypes.objectOf(PropTypes.object),
+  layerVisible: PropTypes.objectOf(PropTypes.bool),
   onChangeLayerVisible: PropTypes.func
 }
 

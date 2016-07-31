@@ -65,6 +65,7 @@ $border-radius: 3px;
     button {
       width: $sidebar-width;
       height: $sidebar-width;
+      font-size: 1.14em;
       cursor: pointer;
       &:focus {
         outline: none;
@@ -74,6 +75,7 @@ $border-radius: 3px;
       margin: 0;
       padding: 3px;
       border-radius: 0px;
+      border: none;
 
       background: transparent;
 

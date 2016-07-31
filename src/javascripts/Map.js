@@ -146,7 +146,7 @@ class Map extends React.Component {
     })
     return (
       <div
-        className="sidebar-map reset-box-sizing"
+        className="sidebar-map"
         ref={ (c) => this._input = c }>
         <MetaControl ref={ (c) => this._metaControl = c }>
           <Sidebar
@@ -186,7 +186,7 @@ Map.defaultProps = {
 }
 
 Map.propTypes = {
-  layerVisible: PropTypes.object.isRequired,
+  layerVisible: PropTypes.objectOf(PropTypes.bool).isRequired,
   onViewPositionChange: PropTypes.func.isRequired,
   renderer: PropTypes.string,
   viewPosition: PropTypes.shape({

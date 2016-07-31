@@ -16,7 +16,7 @@ import './Sidebar.scss'
 class Sidebar extends React.Component {
   _getSidebarClassNames() {
     const pos = this.props.position;
-    return 'osm-sidebar ol-control ' +
+    return 'osm-sidebar ' +
       (pos.indexOf('left') >= 0 ? 'left ' : '') +
       (pos.indexOf('right') >= 0 ? 'right ' : '') +
       (this.props.isOpen ? 'open' : 'closed');

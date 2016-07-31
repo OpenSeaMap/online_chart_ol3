@@ -59,7 +59,8 @@ module.exports = function(env) {
           test: /\.css$/,
           loaders: ['style', 'css']
         }
-      ]
+      ],      
+      noParse: /node_modules\/openlayers\/dist\/ol-debug.js/,
     }
   }
 
