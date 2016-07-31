@@ -91,7 +91,8 @@ module.exports = function(context, options) {
       <div>
         <FormattedMessage id="click-on-markers" />
       </div>
-    ), additionalTab: TabSidebarDetails
+    ),
+    additionalTab: TabSidebarDetails
   };
 
 

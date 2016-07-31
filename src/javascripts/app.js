@@ -78,7 +78,8 @@ const messages = {
   'layer-name-scuba_diving': 'POIs for scuba diving',
   'layer-name-seamarks-debug': 'Interactive Seamarks',
 
-  'click-on-markers': 'click on markers to see details'
+  'click-on-markers': 'click on markers to see details',
+  'copyright-layer': 'Layer data © {source}'
 }
 
 import { LayerType } from './config/chartlayer'

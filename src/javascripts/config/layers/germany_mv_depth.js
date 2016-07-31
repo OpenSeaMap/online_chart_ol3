@@ -4,12 +4,22 @@
 */
 'use strict';
 
+import React from 'react'
+import { FormattedMessage } from 'react-intl';
+import { ExternalLink } from '../../components/misc/Links'
+
 import ol from 'openlayers'
 import ChartLayer from '../chartlayer'
 import { layerTileLoadStateChange } from '../../store/actions'
 
 module.exports = function(context, options) {
   let source = new ol.source.TileWMS({
+    attributions: [
+      new ol.Attribution({
+        html: 'Depth data Germany/MV © ' +
+            '<a href="http://www.geodaten-mv.de/geomis/#94e5ed55-80f9-4af0-b43a-32ca5be7eef9">GeoDaten-MV</a>'
+      })
+    ],
     url: '//www.geodaten-mv.de/dienste/tiefenkarten_seen_wms?lang=ger&',
     params: {
       'LAYERS': 'tiefenlinien,uferlinien',
@@ -26,7 +36,21 @@ module.exports = function(context, options) {
     nameKey: 'layer-name-depth-geodaten_mv',
     layer: new ol.layer.Tile({
       source: source
-    })
+    }),
+    additionalSetup: (
+      <div>
+        <FormattedMessage
+            id="copyright-layer"
+            values={{
+              source: (
+                <ExternalLink href={'http://www.geodaten-mv.de/geomis/#94e5ed55-80f9-4af0-b43a-32ca5be7eef9'}>
+                  {'Ministerium für Landwirtschaft, Umwelt und Verbraucherschutz M-V, Seenprogramm, 2012'}
+                </ExternalLink>
+              )
+            }}
+        />
+      </div>
+    ),
   };
   return new ChartLayer(context, Object.assign(defaults, options));
 };
