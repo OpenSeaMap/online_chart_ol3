@@ -39,24 +39,6 @@ html, body, #map, .sidebar-map {
   padding-right: 10px;
 }
 
-.reset-box-sizing,
-.reset-box-sizing *,
-.reset-box-sizing *:before,
-.reset-box-sizing *:after {
-  -webkit-box-sizing: content-box;
-     -moz-box-sizing: content-box;
-          box-sizing: content-box;
-}
-
-.set-box-sizing,
-.set-box-sizing *,
-.set-box-sizing *:before,
-.set-box-sizing *:after {
-  -webkit-box-sizing: border-box;
-     -moz-box-sizing: border-box;
-          box-sizing: border-box;
-}
-
 label {
   font-weight: normal;
 }
