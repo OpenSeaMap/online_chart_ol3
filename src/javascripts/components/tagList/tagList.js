@@ -14,6 +14,7 @@ import './tagList.scss'
 const TagList = ({tags}) => (
   <div className="tagList">
     <h2><FormattedMessage id="tags" /></h2>
+    <FormattedMessage id="click-on-markers" />
     { tags.map(tag => (
         <TagInfo
           key={ tag.key }

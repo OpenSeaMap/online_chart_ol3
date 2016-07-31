@@ -4,8 +4,11 @@
 */
 'use strict';
 
+import React from 'react'
 import ol from 'openlayers'
 import ChartLayer from '../chartlayer'
+import { FormattedMessage } from 'react-intl';
+import {TabSidebarDetails} from 'features/tabs'
 
 var SimpleImageStyle = require('ol-style-simpleImageStyle');
 var OverpassApi = require('ol-source-overpassApi');
@@ -62,7 +65,7 @@ module.exports = function(context, options) {
     var feature = e.selected[0];
     if (feature) {
       context.dispatch(featureClicked(feature));
-      context.dispatch(setSidebarActiveTab('sidebar-details'));
+      context.dispatch(setSidebarActiveTab(TabSidebarDetails.name));
       context.dispatch(setSidebarOpen(true));
     }
   });
@@ -82,7 +85,13 @@ module.exports = function(context, options) {
 
     interactions: [
       selector, hoverer
-    ]
+    ],
+
+    additionalSetup: (
+      <div>
+        <FormattedMessage id="click-on-markers" />
+      </div>
+    ), additionalTab: TabSidebarDetails
   };
 
 

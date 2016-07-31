@@ -6,6 +6,7 @@
 import React, { PropTypes } from 'react'
 import { connect } from 'react-redux'
 import { FormattedMessage } from 'react-intl';
+import { Collapse } from 'react-bootstrap';
 
 import { setLayerVisible } from '../../store/actions'
 import { LayerType } from '../../config/chartlayer'
@@ -86,6 +87,15 @@ class ConfigList extends React.Component {
                     label={<FormattedMessage id={layer.nameKey} />}
                     layerId={layer.id}
                     onChange={(visible) => this.props.onChangeLayerVisible(layer.id, visible)} />
+                  <Collapse
+                      className="additionalSetup"
+                      in={layerVisible}
+                      unmountOnExit
+                  >
+                    <div>
+                      {layer.additionalSetup}
+                    </div>
+                  </Collapse>
                 </li>
             )})}
         </ul>

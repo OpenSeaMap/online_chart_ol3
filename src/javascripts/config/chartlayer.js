@@ -23,14 +23,17 @@ export default function(context, options) {
 
   self.urlIndex2016 = options.urlIndex2016 || 0;
   if(!self.isBaseLayer)
-    warning(self.urlIndex2016, 'The layer has no urlIndex2016.');
+    warning(self.urlIndex2016 !== undefined, 'The layer has no urlIndex2016.');
 
   self.urlIndex2016BaseLayer = options.urlIndex2016BaseLayer;
   if(self.isBaseLayer)
-    warning(self.urlIndex2016BaseLayer, 'The layer has no urlIndex2016BaseLayer.');
+    warning(self.urlIndex2016BaseLayer !== undefined, 'The layer has no urlIndex2016BaseLayer.');
 
   self.layer = options.layer;
   warning(self.layer, 'The layer has no layer object.');
+
+  self.additionalSetup = options.additionalSetup
+  self.additionalTab = options.additionalTab
 
   if (options.interactions) {
     self.interactions = options.interactions;
@@ -41,6 +44,7 @@ export default function(context, options) {
 }
 
 import { PropTypes } from 'react'
+import TabType from 'features/tabs'
 
 export const LayerType = PropTypes.shape({
   id: PropTypes.string.required, // index for internal handling
@@ -56,5 +60,8 @@ export const LayerType = PropTypes.shape({
   layer: PropTypes.object.isRequired, //ol.layer subclass
   interactions: PropTypes.arrayOf(
     PropTypes.object // ol.interaction subclass
-  )
+  ),
+
+  additionalSetup: PropTypes.node, // a node to be displayed at the layer config
+  additionalTab: TabType
 })
