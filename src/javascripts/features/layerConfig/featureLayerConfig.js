@@ -88,10 +88,9 @@ class ConfigList extends React.Component {
                     layerId={layer.id}
                     onChange={(visible) => this.props.onChangeLayerVisible(layer.id, visible)} />
                   <Collapse
-                      className="additionalSetup"
-                      in={layerVisible}
-                      unmountOnExit
-                  >
+                    className="additionalSetup"
+                    in={layerVisible}
+                    unmountOnExit >
                     <div>
                       {layer.additionalSetup}
                     </div>

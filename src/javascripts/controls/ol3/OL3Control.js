@@ -26,8 +26,7 @@ class OL3Control extends React.Component {
   render() {
     return (
       <div className={ this.props.className }
-        ref={ (c) => this._element = c }>
-      </div>
+        ref={ (c) => this._element = c } />
     )
   }
 }
