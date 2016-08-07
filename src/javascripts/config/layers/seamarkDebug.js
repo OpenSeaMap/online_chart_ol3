@@ -53,12 +53,26 @@ module.exports = function(context, options) {
     });
   };
 
+  let source = new OverpassApi('(node["seamark:type"](bbox););out body qt;');
+  source.on(['tileloadstart', 'tileloadend', 'tileloaderror'], function(ev) {
+    context.dispatch(layerTileLoadStateChange(options.id, ev));
+  });
+
+  let layer = new ol.layer.Vector({
+    source: source,
+    style: function(feature, resolution) {
+      return styleFunction(feature, resolution, 'normal');
+    }
+  })
+
   var selector = new ol.interaction.Select({
+    layers: [layer],
     style: function(feature, resolution) {
       return styleFunction(feature, resolution, 'clicked');
     }
   });
   var hoverer = new ol.interaction.Select({
+    layers: [layer],
     condition: ol.events.condition.pointerMove,
     style: function(feature, resolution) {
       return styleFunction(feature, resolution, 'hovered');
@@ -72,20 +86,11 @@ module.exports = function(context, options) {
       context.dispatch(setSidebarActiveTab(TabSidebarDetails.name));
       context.dispatch(setSidebarOpen(true));
     }
-  });
-
-  let source = new OverpassApi('(node["seamark:type"](bbox););out body qt;');
-  source.on(['tileloadstart', 'tileloadend', 'tileloaderror'], function(ev) {
-    context.dispatch(layerTileLoadStateChange(options.id, ev));
+    return true
   });
 
   var objects = {
-    layer: new ol.layer.Vector({
-      source: source,
-      style: function(feature, resolution) {
-        return styleFunction(feature, resolution, 'normal');
-      }
-    }),
+    layer: layer,
 
     interactions: [
       selector, hoverer

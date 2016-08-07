@@ -46,3 +46,48 @@ export function layerTileLoadStateChange(id, loadEvent) {
     changeType: loadEvent.type
   }
 }
+
+export const SEARCH_START = 'SEARCH_START';
+export function searchStart(queryString) {
+  return {
+    type: SEARCH_START,
+    query: queryString
+  }
+}
+export const SEARCH_END = 'SEARCH_END';
+export function searchEnd(success, response) {
+  return {
+    type: SEARCH_END,
+    success: success,
+    response: response
+  }
+}
+export const SEARCH_RESULT_HOVERED = 'SEARCH_RESULT_HOVERED';
+export function searchResultHovered(feature) {
+  return {
+    type: SEARCH_RESULT_HOVERED,
+    feature: feature
+  }
+}
+// to remove the hover from any feature
+export function searchResultUnhover() {
+  return {
+    type: SEARCH_RESULT_HOVERED,
+    feature: null
+  }
+}
+
+export const SEARCH_RESULT_CLICKED = 'SEARCH_RESULT_CLICKED';
+export function searchResultClicked(feature) {
+  return {
+    type: SEARCH_RESULT_CLICKED,
+    feature: feature
+  }
+}
+// clear the last clicked element
+export function searchResultUnclick() {
+  return {
+    type: SEARCH_RESULT_CLICKED,
+    feature: null
+  }
+}

@@ -11,6 +11,7 @@ import Int1Base from './layers/int1base'
 import DeMvDepth from './layers/germany_mv_depth'
 import ScubaDiving from './layers/scubaDiving'
 import SeamarksDebug from './layers/seamarkDebug'
+import Search from './layers/search'
 
 /**
 for the old (2013) layers format see:
@@ -78,6 +79,12 @@ export const availibleOverlayLayers = [
     id: 'overlay_osm_scubadiving',
     urlIndex2016: 3,
     urlIndex2013: 4,
+    visibleDefault: false
+  },
+  {
+    layerConstructor: Search,
+    id: 'overlay_search',
+    urlIndex2016: 4,
     visibleDefault: false
   }
 ]
