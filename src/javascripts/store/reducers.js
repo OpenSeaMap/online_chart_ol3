@@ -14,6 +14,7 @@ import {
     SET_LAYER_VISIBLE,
     INIT_LAYER_VISIBLE,
     SET_VIEW_POSITION,
+    SET_VIEW_TO_EXTENT,
     FEATURE_CLICKED,
     LAYER_TILE_LOAD_CHANGE
 } from './actions'
@@ -49,6 +50,16 @@ function viewPosition(state = {}, action) {
   switch (action.type) {
     case SET_VIEW_POSITION:
       return Object.assign({}, state, action.position);
+
+    default:
+      return state;
+  }
+}
+
+function viewExtent(state = [], action) {
+  switch (action.type) {
+    case SET_VIEW_TO_EXTENT:
+      return action.extent;
 
     default:
       return state;
@@ -125,18 +136,18 @@ export const SEARCH_STATE_ERROR = 'SEARCH_STATE_ERROR';
 function search(state = {
     state: SEARCH_STATE_IDLE,
     query: '',
-    response: {},
-    hoveredFeature: null,
-    clickedFeature: null
+    response: [],
+    hoveredFeatureId: null,
+    clickedFeatureId: null
   }, action) {
   switch (action.type) {
     case SEARCH_START:
       return {
         state: SEARCH_STATE_RUNNING,
         query: action.query,
-        response: {},
-        hoveredFeature: null,
-        clickedFeature: null
+        response: [],
+        hoveredFeatureId: null,
+        clickedFeatureId: null
       }
     case SEARCH_END: {
       let obj = {};
@@ -150,13 +161,13 @@ function search(state = {
     }
     case SEARCH_RESULT_HOVERED: {
       let obj = {
-        hoveredFeature: action.feature
+        hoveredFeatureId: action.featureId
       };
       return Object.assign({}, state, obj);
     }
     case SEARCH_RESULT_CLICKED: {
       let obj = {
-        clickedFeature: action.feature
+        clickedFeatureId: action.featureId
       };
       return Object.assign({}, state, obj);
     }
@@ -170,6 +181,7 @@ const mapApp = combineReducers({
   sidebarSelectedTab,
   layerVisible,
   viewPosition,
+  viewExtent,
   selectedFeature,
   layerTileLoadState,
   search

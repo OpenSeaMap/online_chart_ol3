@@ -43,6 +43,7 @@ const LayerProgressBar = ({loadState, enabled}) => {
 }
 
 LayerProgressBar.propTypes = {
+  enabled: PropTypes.bool,
   loadState: PropTypes.shape({
     loading: PropTypes.number,
     loaded: PropTypes.number

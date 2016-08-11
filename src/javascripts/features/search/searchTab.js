@@ -7,6 +7,7 @@
 import React from 'react'
 import SearchBar from './searchBar'
 import SearchProvider from './searchProvider'
+import SearchResultList from './searchResultList'
 
 class SearchTabControl extends React.Component {
   render() {
@@ -14,6 +15,7 @@ class SearchTabControl extends React.Component {
       <div>
         <SearchBar />
         <SearchProvider />
+        <SearchResultList />
       </div>
     );
   }

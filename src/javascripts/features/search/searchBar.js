@@ -32,11 +32,8 @@ class SearchBarComponent extends React.Component {
     this.getValidationState = this.getValidationState.bind(this)
   }
 
-  getValidationState() {
-    const state = this.props.state
-    if (state === SEARCH_STATE_COMPLETE) return 'success';
-    else if (state === SEARCH_STATE_RUNNING) return 'warning';
-    else if (state === SEARCH_STATE_ERROR) return 'error';
+  componentWillReceiveProps(nextProps) {
+    this.setState({ value: nextProps.query });
   }
 
   handleChange(e) {
@@ -48,8 +45,11 @@ class SearchBarComponent extends React.Component {
     this.props.onSearchSubmit(this.state.value);
   }
 
-  componentWillReceiveProps(nextProps) {
-    this.setState({ value: nextProps.query });
+  getValidationState() {
+    const state = this.props.state
+    if (state === SEARCH_STATE_COMPLETE) return 'success';
+    else if (state === SEARCH_STATE_RUNNING) return 'warning';
+    else if (state === SEARCH_STATE_ERROR) return 'error';
   }
 
   render() {

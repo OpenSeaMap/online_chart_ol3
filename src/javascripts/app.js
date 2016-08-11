@@ -81,7 +81,9 @@ const messages = {
   'layer-name-seamarks-debug': 'Interactive Seamarks',
 
   'click-on-markers': 'click on markers to see details',
-  'copyright-layer': 'Layer data © {source}'
+  'copyright-layer': 'Layer data © {source}',
+  'search-results': 'Results',
+  'search-start-for-results': 'Start a search to get results.',
 }
 
 import { LayerType } from './config/chartlayer'

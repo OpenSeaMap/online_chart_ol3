@@ -17,10 +17,10 @@ import { Tabs } from './features/tabs'
 
 class Map extends React.Component {
 
-  constructor(props, {store}) {
+  constructor(props) {
     super(props);
-    this._store = store;
     this.updateView = this.updateView.bind(this);
+    this.viewIsMoving = false // set to true during animations to prevent position updates
 
     /* array of controls.
      * this controls must be added/removed from the map.
@@ -70,11 +70,13 @@ class Map extends React.Component {
     this._controls.map((control) => this.ol3Map.addControl(control));
 
     this.ol3Map.on('moveend', function() {
+      this.viewIsMoving = false;
       this.ol3Map.beforeRender();
       this.updateView();
     }.bind(this));
 
     this.ol3Map.getView().on('change:resolution', function() {
+      this.viewIsMoving = false;
       this.ol3Map.beforeRender();
       this.updateView();
     }.bind(this));
@@ -93,19 +95,7 @@ class Map extends React.Component {
     }
     if (!positionsEqual(nextProps.viewPosition, position)) {
       let view = this.ol3Map.getView();
-      let start = +new Date();
-      let pan = ol.animation.pan({
-        duration: 1000,
-        easing: ol.easing.linear,
-        source: view.getCenter(),
-        start: start
-      });
-      var bounce = ol.animation.bounce({
-        duration: 1000,
-        resolution: 2 * view.getResolution(),
-        start: start
-      });
-      this.ol3Map.beforeRender(pan, bounce);
+      this.setupMoveAnimations()
 
       view.setCenter(ol.proj.fromLonLat([
         nextProps.viewPosition.lon,
@@ -113,13 +103,48 @@ class Map extends React.Component {
       ]));
       view.setZoom(nextProps.viewPosition.zoom);
     }
+
+    if(nextProps.viewExtent !== this.props.viewExtent){
+      if(nextProps.viewExtent && nextProps.viewExtent.length === 4){
+        let mapSize = this.ol3Map.getSize()
+        let width = mapSize[0]
+        let height = mapSize[1]
+        let options = {
+          padding: [height/4, width/4, height/4, width/4],
+          maxZoom: 18
+        }
+        this.setupMoveAnimations()
+        this.ol3Map.getView().fit(nextProps.viewExtent, mapSize, options)
+        this.props.onViewExtentChange([])
+        this.viewIsMoving = false;
+        this.updateView() // trigger state update
+      }
+    }
   }
 
   addControlToMap(control) {
     this._controls.push(control);
   }
 
+  setupMoveAnimations(){
+    let view = this.ol3Map.getView();
+    let start = +new Date();
+    let pan = ol.animation.pan({
+      duration: 1000,
+      easing: ol.easing.linear,
+      source: view.getCenter(),
+      start: start
+    });
+    var bounce = ol.animation.bounce({
+      duration: 1000,
+      resolution: 2 * view.getResolution(),
+      start: start
+    });
+    this.ol3Map.beforeRender(pan, bounce);
+  }
+
   updateView() {
+    if(this.viewIsMoving) return
     var centre = ol.proj.transform(this.ol3Map.getView().getCenter(), 'EPSG:3857', 'EPSG:4326');
     let position = {
       lon: centre[0],
@@ -187,20 +212,17 @@ Map.defaultProps = {
 
 Map.propTypes = {
   layerVisible: PropTypes.objectOf(PropTypes.bool).isRequired,
+  onViewExtentChange: PropTypes.func.isRequired,
   onViewPositionChange: PropTypes.func.isRequired,
   renderer: PropTypes.string,
-  viewPosition: PropTypes.shape({
-    lon: PropTypes.number,
-    lat: PropTypes.number,
-    zoom: PropTypes.number
-  })
+  viewExtent: PropTypes.arrayOf(PropTypes.number),
+  viewPosition: PropTypes.objectOf(PropTypes.number)
 }
 
 import { LayerType } from './config/chartlayer'
 
 Map.contextTypes = {
-  layers: PropTypes.arrayOf(LayerType),
-  store: PropTypes.object
+  layers: PropTypes.arrayOf(LayerType)
 }
 
 export default Map;

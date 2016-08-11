@@ -85,7 +85,7 @@ export const availibleOverlayLayers = [
     layerConstructor: Search,
     id: 'overlay_search',
     urlIndex2016: 4,
-    visibleDefault: false
+    visibleDefault: true
   }
 ]
 

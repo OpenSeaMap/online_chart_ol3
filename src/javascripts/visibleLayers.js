@@ -4,17 +4,21 @@
 */
 import Map from './Map'
 
-import { setViewPosition } from './store/actions'
+import { setViewPosition, setViewToExtent } from './store/actions'
 const mapStateToProps = (state) => {
   return {
     layerVisible: state.layerVisible,
-    viewPosition: state.viewPosition
+    viewPosition: state.viewPosition,
+    viewExtent: state.viewExtent
   }
 }
 const mapDispatchToProps = (dispatch) => {
   return {
     onViewPositionChange: (pos) => {
       dispatch(setViewPosition(pos))
+    },
+    onViewExtentChange: (extent) => {
+      dispatch(setViewToExtent(extent))
     }
   }
 }

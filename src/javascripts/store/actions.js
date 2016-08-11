@@ -29,6 +29,14 @@ export function setViewPosition(position) {
   }
 }
 
+export const SET_VIEW_TO_EXTENT = 'SET_VIEW_TO_EXTENT';
+export function setViewToExtent(extent) {
+  return {
+    type: SET_VIEW_TO_EXTENT,
+    extent: extent
+  }
+}
+
 export const FEATURE_CLICKED = 'FEATURE_CLICKED';
 export function featureClicked(feature) {
   return {
@@ -63,31 +71,31 @@ export function searchEnd(success, response) {
   }
 }
 export const SEARCH_RESULT_HOVERED = 'SEARCH_RESULT_HOVERED';
-export function searchResultHovered(feature) {
+export function searchResultHovered(featureId) {
   return {
     type: SEARCH_RESULT_HOVERED,
-    feature: feature
+    featureId: featureId
   }
 }
 // to remove the hover from any feature
 export function searchResultUnhover() {
   return {
     type: SEARCH_RESULT_HOVERED,
-    feature: null
+    featureId: null
   }
 }
 
 export const SEARCH_RESULT_CLICKED = 'SEARCH_RESULT_CLICKED';
-export function searchResultClicked(feature) {
+export function searchResultClicked(featureId) {
   return {
     type: SEARCH_RESULT_CLICKED,
-    feature: feature
+    featureId: featureId
   }
 }
 // clear the last clicked element
 export function searchResultUnclick() {
   return {
     type: SEARCH_RESULT_CLICKED,
-    feature: null
+    featureId: null
   }
 }
