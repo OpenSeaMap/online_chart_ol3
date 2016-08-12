@@ -51,6 +51,8 @@ class Map extends React.Component {
       controls: [],
       layers: layers,
       interactions: interactions,
+      loadTilesWhileAnimating: true,
+      loadTilesWhileInteracting: true,
       view: new ol.View({
         center: ol.proj.fromLonLat([
           this.props.viewPosition.lon,
@@ -131,13 +133,14 @@ class Map extends React.Component {
     let start = +new Date();
     let pan = ol.animation.pan({
       duration: 1000,
-      easing: ol.easing.linear,
+      easing: ol.easing.inAndOut,
       source: view.getCenter(),
       start: start
     });
-    var bounce = ol.animation.bounce({
+    var bounce = ol.animation.zoom({
       duration: 1000,
-      resolution: 2 * view.getResolution(),
+      easing: ol.easing.inAndOut,
+      resolution: view.getResolution(),
       start: start
     });
     this.ol3Map.beforeRender(pan, bounce);

@@ -9,8 +9,6 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { PropTypes } from 'react'
 
-import {ProgressBar} from 'react-bootstrap'
-
 import { searchEnd } from 'store/actions'
 
 import {SEARCH_STATE_IDLE, SEARCH_STATE_ERROR, SEARCH_STATE_RUNNING, SEARCH_STATE_COMPLETE} from 'store/reducers'
@@ -31,7 +29,10 @@ class SearchProviderComponent extends React.Component {
     let args = {
       format: 'json',
       q: nextProps.query,
-      polygon_geojson: '1'
+      polygon_geojson: '1',
+      addressdetails: '1',
+      extratags: '1',
+      namedetails: '1',
     }
     $.getJSON('//nominatim.openstreetmap.org/search', args, this.onDataReceived);
   }
@@ -41,12 +42,7 @@ class SearchProviderComponent extends React.Component {
   }
 
   render() {
-    return (
-      <ProgressBar
-          active={this.props.state === SEARCH_STATE_RUNNING}
-          now={100}
-      />
-      );
+    return null
   }
 }
 

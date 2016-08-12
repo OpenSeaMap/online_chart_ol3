@@ -51,49 +51,69 @@ module.exports = function(context, options) {
 
   var styleFunction = function(/*resolution*/) {
     let feature = this
-    // display label only for hovered or clicked features
-    let text = feature.get(SEARCH_FEATURE_HOVERED_PROPERTY_NAME) || feature.get(SEARCH_FEATURE_CLICKED_PROPERTY_NAME)
-       ? new ol.style.Text({
-         font: feature.get(SEARCH_FEATURE_HOVERED_PROPERTY_NAME) ? 'bold 12px sans-serif' : '10px sans-serif',
-         offsetY: 12,
-         text: feature.get('display_name'),
-         textAlign: 'center',
-         textBaseline: 'top'
-        })
-      : null
+    let labelText = feature.get('namedetails').name
+    let hovered = feature.get(SEARCH_FEATURE_HOVERED_PROPERTY_NAME)
+    let clicked = feature.get(SEARCH_FEATURE_CLICKED_PROPERTY_NAME)
 
-    let icon = feature.get('icon')
-    ? new ol.style.Icon({
-      src: feature.get('icon')
-    })
-    : new ol.style.Circle({
+    let styles = []
+
+    if(labelText && (hovered || clicked)){
+     let text = new ol.style.Style({
+       geometry: 'labelPoint',
+       text: new ol.style.Text({
+           font: 'bold 12px sans-serif',
+           offsetY: 12  ,
+           text: labelText,
+           textAlign: 'center',
+           textBaseline: 'top'
+        })
+      })
+      styles.push(text)
+    }
+
+    if(clicked){
+      let markerIcon = new ol.style.Style({
+        geometry: 'labelPoint',
+        image: new ol.style.Icon({
+          anchor: [0.5, 1],
+          anchorXUnits: 'fraction',
+          anchorYUnits: 'fraction',
+          opacity: 1,
+          src: '//nominatim.openstreetmap.org/js/images/marker-icon.png'
+        })
+      })
+      styles.push(markerIcon)
+    } else {
+      let markerCircle = new ol.style.Style({
+        geometry: 'labelPoint',
+        image: new ol.style.Circle({
+          radius: 10,
+          fill: new ol.style.Fill({
+            color: 'rgba(16, 40, 68, 0.3)'
+          }),
+          stroke: new ol.style.Stroke({
+            color: 'rgba(16, 40, 68, 1)',
+            width: hovered ? 3 : 1
+          })
+        })
+      })
+      styles.push(markerCircle)
+    }
+
+    let polygonColor = clicked || hovered ? 'red': 'blue'
+    let polygonStyle = new ol.style.Style({
+      geometry: 'geometry',
       stroke: new ol.style.Stroke({
-          color: 'blue',
-        width: 3
+          color: polygonColor,
+        width: 2
       }),
       fill: new ol.style.Fill({
         color: 'rgba(0, 0, 255, 0.1)'
       })
     })
+    styles.push(polygonStyle)
 
-    return [
-      new ol.style.Style({
-        geometry: 'geometry',
-        stroke: new ol.style.Stroke({
-            color: feature.get(SEARCH_FEATURE_CLICKED_PROPERTY_NAME) ? 'red': 'blue',
-          lineDash: [4],
-          width: 3
-        }),
-        fill: new ol.style.Fill({
-          color: 'rgba(0, 0, 255, 0.1)'
-        })
-      }),
-      new ol.style.Style({
-        geometry: 'labelPoint',
-        image: icon,
-        text: text
-      }),
-    ]
+    return styles
   };
 
   var vectorSource = new ol.source.Vector({
@@ -189,6 +209,8 @@ module.exports = function(context, options) {
           feature.setId(res.place_id)
           vectorSource.addFeature(feature);
       })
+      if(results.length > 0)
+        context.dispatch(setViewToExtent(vectorSource.getExtent()))
   }
   let storeChangeHandler = function(){
     searchHandler()

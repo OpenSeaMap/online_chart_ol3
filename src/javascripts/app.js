@@ -82,8 +82,11 @@ const messages = {
 
   'click-on-markers': 'click on markers to see details',
   'copyright-layer': 'Layer data © {source}',
-  'search-results': 'Results',
+  'search-results': 'Results: {numberResults}',
   'search-start-for-results': 'Start a search to get results.',
+  'search-error': 'Your search returned an error: {message}.',
+  'search-running': 'Your search is running. Please wait.',
+  'search-empty-result': 'No results found.'
 }
 
 import { LayerType } from './config/chartlayer'

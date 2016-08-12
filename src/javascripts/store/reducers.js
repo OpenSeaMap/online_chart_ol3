@@ -21,6 +21,7 @@ import {
 
 import {
     SEARCH_START,
+    SEARCH_CLEAR,
     SEARCH_END,
     SEARCH_RESULT_HOVERED,
     SEARCH_RESULT_CLICKED
@@ -133,22 +134,34 @@ export const SEARCH_STATE_IDLE = 'SEARCH_STATE_IDLE';
 export const SEARCH_STATE_RUNNING = 'SEARCH_STATE_RUNNING';
 export const SEARCH_STATE_COMPLETE = 'SEARCH_STATE_COMPLETE';
 export const SEARCH_STATE_ERROR = 'SEARCH_STATE_ERROR';
-function search(state = {
-    state: SEARCH_STATE_IDLE,
-    query: '',
-    response: [],
-    hoveredFeatureId: null,
-    clickedFeatureId: null
-  }, action) {
+
+export const SEARCH_STATES = [
+  SEARCH_STATE_IDLE,
+  SEARCH_STATE_RUNNING,
+  SEARCH_STATE_COMPLETE,
+  SEARCH_STATE_ERROR
+]
+
+const searchDefaultState = {
+  state: SEARCH_STATE_IDLE,
+  query: '',
+  response: [],
+  hoveredFeatureId: null,
+  clickedFeatureId: null
+}
+
+function search(state = searchDefaultState, action) {
   switch (action.type) {
-    case SEARCH_START:
-      return {
+    case SEARCH_START: {
+      let obj = {
         state: SEARCH_STATE_RUNNING,
         query: action.query,
-        response: [],
-        hoveredFeatureId: null,
-        clickedFeatureId: null
       }
+      return Object.assign({}, searchDefaultState, obj);
+    }
+    case SEARCH_CLEAR:
+      return searchDefaultState;
+
     case SEARCH_END: {
       let obj = {};
       if(action.success) {

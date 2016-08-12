@@ -9,9 +9,9 @@ import { connect } from 'react-redux'
 import { PropTypes } from 'react'
 
 import {FormGroup, InputGroup, FormControl, Button} from 'react-bootstrap'
-import { MdSearch } from 'react-icons/lib/md'
+import { MdSearch, MdClear } from 'react-icons/lib/md'
 
-import { searchStart } from 'store/actions'
+import { searchStart, searchClear } from 'store/actions'
 import { setSidebarOpen, setSidebarActiveTab } from 'controls/sidebar/store'
 
 import {SearchTab} from 'config/layers/search'
@@ -28,6 +28,7 @@ class SearchBarComponent extends React.Component {
     this.render = this.render.bind(this)
     this.handleChange = this.handleChange.bind(this)
     this.handleSubmit = this.handleSubmit.bind(this)
+    this.handleClear = this.handleClear.bind(this)
     this.componentWillReceiveProps = this.componentWillReceiveProps.bind(this)
     this.getValidationState = this.getValidationState.bind(this)
   }
@@ -43,6 +44,10 @@ class SearchBarComponent extends React.Component {
   handleSubmit(e){
     e.preventDefault()
     this.props.onSearchSubmit(this.state.value);
+  }
+  handleClear(e){
+    e.preventDefault()
+    this.props.onSearchClear();
   }
 
   getValidationState() {
@@ -67,6 +72,7 @@ class SearchBarComponent extends React.Component {
             />
             <InputGroup.Button>
               <Button onClick={this.handleSubmit}><MdSearch /></Button>
+              <Button onClick={this.handleClear}><MdClear /></Button>
             </InputGroup.Button>
           </InputGroup>
         </FormGroup>
@@ -95,6 +101,9 @@ const mapDispatchToProps = (dispatch) => {
 
       dispatch(setSidebarActiveTab(SearchTab.name));
       dispatch(setSidebarOpen(true));
+    },
+    onSearchClear: () => {
+      dispatch(searchClear())
     }
   }
 }

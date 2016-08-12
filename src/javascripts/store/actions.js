@@ -62,6 +62,12 @@ export function searchStart(queryString) {
     query: queryString
   }
 }
+export const SEARCH_CLEAR = 'SEARCH_CLEAR';
+export function searchClear() {
+  return {
+    type: SEARCH_CLEAR,
+  }
+}
 export const SEARCH_END = 'SEARCH_END';
 export function searchEnd(success, response) {
   return {
