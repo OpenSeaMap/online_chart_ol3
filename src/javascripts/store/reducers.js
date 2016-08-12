@@ -2,10 +2,35 @@
 * @license AGPL-3.0
 * @author aAXEe (https://github.com/aAXEe)
 */
-import { combineReducers, createStore, compose, applyMiddleware } from 'redux'
-import { SET_LAYER_VISIBLE, INIT_LAYER_VISIBLE, SET_VIEW_POSITION, FEATURE_CLICKED, LAYER_TILE_LOAD_CHANGE } from './actions'
 
-import { sidebarIsOpen, sidebarSelectedTab } from '../controls/sidebar/store'
+import {
+    combineReducers,
+    createStore,
+    compose,
+    applyMiddleware
+} from 'redux'
+
+import {
+    SET_LAYER_VISIBLE,
+    INIT_LAYER_VISIBLE,
+    SET_VIEW_POSITION,
+    SET_VIEW_TO_EXTENT,
+    FEATURE_CLICKED,
+    LAYER_TILE_LOAD_CHANGE
+} from './actions'
+
+import {
+    SEARCH_START,
+    SEARCH_CLEAR,
+    SEARCH_END,
+    SEARCH_RESULT_HOVERED,
+    SEARCH_RESULT_CLICKED
+} from './actions'
+
+import {
+    sidebarIsOpen,
+    sidebarSelectedTab
+} from '../controls/sidebar/store'
 
 function layerVisible(state = {}, action) {
   switch (action.type) {
@@ -26,6 +51,16 @@ function viewPosition(state = {}, action) {
   switch (action.type) {
     case SET_VIEW_POSITION:
       return Object.assign({}, state, action.position);
+
+    default:
+      return state;
+  }
+}
+
+function viewExtent(state = [], action) {
+  switch (action.type) {
+    case SET_VIEW_TO_EXTENT:
+      return action.extent;
 
     default:
       return state;
@@ -95,13 +130,74 @@ function layerTileLoadState(state = {}, action){
   }
 }
 
+export const SEARCH_STATE_IDLE = 'SEARCH_STATE_IDLE';
+export const SEARCH_STATE_RUNNING = 'SEARCH_STATE_RUNNING';
+export const SEARCH_STATE_COMPLETE = 'SEARCH_STATE_COMPLETE';
+export const SEARCH_STATE_ERROR = 'SEARCH_STATE_ERROR';
+
+export const SEARCH_STATES = [
+  SEARCH_STATE_IDLE,
+  SEARCH_STATE_RUNNING,
+  SEARCH_STATE_COMPLETE,
+  SEARCH_STATE_ERROR
+]
+
+const searchDefaultState = {
+  state: SEARCH_STATE_IDLE,
+  query: '',
+  response: [],
+  hoveredFeatureId: null,
+  clickedFeatureId: null
+}
+
+function search(state = searchDefaultState, action) {
+  switch (action.type) {
+    case SEARCH_START: {
+      let obj = {
+        state: SEARCH_STATE_RUNNING,
+        query: action.query,
+      }
+      return Object.assign({}, searchDefaultState, obj);
+    }
+    case SEARCH_CLEAR:
+      return searchDefaultState;
+
+    case SEARCH_END: {
+      let obj = {};
+      if(action.success) {
+        obj.state = SEARCH_STATE_COMPLETE
+      } else {
+        obj.state = SEARCH_STATE_ERROR
+      }
+      obj.response = action.response
+      return Object.assign({}, state, obj);
+    }
+    case SEARCH_RESULT_HOVERED: {
+      let obj = {
+        hoveredFeatureId: action.featureId
+      };
+      return Object.assign({}, state, obj);
+    }
+    case SEARCH_RESULT_CLICKED: {
+      let obj = {
+        clickedFeatureId: action.featureId
+      };
+      return Object.assign({}, state, obj);
+    }
+    default:
+      return state;
+  }
+}
+
 const mapApp = combineReducers({
   sidebarIsOpen,
   sidebarSelectedTab,
   layerVisible,
   viewPosition,
+  viewExtent,
   selectedFeature,
-  layerTileLoadState
+  layerTileLoadState,
+  search
 })
 
 import { writeToUrlHash } from './urlHashHandling'

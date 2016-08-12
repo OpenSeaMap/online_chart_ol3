@@ -67,10 +67,12 @@ const messages = {
   'sidebar-settings': 'Settings',
   'sidebar-details': 'Details',
   'sidebar-development': 'Development',
+  'sidebar-search': 'Search',
 
   'layerlist-baselayer': 'Base layers',
   'layerlist-overlaylayer': 'Overlay layers',
 
+  'layer-name-search': 'Search',
   'layer-name-seamarks': 'OpenSeaMap seamarks',
   'layer-name-depth-geodaten_mv': 'Official depth data for Germany/MV',
   'layer-name-int1_base': 'INT1 style basemap',
@@ -79,7 +81,12 @@ const messages = {
   'layer-name-seamarks-debug': 'Interactive Seamarks',
 
   'click-on-markers': 'click on markers to see details',
-  'copyright-layer': 'Layer data © {source}'
+  'copyright-layer': 'Layer data © {source}',
+  'search-results': 'Results: {numberResults}',
+  'search-start-for-results': 'Start a search to get results.',
+  'search-error': 'Your search returned an error: {message}.',
+  'search-running': 'Your search is running. Please wait.',
+  'search-empty-result': 'No results found.'
 }
 
 import { LayerType } from './config/chartlayer'

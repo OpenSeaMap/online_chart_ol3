@@ -72,7 +72,7 @@ module.exports = function(context, options) {
     nameKey: 'layer-name-int1_base',
     layer: new ol.layer.Tile({
       //maxResolution: 2500,
-      opacity: 0.5,
+      preload: 6,
       source: source
     })
   };

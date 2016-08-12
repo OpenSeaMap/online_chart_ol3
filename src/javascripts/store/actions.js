@@ -29,6 +29,14 @@ export function setViewPosition(position) {
   }
 }
 
+export const SET_VIEW_TO_EXTENT = 'SET_VIEW_TO_EXTENT';
+export function setViewToExtent(extent) {
+  return {
+    type: SET_VIEW_TO_EXTENT,
+    extent: extent
+  }
+}
+
 export const FEATURE_CLICKED = 'FEATURE_CLICKED';
 export function featureClicked(feature) {
   return {
@@ -44,5 +52,56 @@ export function layerTileLoadStateChange(id, loadEvent) {
     type: LAYER_TILE_LOAD_CHANGE,
     id: id,
     changeType: loadEvent.type
+  }
+}
+
+export const SEARCH_START = 'SEARCH_START';
+export function searchStart(queryString) {
+  return {
+    type: SEARCH_START,
+    query: queryString
+  }
+}
+export const SEARCH_CLEAR = 'SEARCH_CLEAR';
+export function searchClear() {
+  return {
+    type: SEARCH_CLEAR,
+  }
+}
+export const SEARCH_END = 'SEARCH_END';
+export function searchEnd(success, response) {
+  return {
+    type: SEARCH_END,
+    success: success,
+    response: response
+  }
+}
+export const SEARCH_RESULT_HOVERED = 'SEARCH_RESULT_HOVERED';
+export function searchResultHovered(featureId) {
+  return {
+    type: SEARCH_RESULT_HOVERED,
+    featureId: featureId
+  }
+}
+// to remove the hover from any feature
+export function searchResultUnhover() {
+  return {
+    type: SEARCH_RESULT_HOVERED,
+    featureId: null
+  }
+}
+
+export const SEARCH_RESULT_CLICKED = 'SEARCH_RESULT_CLICKED';
+export function searchResultClicked(featureId) {
+  return {
+    type: SEARCH_RESULT_CLICKED,
+    featureId: featureId
+  }
+}
+// clear the last clicked element
+export function searchResultUnclick() {
+  return {
+    type: SEARCH_RESULT_CLICKED,
+    featureId: null
   }
 }
