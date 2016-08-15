@@ -1,0 +1,9 @@
+version: '2'
+
+services:
+  base:
+    build: .
+    volumes:
+     - ./src:/code/src
+    environment:
+      - NPM_CONFIG_LOGLEVEL=warn
