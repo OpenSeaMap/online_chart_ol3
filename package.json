@@ -95,6 +95,7 @@
     "karma-firefox-launcher": "^1.0.0",
     "karma-mocha": "^1.1.1",
     "karma-nyan-reporter": "0.2.4",
+    "karma-phantomjs-launcher": "^1.0.1",
     "karma-sinon-chai": "^1.2.0",
     "karma-webpack": "1.8.0",
     "lodash": "^4.2.1",
