@@ -16,10 +16,7 @@ import {
     SET_VIEW_POSITION,
     SET_VIEW_TO_EXTENT,
     FEATURE_CLICKED,
-    LAYER_TILE_LOAD_CHANGE
-} from './actions'
-
-import {
+    LAYER_TILE_LOAD_CHANGE,
     SEARCH_START,
     SEARCH_CLEAR,
     SEARCH_END,
@@ -32,44 +29,44 @@ import {
     sidebarSelectedTab
 } from '../controls/sidebar/store'
 
-function layerVisible(state = {}, action) {
+function layerVisible (state = {}, action) {
   switch (action.type) {
     case SET_LAYER_VISIBLE:
-      var vis = {};
-      vis[action.id] = action.visible;
-      return Object.assign({}, state, vis);
+      var vis = {}
+      vis[action.id] = action.visible
+      return Object.assign({}, state, vis)
 
     case INIT_LAYER_VISIBLE:
-      return Object.assign({}, action.list);
+      return Object.assign({}, action.list)
 
     default:
-      return state;
+      return state
   }
 }
 
-function viewPosition(state = {}, action) {
+function viewPosition (state = {}, action) {
   switch (action.type) {
     case SET_VIEW_POSITION:
-      return Object.assign({}, state, action.position);
+      return Object.assign({}, state, action.position)
 
     default:
-      return state;
+      return state
   }
 }
 
-function viewExtent(state = [], action) {
+function viewExtent (state = [], action) {
   switch (action.type) {
     case SET_VIEW_TO_EXTENT:
-      return action.extent;
+      return action.extent
 
     default:
-      return state;
+      return state
   }
 }
 
-function selectedFeature(state = {
-    hasFeature: false
-  }, action) {
+function selectedFeature (state = {
+  hasFeature: false
+}, action) {
   switch (action.type) {
     case FEATURE_CLICKED:
       return {
@@ -77,63 +74,63 @@ function selectedFeature(state = {
         feature: action.feature
       }
     default:
-      return state;
+      return state
   }
 }
 
-function layerTileLoadState(state = {}, action){
+function layerTileLoadState (state = {}, action) {
   switch (action.type) {
     case LAYER_TILE_LOAD_CHANGE: {
-      let count = state[action.id];
+      let count = state[action.id]
 
-      if(action.changeType === 'imageloadstart' || action.changeType === 'tileloadstart') {
-        count.loading++;
+      if (action.changeType === 'imageloadstart' || action.changeType === 'tileloadstart') {
+        count.loading++
       } else {
-        count.loaded++;
+        count.loaded++
       }
 
-      if(action.changeType.endsWith('error')) {
+      if (action.changeType.endsWith('error')) {
         count.lastError = action.changeType
       }
 
-      if(count.loading == count.loaded) {
-         count.loading = 0
-         count.loaded = 0
+      if (count.loading === count.loaded) {
+        count.loading = 0
+        count.loaded = 0
       }
 
-      let obj = {};
-      obj[action.id] = count;
-      return Object.assign({}, state, obj);
+      let obj = {}
+      obj[action.id] = count
+      return Object.assign({}, state, obj)
     }
 
     case SET_LAYER_VISIBLE: {
-      let count = state[action.id];
+      let count = state[action.id]
       count.lastError = ''
-      let obj = {};
-      obj[action.id] = count;
-      return Object.assign({}, state, obj);
+      let obj = {}
+      obj[action.id] = count
+      return Object.assign({}, state, obj)
     }
 
     case INIT_LAYER_VISIBLE: {
-      let obj = {};
+      let obj = {}
       Object.keys(action.list).forEach(id => {
-        obj[id] =  {
+        obj[id] = {
           lastError: '',
           loading: 0,
           loaded: 0
         }
       })
-      return Object.assign({}, obj);
+      return Object.assign({}, obj)
     }
     default:
-      return state;
+      return state
   }
 }
 
-export const SEARCH_STATE_IDLE = 'SEARCH_STATE_IDLE';
-export const SEARCH_STATE_RUNNING = 'SEARCH_STATE_RUNNING';
-export const SEARCH_STATE_COMPLETE = 'SEARCH_STATE_COMPLETE';
-export const SEARCH_STATE_ERROR = 'SEARCH_STATE_ERROR';
+export const SEARCH_STATE_IDLE = 'SEARCH_STATE_IDLE'
+export const SEARCH_STATE_RUNNING = 'SEARCH_STATE_RUNNING'
+export const SEARCH_STATE_COMPLETE = 'SEARCH_STATE_COMPLETE'
+export const SEARCH_STATE_ERROR = 'SEARCH_STATE_ERROR'
 
 export const SEARCH_STATES = [
   SEARCH_STATE_IDLE,
@@ -150,42 +147,42 @@ const searchDefaultState = {
   clickedFeatureId: null
 }
 
-function search(state = searchDefaultState, action) {
+function search (state = searchDefaultState, action) {
   switch (action.type) {
     case SEARCH_START: {
       let obj = {
         state: SEARCH_STATE_RUNNING,
-        query: action.query,
+        query: action.query
       }
-      return Object.assign({}, searchDefaultState, obj);
+      return Object.assign({}, searchDefaultState, obj)
     }
     case SEARCH_CLEAR:
-      return searchDefaultState;
+      return searchDefaultState
 
     case SEARCH_END: {
-      let obj = {};
-      if(action.success) {
+      let obj = {}
+      if (action.success) {
         obj.state = SEARCH_STATE_COMPLETE
       } else {
         obj.state = SEARCH_STATE_ERROR
       }
       obj.response = action.response
-      return Object.assign({}, state, obj);
+      return Object.assign({}, state, obj)
     }
     case SEARCH_RESULT_HOVERED: {
       let obj = {
         hoveredFeatureId: action.featureId
-      };
-      return Object.assign({}, state, obj);
+      }
+      return Object.assign({}, state, obj)
     }
     case SEARCH_RESULT_CLICKED: {
       let obj = {
         clickedFeatureId: action.featureId
-      };
-      return Object.assign({}, state, obj);
+      }
+      return Object.assign({}, state, obj)
     }
     default:
-      return state;
+      return state
   }
 }
 
@@ -202,19 +199,19 @@ const mapApp = combineReducers({
 
 import { writeToUrlHash } from './urlHashHandling'
 
-export default function configureStore(initialState) {
+export default function configureStore (initialState) {
   const store = createStore(mapApp, initialState, compose(
     applyMiddleware(writeToUrlHash),
     window.devToolsExtension ? window.devToolsExtension() : f => f
-  ));
+  ))
 
   if (module.hot) {
     // Enable Webpack hot module replacement for reducers
     module.hot.accept('./reducers', () => {
-      const nextReducer = require('../reducers');
-      store.replaceReducer(nextReducer);
-    });
+      const nextReducer = require('../reducers')
+      store.replaceReducer(nextReducer)
+    })
   }
 
-  return store;
+  return store
 }

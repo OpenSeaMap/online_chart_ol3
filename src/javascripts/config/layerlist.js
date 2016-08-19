@@ -42,14 +42,14 @@ var layer_waterdepth_contours;         // 22
 
 export const availibleBaseLayers = [
   {
-    layerConstructor: OsmBase,
+    LayerConstructor: OsmBase,
     id: 'base_osm_default',
     isBaseLayer: true,
     urlIndex2013: 1,
     urlIndex2016BaseLayer: 'A',
     visibleDefault: true
   }, {
-    layerConstructor: Int1Base,
+    LayerConstructor: Int1Base,
     id: 'overlay_intl_base',
     isBaseLayer: true,
     urlIndex2016BaseLayer: 'B',
@@ -59,42 +59,41 @@ export const availibleBaseLayers = [
 
 export const availibleOverlayLayers = [
   {
-    layerConstructor: Seamarks,
+    LayerConstructor: Seamarks,
     id: 'overlay_osm_seamarks',
     urlIndex2016: 0,
     urlIndex2013: 3,
     visibleDefault: true
   }, {
-    layerConstructor: SeamarksDebug,
+    LayerConstructor: SeamarksDebug,
     id: 'overlay_osm_seamarks_debug',
     urlIndex2016: 1,
     visibleDefault: false
   }, {
-    layerConstructor: DeMvDepth,
+    LayerConstructor: DeMvDepth,
     id: 'overlay_demvdepth',
     urlIndex2016: 2,
     visibleDefault: false
   }, {
-    layerConstructor: ScubaDiving,
+    LayerConstructor: ScubaDiving,
     id: 'overlay_osm_scubadiving',
     urlIndex2016: 3,
     urlIndex2013: 4,
     visibleDefault: false
   },
   {
-    layerConstructor: Search,
+    LayerConstructor: Search,
     id: 'overlay_search',
     urlIndex2016: 4,
     visibleDefault: true
   }
 ]
 
-
-export function createLayers(store) {
-  let layers = [];
+export function createLayers (store) {
+  let layers = []
   let availibleLayers = availibleBaseLayers.concat(availibleOverlayLayers)
-  availibleLayers.forEach(function(layer) {
-    layers.push(new layer.layerConstructor(store, _.omit(layer, 'layerConstructor')));
-  });
+  availibleLayers.forEach(function (layer) {
+    layers.push(new layer.LayerConstructor(store, _.omit(layer, 'LayerConstructor')))
+  })
   return layers
 }

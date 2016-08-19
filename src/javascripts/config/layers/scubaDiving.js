@@ -2,27 +2,26 @@
 * @license AGPL-3.0
 * @author aAXEe (https://github.com/aAXEe)
 */
-'use strict';
+'use strict'
 
 import React from 'react'
 import ol from 'openlayers'
 import ChartLayer from '../chartlayer'
-import { FormattedMessage } from 'react-intl';
+import { FormattedMessage } from 'react-intl'
 import {TabSidebarDetails} from 'features/tabs'
 
-var SimpleImageStyle = require('ol-style-simpleImageStyle');
-var OverpassApi = require('ol-source-overpassApi');
+var SimpleImageStyle = require('ol-style-simpleImageStyle')
+var OverpassApi = require('ol-source-overpassApi')
 
 import { featureClicked, layerTileLoadStateChange } from '../../store/actions'
 import { setSidebarOpen, setSidebarActiveTab } from '../../controls/sidebar/store'
 
-module.exports = function(context, options) {
-
+module.exports = function (context, options) {
   var defaults = {
     nameKey: 'layer-name-scuba_diving',
     iconSize: 32
-  };
-  Object.assign(defaults, options);
+  }
+  Object.assign(defaults, options)
 
   var styles = {
     'sport': {
@@ -31,59 +30,59 @@ module.exports = function(context, options) {
     'amenity': {
       'dive_centre': new SimpleImageStyle('images/amenity-dive_centre.svg', defaults.iconSize, defaults.iconSize)
     }
-  };
+  }
 
-  var styleFunction = function(feature, resolution, type) {
+  var styleFunction = function (feature, resolution, type) {
     if (type === 'normal' || type === 'hovered' || type === 'clicked') {
       for (var key in styles) {
-        var value = feature.get(key);
+        var value = feature.get(key)
         if (value !== undefined) {
           for (var regexp in styles[key]) {
             if (new RegExp(regexp).test(value)) {
-              return styles[key][regexp];
+              return styles[key][regexp]
             }
           }
         }
       }
     }
-    return null;
-  };
+    return null
+  }
 
-  let source = new OverpassApi('(node[sport=scuba_diving](bbox);node[amenity=dive_centre](bbox););out body qt;');
-  source.on(['tileloadstart', 'tileloadend', 'tileloaderror'], function(ev) {
-    context.dispatch(layerTileLoadStateChange(options.id, ev));
-  });
+  let source = new OverpassApi('(node[sport=scuba_diving](bbox);node[amenity=dive_centre](bbox););out body qt;')
+  source.on(['tileloadstart', 'tileloadend', 'tileloaderror'], function (ev) {
+    context.dispatch(layerTileLoadStateChange(options.id, ev))
+  })
 
   let layer = new ol.layer.Vector({
     source: source,
-    style: function(feature, resolution) {
-      return styleFunction(feature, resolution, 'normal');
+    style: function (feature, resolution) {
+      return styleFunction(feature, resolution, 'normal')
     }
   })
 
   var selector = new ol.interaction.Select({
     layers: [layer],
-    style: function(feature, resolution) {
-      return styleFunction(feature, resolution, 'clicked');
+    style: function (feature, resolution) {
+      return styleFunction(feature, resolution, 'clicked')
     }
-  });
+  })
   var hoverer = new ol.interaction.Select({
     layers: [layer],
     condition: ol.events.condition.pointerMove,
-    style: function(feature, resolution) {
-      return styleFunction(feature, resolution, 'hovered');
+    style: function (feature, resolution) {
+      return styleFunction(feature, resolution, 'hovered')
     }
-  });
+  })
 
-  selector.on('select', function(e) {
-    var feature = e.selected[0];
+  selector.on('select', function (e) {
+    var feature = e.selected[0]
     if (feature) {
-      context.dispatch(featureClicked(feature));
-      context.dispatch(setSidebarActiveTab(TabSidebarDetails.name));
-      context.dispatch(setSidebarOpen(true));
+      context.dispatch(featureClicked(feature))
+      context.dispatch(setSidebarActiveTab(TabSidebarDetails.name))
+      context.dispatch(setSidebarOpen(true))
     }
     return true
-  });
+  })
 
   var objects = {
     layer: layer,
@@ -98,8 +97,7 @@ module.exports = function(context, options) {
       </div>
     ),
     additionalTab: TabSidebarDetails
-  };
+  }
 
-
-  return new ChartLayer(context, Object.assign(defaults, objects));
-};
+  return new ChartLayer(context, Object.assign(defaults, objects))
+}

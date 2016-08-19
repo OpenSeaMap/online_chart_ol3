@@ -2,15 +2,14 @@
 * @license AGPL-3.0
 * @author aAXEe (https://github.com/aAXEe)
 */
-'use strict';
+'use strict'
 
-import React from 'react'
+import React, { PropTypes } from 'react'
 import { connect } from 'react-redux'
-import { PropTypes } from 'react'
-import { FormattedMessage } from 'react-intl';
-import { ListGroup } from 'react-bootstrap';
+import { FormattedMessage } from 'react-intl'
+import { ListGroup } from 'react-bootstrap'
 
-import { SearchResultDisplay } from './searchResultDisplay';
+import { SearchResultDisplay } from './searchResultDisplay'
 
 import {
   searchResultHovered,
@@ -22,7 +21,7 @@ import {
   SEARCH_STATE_RUNNING,
   SEARCH_STATE_COMPLETE,
   SEARCH_STATE_ERROR,
-  SEARCH_STATES,
+  SEARCH_STATES
 } from '../../store/reducers'
 
 const ResultList = ({
@@ -30,7 +29,7 @@ const ResultList = ({
   onResultClicked, onResultHovered, onResultUnhover,
   results, searchState
 }) => {
-  switch(searchState){
+  switch (searchState) {
     case SEARCH_STATE_IDLE:
       return (
         <FormattedMessage id="search-start-for-results" />
@@ -40,7 +39,7 @@ const ResultList = ({
         <FormattedMessage id="search-running" />
       )
     case SEARCH_STATE_COMPLETE:
-      if(results.length === 0){
+      if (results.length === 0) {
         return (
           <FormattedMessage id="search-empty-result" />
         )
@@ -49,22 +48,20 @@ const ResultList = ({
         <div>
           <h2>
             <FormattedMessage
-                id="search-results"
-                values={{numberResults: results.length}}
-            />
+              id="search-results"
+              values={{numberResults: results.length}} />
           </h2>
           <ListGroup>
             {results.map(result => (
               <SearchResultDisplay
-                  key={result.place_id}
+                key={result.place_id}
 
-                  isClicked={result.place_id === clickedId}
-                  isHovered={result.place_id === hoveredId}
-                  onResultClicked={()=>{onResultClicked(result.place_id)}}
-                  onResultHovered={()=>{onResultHovered(result.place_id)}}
-                  onResultUnhover={onResultUnhover}
-                  result={result}
-              />
+                isClicked={result.place_id === clickedId}
+                isHovered={result.place_id === hoveredId}
+                onResultClicked={() => { onResultClicked(result.place_id) }}
+                onResultHovered={() => { onResultHovered(result.place_id) }}
+                onResultUnhover={onResultUnhover}
+                result={result} />
               ))
             }
           </ListGroup>
@@ -73,9 +70,8 @@ const ResultList = ({
     case SEARCH_STATE_ERROR:
       return (
         <FormattedMessage
-            id="search-error"
-            values={{message: results}}
-        />
+          id="search-error"
+          values={{message: results}} />
       )
   }
   return null
@@ -96,7 +92,7 @@ const mapStateToProps = (state) => {
     results: state.search.response,
     searchState: state.search.state,
     hoveredId: state.search.hoveredFeatureId,
-    clickedId: state.search.clickedFeatureId,
+    clickedId: state.search.clickedFeatureId
   }
 }
 
@@ -110,7 +106,7 @@ const mapDispatchToProps = (dispatch) => {
     },
     onResultUnhover: () => {
       dispatch(searchResultUnhover())
-    },
+    }
   }
 }
 

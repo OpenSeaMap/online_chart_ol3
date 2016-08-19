@@ -3,19 +3,19 @@
 * @author aAXEe (https://github.com/aAXEe)
 * @author mojoaxel (https://github.com/mojoaxel)
 */
-'use strict';
+'use strict'
 
 import ReactDOM from 'react-dom'
 import React, { PropTypes } from 'react'
 
-import { IntlProvider } from 'react-intl';
+import { IntlProvider } from 'react-intl'
 
 import VisibleLayers from './visibleLayers'
 import { createLayers } from './config/layerlist'
 import configureStore from './store/reducers'
-import { initLayerVisible } from './store/actions'
+import { initLayerVisible, setViewPosition } from './store/actions'
 import { getStateFromUrlHash } from './store/urlHashHandling'
-
+import { positionsEqual } from './utils'
 import { defaultViewPosition } from './SETTINGS'
 
 let hashState = getStateFromUrlHash({
@@ -23,43 +23,39 @@ let hashState = getStateFromUrlHash({
 })
 let store = configureStore(hashState)
 
-let layers = createLayers(store);
+let layers = createLayers(store)
 
-let defaultVisibleList = {};
-if(hashState.layerVisible) { // use layer state from url if provided
+let defaultVisibleList = {}
+if (hashState.layerVisible) { // use layer state from url if provided
   defaultVisibleList = hashState.layerVisible
 } else {
   layers.forEach(layer => {
-    defaultVisibleList[layer.id] = layer.visibleDefault;
+    defaultVisibleList[layer.id] = layer.visibleDefault
   })
 }
-store.dispatch(initLayerVisible(defaultVisibleList));
+store.dispatch(initLayerVisible(defaultVisibleList))
 
-import { positionsEqual } from './utils'
-import { setViewPosition } from './store/actions'
-function onHashChange() {
-  let oldState = store.getState();
-  let newState = getStateFromUrlHash(oldState);
+function onHashChange () {
+  let oldState = store.getState()
+  let newState = getStateFromUrlHash(oldState)
 
   if (!positionsEqual(newState.viewPosition, oldState.viewPosition)) {
     store.dispatch(setViewPosition(newState.viewPosition))
   }
 
   if (oldState.layerVisible !== newState.layerVisible) {
-    store.dispatch(initLayerVisible(newState.layerVisible));
+    store.dispatch(initLayerVisible(newState.layerVisible))
   }
 }
 
 // Handle browser navigation events
-window.addEventListener('hashchange', onHashChange, false);
+window.addEventListener('hashchange', onHashChange, false)
 
 import { Provider } from 'react-redux'
 
-
-
 // todo: wrap Sidebar by redux store and set visible tab based on state
 
-const locale = 'en';
+const locale = 'en'
 const messages = {
   'test': 'key: {key} / value: {value}',
   'tags': 'Tags',
@@ -92,13 +88,13 @@ const messages = {
 import { LayerType } from './config/chartlayer'
 
 class MapLayerProvider extends React.Component {
-  getChildContext() {
+  getChildContext () {
     return {
       layers: this.props.layers
     }
   }
-  render() {
-    return this.props.children;
+  render () {
+    return this.props.children
   }
 }
 MapLayerProvider.childContextTypes = {
@@ -112,13 +108,13 @@ MapLayerProvider.propTypes = {
 
 ReactDOM.render((
   <IntlProvider
-    locale={ locale }
-    messages={ messages }>
-    <Provider store={ store }>
-      <MapLayerProvider layers={ layers }>
+    locale={locale}
+    messages={messages}>
+    <Provider store={store}>
+      <MapLayerProvider layers={layers}>
         <VisibleLayers />
       </MapLayerProvider>
     </Provider>
   </IntlProvider>),
   document.getElementById('map')
-);
+)

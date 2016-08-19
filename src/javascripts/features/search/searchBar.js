@@ -2,11 +2,10 @@
 * @license AGPL-3.0
 * @author aAXEe (https://github.com/aAXEe)
 */
-'use strict';
+'use strict'
 
-import React from 'react'
+import React, { PropTypes } from 'react'
 import { connect } from 'react-redux'
-import { PropTypes } from 'react'
 
 import {FormGroup, InputGroup, FormControl, Button} from 'react-bootstrap'
 import { MdSearch, MdClear } from 'react-icons/lib/md'
@@ -18,12 +17,12 @@ import {SearchTab} from 'config/layers/search'
 import {SEARCH_STATE_IDLE, SEARCH_STATE_ERROR, SEARCH_STATE_RUNNING, SEARCH_STATE_COMPLETE} from 'store/reducers'
 
 class SearchBarComponent extends React.Component {
-  constructor(props) {
-    super(props);
+  constructor (props) {
+    super(props)
 
     this.state = {
       value: ''
-    };
+    }
 
     this.render = this.render.bind(this)
     this.handleChange = this.handleChange.bind(this)
@@ -33,43 +32,40 @@ class SearchBarComponent extends React.Component {
     this.getValidationState = this.getValidationState.bind(this)
   }
 
-  componentWillReceiveProps(nextProps) {
-    this.setState({ value: nextProps.query });
+  componentWillReceiveProps (nextProps) {
+    this.setState({ value: nextProps.query })
   }
 
-  handleChange(e) {
-    this.setState({ value: e.target.value });
+  handleChange (e) {
+    this.setState({ value: e.target.value })
   }
 
-  handleSubmit(e){
+  handleSubmit (e) {
     e.preventDefault()
-    this.props.onSearchSubmit(this.state.value);
+    this.props.onSearchSubmit(this.state.value)
   }
-  handleClear(e){
+  handleClear (e) {
     e.preventDefault()
-    this.props.onSearchClear();
+    this.props.onSearchClear()
   }
 
-  getValidationState() {
+  getValidationState () {
     const state = this.props.state
-    if (state === SEARCH_STATE_COMPLETE) return 'success';
-    else if (state === SEARCH_STATE_RUNNING) return 'warning';
-    else if (state === SEARCH_STATE_ERROR) return 'error';
+    if (state === SEARCH_STATE_COMPLETE) return 'success'
+    else if (state === SEARCH_STATE_RUNNING) return 'warning'
+    else if (state === SEARCH_STATE_ERROR) return 'error'
   }
 
-  render() {
+  render () {
     return (
       <form onSubmit={this.handleSubmit}>
-        <FormGroup
-            validationState={this.getValidationState()}
-        >
+        <FormGroup validationState={this.getValidationState()} >
           <InputGroup>
             <FormControl
-                onChange={this.handleChange}
-                placeholder="Enter text"
-                type="text"
-                value={this.state.value}
-            />
+              onChange={this.handleChange}
+              placeholder="Enter text"
+              type="text"
+              value={this.state.value} />
             <InputGroup.Button>
               <Button onClick={this.handleSubmit}><MdSearch /></Button>
               <Button onClick={this.handleClear}><MdClear /></Button>
@@ -77,14 +73,15 @@ class SearchBarComponent extends React.Component {
           </InputGroup>
         </FormGroup>
       </form>
-      );
+      )
   }
 }
 
 SearchBarComponent.propTypes = {
+  onSearchClear: PropTypes.func.isRequired,
   onSearchSubmit: PropTypes.func.isRequired,
   query: PropTypes.string,
-  state:PropTypes.oneOf([SEARCH_STATE_IDLE, SEARCH_STATE_ERROR, SEARCH_STATE_RUNNING, SEARCH_STATE_COMPLETE])
+  state: PropTypes.oneOf([SEARCH_STATE_IDLE, SEARCH_STATE_ERROR, SEARCH_STATE_RUNNING, SEARCH_STATE_COMPLETE])
 }
 
 const mapStateToProps = (state) => {
@@ -99,8 +96,8 @@ const mapDispatchToProps = (dispatch) => {
     onSearchSubmit: (query) => {
       dispatch(searchStart(query))
 
-      dispatch(setSidebarActiveTab(SearchTab.name));
-      dispatch(setSidebarOpen(true));
+      dispatch(setSidebarActiveTab(SearchTab.name))
+      dispatch(setSidebarOpen(true))
     },
     onSearchClear: () => {
       dispatch(searchClear())

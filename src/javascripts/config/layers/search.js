@@ -2,7 +2,7 @@
  * @license AGPL-3.0
  * @author aAXEe (https://github.com/aAXEe)
  */
-'use strict';
+'use strict'
 
 import React from 'react'
 import _ from 'lodash'
@@ -14,8 +14,8 @@ import {MdSearch} from 'react-icons/lib/md'
 import ol from 'openlayers'
 import ChartLayer from '../chartlayer'
 
-import {layerTileLoadStateChange} from '../../store/actions'
 import {
+  layerTileLoadStateChange,
   searchResultHovered,
   searchResultUnhover,
   searchResultClicked
@@ -34,22 +34,22 @@ import {
 import { setViewToExtent } from 'store/actions'
 
 export const SearchTab = {
-    name: 'sidebar-search',
-    align: 'top',
-    icon: < MdSearch / > ,
-    content: < SearchTabComponent / >
-};
+  name: 'sidebar-search',
+  align: 'top',
+  icon: < MdSearch / >,
+  content: < SearchTabComponent / >
+}
 
 const SEARCH_FEATURE_CLICKED_PROPERTY_NAME = '_clicked'
 const SEARCH_FEATURE_HOVERED_PROPERTY_NAME = '_hovered'
 
-module.exports = function(context, options) {
+module.exports = function (context, options) {
   var defaults = {
-      nameKey: 'layer-name-search'
-  };
-  Object.assign(defaults, options);
+    nameKey: 'layer-name-search'
+  }
+  Object.assign(defaults, options)
 
-  var styleFunction = function(/*resolution*/) {
+  var styleFunction = function (/* resolution*/) {
     let feature = this
     let labelText = feature.get('namedetails').name
     let hovered = feature.get(SEARCH_FEATURE_HOVERED_PROPERTY_NAME)
@@ -57,21 +57,21 @@ module.exports = function(context, options) {
 
     let styles = []
 
-    if(labelText && (hovered || clicked)){
-     let text = new ol.style.Style({
-       geometry: 'labelPoint',
-       text: new ol.style.Text({
-           font: 'bold 12px sans-serif',
-           offsetY: 12  ,
-           text: labelText,
-           textAlign: 'center',
-           textBaseline: 'top'
+    if (labelText && (hovered || clicked)) {
+      let text = new ol.style.Style({
+        geometry: 'labelPoint',
+        text: new ol.style.Text({
+          font: 'bold 12px sans-serif',
+          offsetY: 12,
+          text: labelText,
+          textAlign: 'center',
+          textBaseline: 'top'
         })
       })
       styles.push(text)
     }
 
-    if(clicked){
+    if (clicked) {
       let markerIcon = new ol.style.Style({
         geometry: 'labelPoint',
         image: new ol.style.Icon({
@@ -100,11 +100,11 @@ module.exports = function(context, options) {
       styles.push(markerCircle)
     }
 
-    let polygonColor = clicked || hovered ? 'red': 'blue'
+    let polygonColor = clicked || hovered ? 'red' : 'blue'
     let polygonStyle = new ol.style.Style({
       geometry: 'geometry',
       stroke: new ol.style.Stroke({
-          color: polygonColor,
+        color: polygonColor,
         width: 2
       }),
       fill: new ol.style.Fill({
@@ -114,105 +114,105 @@ module.exports = function(context, options) {
     styles.push(polygonStyle)
 
     return styles
-  };
+  }
 
   var vectorSource = new ol.source.Vector({
     projection: 'EPSG:3857'
-  });
+  })
 
-  let updateMapPosition = function(feature){
+  let updateMapPosition = function (feature) {
     let bound = feature.get('boundingbox')
-    let topLeft = ol.proj.fromLonLat([Number(bound[2]), Number(bound[0])]);
-    let bottomRight = ol.proj.fromLonLat([Number(bound[3]), Number(bound[1])]);
-    let extent=[topLeft[0], topLeft[1], bottomRight[0], bottomRight[1]]
+    let topLeft = ol.proj.fromLonLat([Number(bound[2]), Number(bound[0])])
+    let bottomRight = ol.proj.fromLonLat([Number(bound[3]), Number(bound[1])])
+    let extent = [topLeft[0], topLeft[1], bottomRight[0], bottomRight[1]]
     context.dispatch(setViewToExtent(extent))
   }
 
   let oldClickState = context.getState().search.clickedFeatureId
-  let clickHandler = function(){
-      let state = context.getState()
-      if(oldClickState === state.search.clickedFeatureId)
-        return
-      oldClickState = state.search.clickedFeatureId
+  let clickHandler = function () {
+    let state = context.getState()
+    if (oldClickState === state.search.clickedFeatureId) return
+    oldClickState = state.search.clickedFeatureId
 
-      let features = vectorSource.getFeatures();
-      features.forEach(feature =>{
-        feature.set(SEARCH_FEATURE_CLICKED_PROPERTY_NAME, false)
-      })
+    let features = vectorSource.getFeatures()
+    features.forEach(feature => {
+      feature.set(SEARCH_FEATURE_CLICKED_PROPERTY_NAME, false)
+    })
 
-      if(!state.search.clickedFeatureId) return
+    if (!state.search.clickedFeatureId) return
 
-      let clickedFeature = vectorSource.getFeatureById(state.search.clickedFeatureId)
-      if(!clickedFeature) return
+    let clickedFeature = vectorSource.getFeatureById(state.search.clickedFeatureId)
+    if (!clickedFeature) return
 
-      clickedFeature.set(SEARCH_FEATURE_CLICKED_PROPERTY_NAME, true)
-      updateMapPosition(clickedFeature)
+    clickedFeature.set(SEARCH_FEATURE_CLICKED_PROPERTY_NAME, true)
+    updateMapPosition(clickedFeature)
   }
 
   let oldHoverState = context.getState().search.hoveredFeatureId
-  let hoverHandler = function(){
-      let state = context.getState()
-      if(oldHoverState === state.search.hoveredFeatureId)
-        return
-      oldHoverState = state.search.hoveredFeatureId
+  let hoverHandler = function () {
+    let state = context.getState()
+    if (oldHoverState === state.search.hoveredFeatureId) return
+    oldHoverState = state.search.hoveredFeatureId
 
-      let features = vectorSource.getFeatures();
-      features.forEach(feature =>{
-        feature.set(SEARCH_FEATURE_HOVERED_PROPERTY_NAME, false)
-      })
+    let features = vectorSource.getFeatures()
+    features.forEach(feature => {
+      feature.set(SEARCH_FEATURE_HOVERED_PROPERTY_NAME, false)
+    })
 
-      if(!state.search.hoveredFeatureId) return
+    if (!state.search.hoveredFeatureId) return
 
-      let hoveredFeature = vectorSource.getFeatureById(state.search.hoveredFeatureId)
-      if(!hoveredFeature) return
-      hoveredFeature.set(SEARCH_FEATURE_HOVERED_PROPERTY_NAME, true)
+    let hoveredFeature = vectorSource.getFeatureById(state.search.hoveredFeatureId)
+    if (!hoveredFeature) return
+    hoveredFeature.set(SEARCH_FEATURE_HOVERED_PROPERTY_NAME, true)
   }
 
   let oldSearchState = context.getState().search.state
-  let searchHandler = function() {
-      let state = context.getState()
-      let searchState = state.search.state
-      if (searchState === oldSearchState)
-          return
-      oldSearchState = searchState
+  let searchHandler = function () {
+    let state = context.getState()
+    let searchState = state.search.state
+    if (searchState === oldSearchState) return
+    oldSearchState = searchState
 
-      if (searchState === SEARCH_STATE_RUNNING)
-          context.dispatch(layerTileLoadStateChange(options.id, {
-              type: 'tileloadstart'
-          }));
-      if (searchState === SEARCH_STATE_COMPLETE)
-          context.dispatch(layerTileLoadStateChange(options.id, {
-              type: 'tileloadend'
-          }));
-      if (searchState === SEARCH_STATE_ERROR)
-          context.dispatch(layerTileLoadStateChange(options.id, {
-              type: 'tileloaderror'
-          }));
+    if (searchState === SEARCH_STATE_RUNNING) {
+      context.dispatch(layerTileLoadStateChange(options.id, {
+        type: 'tileloadstart'
+      }))
+    }
+    if (searchState === SEARCH_STATE_COMPLETE) {
+      context.dispatch(layerTileLoadStateChange(options.id, {
+        type: 'tileloadend'
+      }))
+    }
+    if (searchState === SEARCH_STATE_ERROR) {
+      context.dispatch(layerTileLoadStateChange(options.id, {
+        type: 'tileloaderror'
+      }))
+    }
 
-      vectorSource.clear()
+    vectorSource.clear()
 
-      if (searchState !== SEARCH_STATE_COMPLETE)
-          return
+    if (searchState !== SEARCH_STATE_COMPLETE) return
 
-      let results = state.search.response
-      results.forEach((res) => {
-          let geoJson = res.geojson
-          let geom = new ol.format.GeoJSON().readGeometry(geoJson, {featureProjection: 'EPSG:3857'})
-          let labelCoords = ol.proj.fromLonLat([Number(res.lon), Number(res.lat)]);
+    let results = state.search.response
+    results.forEach((res) => {
+      let geoJson = res.geojson
+      let geom = new ol.format.GeoJSON().readGeometry(geoJson, {featureProjection: 'EPSG:3857'})
+      let labelCoords = ol.proj.fromLonLat([Number(res.lon), Number(res.lat)])
 
-          let featureProps = _.omit(res, ['geojson'])
-          featureProps.geometry = geom
-          featureProps.labelPoint = new ol.geom.Point(labelCoords)
+      let featureProps = _.omit(res, ['geojson'])
+      featureProps.geometry = geom
+      featureProps.labelPoint = new ol.geom.Point(labelCoords)
 
-          let feature = new ol.Feature(featureProps);
-          feature.setStyle(styleFunction)
-          feature.setId(res.place_id)
-          vectorSource.addFeature(feature);
-      })
-      if(results.length > 0)
-        context.dispatch(setViewToExtent(vectorSource.getExtent()))
+      let feature = new ol.Feature(featureProps)
+      feature.setStyle(styleFunction)
+      feature.setId(res.place_id)
+      vectorSource.addFeature(feature)
+    })
+    if (results.length > 0) {
+      context.dispatch(setViewToExtent(vectorSource.getExtent()))
+    }
   }
-  let storeChangeHandler = function(){
+  let storeChangeHandler = function () {
     searchHandler()
     hoverHandler()
     clickHandler()
@@ -220,50 +220,50 @@ module.exports = function(context, options) {
   context.subscribe(storeChangeHandler)
 
   let layer = new ol.layer.Vector({
-      source: vectorSource
+    source: vectorSource
   })
 
   var selector = new ol.interaction.Select({
-      layers: [layer]
-  });
-  selector.on('select', function(e) {
-    var feature = e.selected[0];
+    layers: [layer]
+  })
+  selector.on('select', function (e) {
+    var feature = e.selected[0]
     if (feature) {
-      context.dispatch(searchResultClicked(feature.getId()));
-      context.dispatch(setSidebarActiveTab(SearchTab.name));
-      context.dispatch(setSidebarOpen(true));
+      context.dispatch(searchResultClicked(feature.getId()))
+      context.dispatch(setSidebarActiveTab(SearchTab.name))
+      context.dispatch(setSidebarOpen(true))
     }
     return true
-  });
+  })
 
   var hoverer = new ol.interaction.Select({
-      layers: [layer],
-      condition: ol.events.condition.pointerMove
-  });
-  hoverer.on('select', function(e) {
-    var feature = e.selected[0];
+    layers: [layer],
+    condition: ol.events.condition.pointerMove
+  })
+  hoverer.on('select', function (e) {
+    var feature = e.selected[0]
     if (feature) {
-      context.dispatch(searchResultHovered(feature.getId()));
+      context.dispatch(searchResultHovered(feature.getId()))
     } else {
       context.dispatch(searchResultUnhover())
     }
     return true
-  });
+  })
 
   var objects = {
-      layer: layer,
+    layer: layer,
 
-      interactions: [
-          selector, hoverer
-      ],
+    interactions: [
+      selector, hoverer
+    ],
 
-      additionalSetup: (
-        <div>
-          <SearchBar / >
-        </div>
+    additionalSetup: (
+      <div>
+        <SearchBar / >
+      </div>
       ),
-      additionalTab: SearchTab
-  };
+    additionalTab: SearchTab
+  }
 
-  return new ChartLayer(context, Object.assign(defaults, objects));
-};
+  return new ChartLayer(context, Object.assign(defaults, objects))
+}

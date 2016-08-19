@@ -2,23 +2,21 @@
 * @license AGPL-3.0
 * @author mojoaxel (https://github.com/mojoaxel)
 */
-
+/* eslint-env mocha */
 import { expect } from 'chai'
-
-/*eslint-env node, mocha */
 
 /**
  * "license": "AGPL-3.0",
  */
 describe('package.json license', () => {
-  var PACKAGE = require('../../../package.json');
+  var PACKAGE = require('../../../package.json')
 
   it('is available', () => {
-    expect(PACKAGE).to.have.property('license').that.is.a('string');
+    expect(PACKAGE).to.have.property('license').that.is.a('string')
   })
 
   it('is AGPL-3.0', () => {
-    expect(PACKAGE.license).to.be.equal('AGPL-3.0');
+    expect(PACKAGE.license).to.be.equal('AGPL-3.0')
   })
 })
 
@@ -28,16 +26,16 @@ describe('package.json license', () => {
  * },
  */
 describe('package.json bugs', () => {
-  var PACKAGE = require('../../../package.json');
+  var PACKAGE = require('../../../package.json')
 
   it('is availible', () => {
-    expect(PACKAGE).to.have.property('bugs');
-    expect(PACKAGE).to.have.property('bugs').to.have.property('url');
+    expect(PACKAGE).to.have.property('bugs')
+    expect(PACKAGE).to.have.property('bugs').to.have.property('url')
   })
 
   it('has valid url', () => {
-    var validUrl = require('valid-url');
-    expect(validUrl.isUri(PACKAGE.bugs.url));
+    var validUrl = require('valid-url')
+    expect(validUrl.isUri(PACKAGE.bugs.url))
   })
 })
 
@@ -45,17 +43,16 @@ describe('package.json bugs', () => {
  * "repository": "https://github.com/aAXEe/online_chart_ol3",
  */
 describe('package.json repository', () => {
-  var PACKAGE = require('../../../package.json');
+  var PACKAGE = require('../../../package.json')
 
   it('is availible', () => {
-    expect(PACKAGE).to.have.property('repository');
-
+    expect(PACKAGE).to.have.property('repository')
   })
 
   it('is a valid repository', () => {
-    var parseRepo = require('parse-repo');
+    var parseRepo = require('parse-repo')
     var repoInfo = parseRepo(PACKAGE.repository)
-    expect(repoInfo).to.have.property('owner');
-    expect(repoInfo).to.have.property('project');
+    expect(repoInfo).to.have.property('owner')
+    expect(repoInfo).to.have.property('project')
   })
 })

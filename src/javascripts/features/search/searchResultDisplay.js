@@ -2,13 +2,12 @@
 * @license AGPL-3.0
 * @author aAXEe (https://github.com/aAXEe)
 */
-'use strict';
+'use strict'
 
-import React from 'react'
-import { PropTypes } from 'react'
-//import { FormattedMessage } from 'react-intl';
+import React, { PropTypes } from 'react'
+// import { FormattedMessage } from 'react-intl';
 
-import { ListGroupItem } from 'react-bootstrap';
+import { ListGroupItem } from 'react-bootstrap'
 
 export const SearchResultDisplay = ({
   isClicked, isHovered,
@@ -16,12 +15,11 @@ export const SearchResultDisplay = ({
   result
 }) => (
   <ListGroupItem
-      active={isClicked}
-      bsStyle={isHovered ? 'info' : ''}
-      onClick={onResultClicked}
-      onMouseOut={onResultUnhover}
-      onMouseOver={onResultHovered}
-  >
+    active={isClicked}
+    bsStyle={isHovered ? 'info' : ''}
+    onClick={onResultClicked}
+    onMouseOut={onResultUnhover}
+    onMouseOver={onResultHovered} >
     {result.display_name}
   </ListGroupItem>
 )
@@ -36,6 +34,6 @@ SearchResultDisplay.propTypes = {
     PropTypes.object,
     PropTypes.string,
     PropTypes.array,
-    PropTypes.number,
+    PropTypes.number
   ]))
 }
