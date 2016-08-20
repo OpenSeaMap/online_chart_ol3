@@ -5,8 +5,8 @@
 */
 import React, { PropTypes } from 'react'
 import { connect } from 'react-redux'
-import { FormattedMessage } from 'react-intl';
-import { Collapse } from 'react-bootstrap';
+import { FormattedMessage } from 'react-intl'
+import { Collapse } from 'react-bootstrap'
 
 import { setLayerVisible } from '../../store/actions'
 import { LayerType } from '../../config/chartlayer'
@@ -17,33 +17,33 @@ import LayerProgressBar from './layerProgressBar'
 import './featureLayerConfig.scss'
 
 class ConfigList extends React.Component {
-  constructor(props) {
-    super(props);
-    this.currentBaseLayerId = this.currentBaseLayerId.bind(this);
-    this.selectBaseLayer = this.selectBaseLayer.bind(this);
+  constructor (props) {
+    super(props)
+    this.currentBaseLayerId = this.currentBaseLayerId.bind(this)
+    this.selectBaseLayer = this.selectBaseLayer.bind(this)
   }
 
-  currentBaseLayerId() {
-    let id = undefined;
+  currentBaseLayerId () {
+    let id
     this.context.layers.forEach(layer => {
-      if(!layer.isBaseLayer)
-        return
-      if(this.props.layerVisible[layer.id])
+      if (!layer.isBaseLayer) return
+      if (this.props.layerVisible[layer.id]) {
         id = layer.id
+      }
     }, this)
     return id
   }
 
-  selectBaseLayer(id) {
+  selectBaseLayer (id) {
     let currentBase = this.currentBaseLayerId()
-    if(id === currentBase)
-      return  // do not deactivate the current base layer
-    if(currentBase)
+    if (id === currentBase) return  // do not deactivate the current base layer
+    if (currentBase) {
       this.props.onChangeLayerVisible(currentBase, false)
+    }
     this.props.onChangeLayerVisible(id, true)
   }
 
-  render() {
+  render () {
     return (
       <div>
         <div>
@@ -51,52 +51,50 @@ class ConfigList extends React.Component {
         </div>
         <ul className="layerList base">
           {this.context.layers.map(layer => {
-              let loadState = this.props.layerLoadState[layer.id] || {loading: 0, loaded: 0}
-              let layerVisible = !!this.props.layerVisible[layer.id]
-              if(!layer.isBaseLayer)
-                return
-              return (
-                <li key={'layer_' + layer.id}>
-                  <LayerProgressBar
-                    enabled={layerVisible}
-                    loadState={loadState} />
-                  <OsmToggle
-                    checked={layerVisible}
-                    label={<FormattedMessage id={layer.nameKey} />}
-                    layerId={layer.id}
-                    onChange={() => this.selectBaseLayer(layer.id)} />
-                </li>
-            )})}
+            let loadState = this.props.layerLoadState[layer.id] || {loading: 0, loaded: 0}
+            let layerVisible = !!this.props.layerVisible[layer.id]
+            if (!layer.isBaseLayer) return
+            return (
+              <li key={'layer_' + layer.id}>
+                <LayerProgressBar
+                  enabled={layerVisible}
+                  loadState={loadState} />
+                <OsmToggle
+                  checked={layerVisible}
+                  label={<FormattedMessage id={layer.nameKey} />}
+                  layerId={layer.id}
+                  onChange={() => this.selectBaseLayer(layer.id)} />
+              </li>
+            ) })}
         </ul>
         <div>
           <FormattedMessage id={'layerlist-overlaylayer'} />
         </div>
         <ul className="layerList overlays">
           {this.context.layers.map(layer => {
-              let loadState = this.props.layerLoadState[layer.id] || {loading: 0, loaded: 0}
-              let layerVisible = !!this.props.layerVisible[layer.id]
-              if(layer.isBaseLayer)
-                return
-              return (
-                <li key={'layer_' + layer.id}>
-                  <LayerProgressBar
-                    enabled={layerVisible}
-                    loadState={loadState} />
-                  <OsmToggle
-                    checked={layerVisible}
-                    label={<FormattedMessage id={layer.nameKey} />}
-                    layerId={layer.id}
-                    onChange={(visible) => this.props.onChangeLayerVisible(layer.id, visible)} />
-                  <Collapse
-                    className="additionalSetup"
-                    in={layerVisible}
-                    unmountOnExit >
-                    <div>
-                      {layer.additionalSetup}
-                    </div>
-                  </Collapse>
-                </li>
-            )})}
+            let loadState = this.props.layerLoadState[layer.id] || {loading: 0, loaded: 0}
+            let layerVisible = !!this.props.layerVisible[layer.id]
+            if (layer.isBaseLayer) return
+            return (
+              <li key={'layer_' + layer.id}>
+                <LayerProgressBar
+                  enabled={layerVisible}
+                  loadState={loadState} />
+                <OsmToggle
+                  checked={layerVisible}
+                  label={<FormattedMessage id={layer.nameKey} />}
+                  layerId={layer.id}
+                  onChange={(visible) => this.props.onChangeLayerVisible(layer.id, visible)} />
+                <Collapse
+                  className="additionalSetup"
+                  in={layerVisible}
+                  unmountOnExit >
+                  <div>
+                    {layer.additionalSetup}
+                  </div>
+                </Collapse>
+              </li>
+            ) })}
         </ul>
       </div>
     )

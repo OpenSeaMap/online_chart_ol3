@@ -2,7 +2,7 @@
 * @license AGPL-3.0
 * @author mojoaxel (https://github.com/mojoaxel)
 */
-'use strict';
+'use strict'
 import './Links.scss'
 
 import React from 'react'
@@ -14,7 +14,7 @@ let LinkPropTypes = {
   ]).isRequired,
   href: React.PropTypes.string.isRequired,
   title: React.PropTypes.string
-};
+}
 
 /**
  * normal Link.
@@ -22,13 +22,13 @@ let LinkPropTypes = {
 export const NormalLink = (props) => (
   <a
     role="link"
-    href={ props.href }
-    title={ props.title || '' }
+    href={props.href}
+    title={props.title || ''}
     {...props}>
     { props.children }
   </a>
 )
-NormalLink.propTypes = LinkPropTypes;
+NormalLink.propTypes = LinkPropTypes
 
 /**
  * Link to external page.
@@ -40,8 +40,8 @@ export const ExternalLink = (props) => (
     {...props}>
     { props.children }
   </NormalLink>
-);
-ExternalLink.propTypes = LinkPropTypes;
+)
+ExternalLink.propTypes = LinkPropTypes
 
 /**
  * Link to file to download
@@ -52,5 +52,5 @@ export const DownloadLink = (props) => (
     {...props}>
     { props.children }
   </ExternalLink>
-);
-DownloadLink.propTypes = LinkPropTypes;
+)
+DownloadLink.propTypes = LinkPropTypes

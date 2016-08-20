@@ -2,29 +2,27 @@
 * @license AGPL-3.0
 * @author aAXEe (https://github.com/aAXEe)
 */
-'use strict';
+'use strict'
 
-let $ = require('jquery');
-import React from 'react'
+let $ = require('jquery')
+import React, { PropTypes } from 'react'
 import { connect } from 'react-redux'
-import { PropTypes } from 'react'
 
 import { searchEnd } from 'store/actions'
 
 import {SEARCH_STATE_IDLE, SEARCH_STATE_ERROR, SEARCH_STATE_RUNNING, SEARCH_STATE_COMPLETE} from 'store/reducers'
 
 class SearchProviderComponent extends React.Component {
-  constructor(props) {
-    super(props);
+  constructor (props) {
+    super(props)
 
     this.render = this.render.bind(this)
     this.componentWillReceiveProps = this.componentWillReceiveProps.bind(this)
     this.onDataReceived = this.onDataReceived.bind(this)
   }
 
-  componentWillReceiveProps(nextProps) {
-    if(nextProps.state !== SEARCH_STATE_RUNNING)
-      return
+  componentWillReceiveProps (nextProps) {
+    if (nextProps.state !== SEARCH_STATE_RUNNING) return
 
     let args = {
       format: 'json',
@@ -32,16 +30,16 @@ class SearchProviderComponent extends React.Component {
       polygon_geojson: '1',
       addressdetails: '1',
       extratags: '1',
-      namedetails: '1',
+      namedetails: '1'
     }
-    $.getJSON('//nominatim.openstreetmap.org/search', args, this.onDataReceived);
+    $.getJSON('//nominatim.openstreetmap.org/search', args, this.onDataReceived)
   }
 
-  onDataReceived(data){
+  onDataReceived (data) {
     this.props.onSearchEnd(true, data)
   }
 
-  render() {
+  render () {
     return null
   }
 }
@@ -49,7 +47,7 @@ class SearchProviderComponent extends React.Component {
 SearchProviderComponent.propTypes = {
   onSearchEnd: PropTypes.func.isRequired,
   query: PropTypes.string,
-  state:PropTypes.oneOf([SEARCH_STATE_IDLE, SEARCH_STATE_ERROR, SEARCH_STATE_RUNNING, SEARCH_STATE_COMPLETE])
+  state: PropTypes.oneOf([SEARCH_STATE_IDLE, SEARCH_STATE_ERROR, SEARCH_STATE_RUNNING, SEARCH_STATE_COMPLETE])
 }
 
 const mapStateToProps = (state) => {

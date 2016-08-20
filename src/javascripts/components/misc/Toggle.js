@@ -2,7 +2,7 @@
 * @license AGPL-3.0
 * @author mojoaxel (https://github.com/mojoaxel)
 */
-'use strict';
+'use strict'
 import React from 'react'
 
 import ReactToggle from 'react-toggle'
@@ -10,18 +10,23 @@ import 'react-toggle/style.css'
 import './Toggle.scss'
 
 class OsmToggle extends React.Component {
-  constructor(props) {
-    super(props);
+  constructor (props) {
+    super(props)
+    this._onChange = this._onChange.bind(this)
   }
 
-  render() {
-    var toggleId = 'toggle_' + this.props.layerId + (this.props.checked ? '_checked' : '_unchecked');
+  _onChange (event) {
+    this.props.onChange(event.target.checked)
+  }
+
+  render () {
+    var toggleId = 'toggle_' + this.props.layerId + (this.props.checked ? '_checked' : '_unchecked')
     return (
       <div className="toggle">
         <ReactToggle
           checked={this.props.checked}
           id={toggleId}
-          onChange={(event) => this.props.onChange(event.target.checked)} />
+          onChange={this._onChange} />
         <label
           className="toggle-label"
           htmlFor={toggleId}>
@@ -29,7 +34,7 @@ class OsmToggle extends React.Component {
         </label>
         {this.props.children}
       </div>
-    );
+    )
   }
 }
 

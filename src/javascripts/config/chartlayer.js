@@ -2,45 +2,47 @@
 * @license AGPL-3.0
 * @author aAXEe (https://github.com/aAXEe)
 */
-'use strict';
+'use strict'
 
-var warning = require('fbjs/lib/warning');
+var warning = require('fbjs/lib/warning')
 
-export default function(context, options) {
-  var self = {};
+export default function (context, options) {
+  var self = {}
 
-  self.id = options.id;
-  warning(self.id !== undefined, 'The layer has no ID set.');
+  self.id = options.id
+  warning(self.id !== undefined, 'The layer has no ID set.')
 
-  self.visibleDefault = false || options.visibleDefault;
+  self.visibleDefault = false || options.visibleDefault
 
-  self.nameKey = options.nameKey;
-  warning(self.nameKey, 'The layer has no key for the name.');
+  self.nameKey = options.nameKey
+  warning(self.nameKey, 'The layer has no key for the name.')
 
-  self.isBaseLayer = false || options.isBaseLayer;
+  self.isBaseLayer = false || options.isBaseLayer
 
-  self.urlIndex2013 = options.urlIndex2013 || -1;
+  self.urlIndex2013 = options.urlIndex2013 || -1
 
-  self.urlIndex2016 = options.urlIndex2016 || 0;
-  if(!self.isBaseLayer)
-    warning(self.urlIndex2016 !== undefined, 'The layer has no urlIndex2016.');
+  self.urlIndex2016 = options.urlIndex2016 || 0
+  if (!self.isBaseLayer) {
+    warning(self.urlIndex2016 !== undefined, 'The layer has no urlIndex2016.')
+  }
 
-  self.urlIndex2016BaseLayer = options.urlIndex2016BaseLayer;
-  if(self.isBaseLayer)
-    warning(self.urlIndex2016BaseLayer !== undefined, 'The layer has no urlIndex2016BaseLayer.');
+  self.urlIndex2016BaseLayer = options.urlIndex2016BaseLayer
+  if (self.isBaseLayer) {
+    warning(self.urlIndex2016BaseLayer !== undefined, 'The layer has no urlIndex2016BaseLayer.')
+  }
 
-  self.layer = options.layer;
-  warning(self.layer, 'The layer has no layer object.');
+  self.layer = options.layer
+  warning(self.layer, 'The layer has no layer object.')
 
   self.additionalSetup = options.additionalSetup
   self.additionalTab = options.additionalTab
 
   if (options.interactions) {
-    self.interactions = options.interactions;
+    self.interactions = options.interactions
   } else {
-    self.interactions = [];
+    self.interactions = []
   }
-  return self;
+  return self
 }
 
 import { PropTypes } from 'react'
@@ -57,7 +59,7 @@ export const LayerType = PropTypes.shape({
   urlIndex2016: PropTypes.number, // index in url 2016 style (only for overlay layers)
   urlIndex2016BaseLayer: PropTypes.string, // index letter for a base layer (required if isBaseLayer)
 
-  layer: PropTypes.object.isRequired, //ol.layer subclass
+  layer: PropTypes.object.isRequired, // ol.layer subclass
   interactions: PropTypes.arrayOf(
     PropTypes.object // ol.interaction subclass
   ),

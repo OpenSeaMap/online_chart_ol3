@@ -2,11 +2,11 @@
 * @license AGPL-3.0
 * @author mojoaxel (https://github.com/mojoaxel)
 */
-'use strict';
+'use strict'
 import './featureDevelopment.scss'
 
 import React from 'react'
-import { IntlProvider, FormattedMessage } from 'react-intl';
+import { IntlProvider, FormattedMessage } from 'react-intl'
 
 import AuthorsList from './AuthorsList'
 import { ExternalLink, DownloadLink } from '../../components/misc/Links'
@@ -38,28 +38,28 @@ const messages = {
 }
 
 class FeatureDevelopment extends React.Component {
-  render() {
-    const repoInfo = repoPathParse(PACKAGE.repository);
-    const repoUrl = `https://github.com/${repoInfo.owner}/${repoInfo.repo}`;
+  render () {
+    const repoInfo = repoPathParse(PACKAGE.repository)
+    const repoUrl = `https://github.com/${repoInfo.owner}/${repoInfo.repo}`
     const newIssueUrl = PACKAGE.bugs.url + '/new' +
       '?title=' + encodeURIComponent(messages['issues-bug-found-new-title']) +
       '&body=' + encodeURIComponent(messages['issues-bug-found-new-body']) +
-      '&labels=bug';
+      '&labels=bug'
 
     return (
-      <IntlProvider messages={ messages }>
+      <IntlProvider messages={messages}>
         <div className="featureDevelopment">
           <section>
             <h2><FormattedMessage id="issues-title" /></h2>
             <div>
               <FormattedMessage
                 id="issues-bug-found"
-                values={ { linkGitHubIssues: ( <ExternalLink href={ PACKAGE.bugs.url }> <FormattedMessage id="issues-bug-found-new" /> </ExternalLink> ) } } />
+                values={{ linkGitHubIssues: (<ExternalLink href={PACKAGE.bugs.url}> <FormattedMessage id="issues-bug-found-new" /> </ExternalLink>) }} />
               <br />
             </div>
             <div>
               <ExternalLink
-                href={ newIssueUrl }
+                href={newIssueUrl}
                 className="button">
                 <FormattedMessage id="issues-create-new" />
               </ExternalLink>
@@ -70,7 +70,7 @@ class FeatureDevelopment extends React.Component {
             <div>
               <FormattedMessage
                 id="source-links"
-                values={ { linkGithub: ( <ExternalLink href={ repoUrl }> <FormattedMessage id="source-links-github" /> </ExternalLink>), linkDownload: (<DownloadLink href={ repoUrl + '/tarball/master' }> <FormattedMessage id="source-links-tarball" /> </DownloadLink> ) } } />
+                values={{ linkGithub: (<ExternalLink href={repoUrl}> <FormattedMessage id="source-links-github" /> </ExternalLink>), linkDownload: (<DownloadLink href={repoUrl + '/tarball/master'}> <FormattedMessage id="source-links-tarball" /> </DownloadLink>) }} />
             </div>
           </section>
           <section>
@@ -78,13 +78,13 @@ class FeatureDevelopment extends React.Component {
             <div>
               <FormattedMessage
                 id="license-links"
-                values={ { linkFoss: ( <ExternalLink href={ messages['license-links-foss-link'] }> <FormattedMessage id="license-links-foss-text" /> </ExternalLink>), linkLicense: (<ExternalLink href={ 'https://spdx.org/licenses/' + PACKAGE.license + '.html' }> { PACKAGE.license } </ExternalLink> ) } } />
+                values={{ linkFoss: (<ExternalLink href={messages['license-links-foss-link']}> <FormattedMessage id="license-links-foss-text" /> </ExternalLink>), linkLicense: (<ExternalLink href={'https://spdx.org/licenses/' + PACKAGE.license + '.html'}> { PACKAGE.license } </ExternalLink>) }} />
             </div>
           </section>
           <section>
             <h2><FormattedMessage id="license-authors" /></h2>
             <div>
-              <AuthorsList authors={ authorsParser(AUTHORS) } />
+              <AuthorsList authors={authorsParser(AUTHORS)} />
             </div>
           </section>
           <section>
@@ -132,7 +132,7 @@ class FeatureDevelopment extends React.Component {
           </section>
         </div>
       </IntlProvider>
-      );
+      )
   }
 }
 

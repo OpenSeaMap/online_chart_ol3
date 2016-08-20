@@ -4,13 +4,13 @@
 */
 import React, { PropTypes } from 'react'
 
-var CircleProgressBar = require('rc-progress').Circle;
+var CircleProgressBar = require('rc-progress').Circle
 
 const LayerProgressBar = ({loadState, enabled}) => {
   let progress = 100
-  if (enabled && loadState.loading)
+  if (enabled && loadState.loading) {
     progress = loadState.loaded / loadState.loading * 100
-
+  }
 
   var circleContainerStyle = {
     'width': '24px',
@@ -25,12 +25,9 @@ const LayerProgressBar = ({loadState, enabled}) => {
     error: '#fc2024'
   }
   let color = colors.success
-  if(progress < 100)
-    color = colors.active
-  if(loadState.lastError)
-    color = colors.error
-  if(!enabled)
-    color = colors.inactive
+  if (progress < 100) color = colors.active
+  if (loadState.lastError) color = colors.error
+  if (!enabled) color = colors.inactive
 
   return (
     <div style={circleContainerStyle}>

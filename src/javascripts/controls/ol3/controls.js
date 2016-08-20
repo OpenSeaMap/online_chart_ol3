@@ -2,7 +2,7 @@
 * @license AGPL-3.0
 * @author mojoaxel (https://github.com/mojoaxel)
 */
-'use strict';
+'use strict'
 
 import OL3Attribution from './OL3Attribution'
 import OL3Control from './OL3Control'

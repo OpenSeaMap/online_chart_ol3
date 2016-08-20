@@ -2,37 +2,37 @@
 * @license AGPL-3.0
 * @author mojoaxel (https://github.com/mojoaxel)
 */
-'use strict';
+'use strict'
 import React from 'react'
 import _ from 'lodash'
 
 import './MetaControl.scss'
 
 class MetaControl extends React.Component {
-  getDomNode(id) {
-    var elm = document.getElementById(id);
-    return elm ? elm : this._container;
+  getDomNode (id) {
+    var elm = document.getElementById(id)
+    return elm || this._container
   }
 
-  getControlsByPosition(position) {
-    var childControls = _.filter(this.props.children, function(c) {
+  getControlsByPosition (position) {
+    var childControls = _.filter(this.props.children, function (c) {
       return c.props.position === position.toLowerCase()
-    });
+    })
     return childControls.map(control => (
       <div
         className="flbx-control"
-        id={ control.props.id }
-        key={ control.props.id }>
+        id={control.props.id}
+        key={control.props.id}>
         { control }
       </div>
-    ));
+    ))
   }
 
-  render() {
+  render () {
     return (
       <div
         className="flbx-container"
-        ref={ (c) => this._container = c }>
+        ref={(c) => { this._container = c }}>
         <div className="flbx-sidebar left">
           { this.getControlsByPosition('sidebar left') }
         </div>

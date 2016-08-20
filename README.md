@@ -3,6 +3,7 @@
 [![Build Status](https://travis-ci.org/aAXEe/online_chart_ol3.svg?branch=master)](https://travis-ci.org/aAXEe/online_chart_ol3)
 [![Dependency Status](https://david-dm.org/aAXEe/online_chart_ol3.svg)](https://david-dm.org/aAXEe/online_chart_ol3)
 [![devDependency Status](https://david-dm.org/aAXEe/online_chart_ol3/dev-status.svg)](https://david-dm.org/aAXEe/online_chart_ol3/?type=dev)
+[![JavaScript Style Guide](https://img.shields.io/badge/code%20style-standard-brightgreen.svg)](http://standardjs.com/)
 
 A new online chart based on [OpenLayers 3](http://openlayers.org/), [React](https://facebook.github.io/react/), [Redux](http://redux.js.org/) and [Bootstrap](http://getbootstrap.com/).
 

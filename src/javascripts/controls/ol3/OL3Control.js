@@ -2,31 +2,32 @@
 * @license AGPL-3.0
 * @author mojoaxel (https://github.com/mojoaxel)
 */
-'use strict';
+'use strict'
 
 import React from 'react'
 import ol from 'openlayers'
 
 class OL3Control extends React.Component {
 
-  componentDidMount() {
-    this.props.addControlToMap(this.getControl());
+  componentDidMount () {
+    this.props.addControlToMap(this.getControl())
   }
 
-  getControl() {
-    return this._control ? this._control : this._createControl();
+  getControl () {
+    return this._control ? this._control : this._createControl()
   }
 
-  _createControl() {
-    return this._control = new ol.control.Control({
+  _createControl () {
+    this._control = new ol.control.Control({
       target: this._element
     })
+    return this._control
   }
 
-  render() {
+  render () {
     return (
-      <div className={ this.props.className }
-        ref={ (c) => this._element = c } />
+      <div className={this.props.className}
+        ref={(c) => { this._element = c }} />
     )
   }
 }
@@ -37,4 +38,4 @@ OL3Control.propTypes = React.PropTypes.shape({
   position: React.PropTypes.string.isRequired
 })
 
-export default OL3Control;
+export default OL3Control

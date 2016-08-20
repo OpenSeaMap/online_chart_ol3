@@ -2,17 +2,17 @@
 * @license AGPL-3.0
 * @author aAXEe (https://github.com/aAXEe)
 */
-'use strict';
+'use strict'
 
 import React from 'react'
-import { FormattedMessage } from 'react-intl';
+import { FormattedMessage } from 'react-intl'
 import { ExternalLink } from '../../components/misc/Links'
 
 import ol from 'openlayers'
 import ChartLayer from '../chartlayer'
 import { layerTileLoadStateChange } from '../../store/actions'
 
-module.exports = function(context, options) {
+module.exports = function (context, options) {
   let source = new ol.source.TileWMS({
     attributions: [
       new ol.Attribution({
@@ -28,9 +28,9 @@ module.exports = function(context, options) {
     gutter: 0
   })
 
-  source.on(['tileloadstart', 'tileloadend', 'tileloaderror'], function(ev) {
-    context.dispatch(layerTileLoadStateChange(options.id, ev));
-  });
+  source.on(['tileloadstart', 'tileloadend', 'tileloaderror'], function (ev) {
+    context.dispatch(layerTileLoadStateChange(options.id, ev))
+  })
 
   var defaults = {
     nameKey: 'layer-name-depth-geodaten_mv',
@@ -49,7 +49,7 @@ module.exports = function(context, options) {
             )
           }} />
       </div>
-    ),
-  };
-  return new ChartLayer(context, Object.assign(defaults, options));
-};
+    )
+  }
+  return new ChartLayer(context, Object.assign(defaults, options))
+}
