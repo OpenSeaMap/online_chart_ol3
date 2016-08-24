@@ -27,7 +27,7 @@ for (var z = 0; z < zoomLevels; ++z) {
 
 module.exports = function (context, options) {
   let source = new ol.source.TileImage({
-    tileUrlFunction: function (tileCoord /*, pixelRatio, projection*/) {
+    tileUrlFunction: function (tileCoord /*, pixelRatio, projection */) {
       var z = tileCoord[0]
       var x = tileCoord[1]
       var y = -tileCoord[2] - 1

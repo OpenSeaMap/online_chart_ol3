@@ -49,7 +49,7 @@ module.exports = function (context, options) {
   }
   Object.assign(defaults, options)
 
-  var styleFunction = function (/* resolution*/) {
+  var styleFunction = function (/* resolution */) {
     let feature = this
     let labelText = feature.get('namedetails').name
     let hovered = feature.get(SEARCH_FEATURE_HOVERED_PROPERTY_NAME)
