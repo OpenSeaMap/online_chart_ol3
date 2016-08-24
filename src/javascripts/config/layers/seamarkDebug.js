@@ -100,7 +100,8 @@ module.exports = function (context, options) {
       <div>
         <FormattedMessage id="click-on-markers" />
       </div>
-    ), additionalTab: TabSidebarDetails
+    ),
+    additionalTab: TabSidebarDetails
   }
 
   return new ChartLayer(context, Object.assign(defaults, objects))
