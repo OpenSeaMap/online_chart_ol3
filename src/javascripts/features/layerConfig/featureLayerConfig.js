@@ -49,7 +49,7 @@ class ConfigList extends React.Component {
         <div>
           <FormattedMessage id={'layerlist-baselayer'} />
         </div>
-        <ul className="layerList base">
+        <ul className='layerList base'>
           {this.context.layers.map(layer => {
             let loadState = this.props.layerLoadState[layer.id] || {loading: 0, loaded: 0}
             let layerVisible = !!this.props.layerVisible[layer.id]
@@ -70,7 +70,7 @@ class ConfigList extends React.Component {
         <div>
           <FormattedMessage id={'layerlist-overlaylayer'} />
         </div>
-        <ul className="layerList overlays">
+        <ul className='layerList overlays'>
           {this.context.layers.map(layer => {
             let loadState = this.props.layerLoadState[layer.id] || {loading: 0, loaded: 0}
             let layerVisible = !!this.props.layerVisible[layer.id]
@@ -86,7 +86,7 @@ class ConfigList extends React.Component {
                   layerId={layer.id}
                   onChange={(visible) => this.props.onChangeLayerVisible(layer.id, visible)} />
                 <Collapse
-                  className="additionalSetup"
+                  className='additionalSetup'
                   in={layerVisible}
                   unmountOnExit >
                   <div>

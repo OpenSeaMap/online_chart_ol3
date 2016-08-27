@@ -25,7 +25,7 @@ class Sidebar extends React.Component {
   _renderOpenCloseBtn () {
     return (
       <button
-        id="openCloseBtn"
+        id='openCloseBtn'
         onClick={this.props.setSidebarOpen}>
         <FaAngleDoubleLeft className={this.props.isOpen ? 'open' : 'closed'} />
       </button>
@@ -69,10 +69,10 @@ class Sidebar extends React.Component {
         ref={(c) => { this._element = c }}>
         <aside>
           { this._renderOpenCloseBtn() }
-          <ul className="align-top">
+          <ul className='align-top'>
             { this._renderTabButtonList(this.props.tabs, 'top') }
           </ul>
-          <ul className="align-bottom">
+          <ul className='align-bottom'>
             { this._renderTabButtonList(this.props.tabs, 'bottom') }
           </ul>
         </aside>
@@ -86,7 +86,7 @@ class Sidebar extends React.Component {
                   <FormattedMessage id={tab.name} />
                 </h1>
               </header>
-              <div className="content">
+              <div className='content'>
                 { tab.content }
               </div>
             </article>

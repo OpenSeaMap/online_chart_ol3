@@ -11,7 +11,7 @@ class AuthorsList extends React.Component {
   render () {
     var authors = this.props.authors
     return (
-      <ul className="authorsList">
+      <ul className='authorsList'>
         { authors.map((author, i) => (
           <li key={i}>
             <ExternalLink href={author.url}>

@@ -171,34 +171,34 @@ class Map extends React.Component {
     })
     return (
       <div
-        className="sidebar-map"
+        className='sidebar-map'
         ref={(c) => { this._input = c }}>
         <MetaControl ref={(c) => { this._metaControl = c }}>
           <Sidebar
-            id="sidebar"
-            position="sidebar left"
+            id='sidebar'
+            position='sidebar left'
             tabs={Tabs.concat(additionalTabs)} />
           <OL3Attribution
-            id="ol3-attribution"
-            position="bottom right"
+            id='ol3-attribution'
+            position='bottom right'
             addControlToMap={(c) => this.addControlToMap(c)} />
           <OL3Fullscreen
-            id="ol3-fullscreen"
-            position="top right"
+            id='ol3-fullscreen'
+            position='top right'
             addControlToMap={(c) => this.addControlToMap(c)} />
           <OL3Zoom
-            id="ol3-zoom"
-            position="top left"
+            id='ol3-zoom'
+            position='top left'
             addControlToMap={(c) => this.addControlToMap(c)} />
           <OL3ScaleLine
-            id="ol3-scaleline-metric"
-            position="bottom left"
-            units="metric"
+            id='ol3-scaleline-metric'
+            position='bottom left'
+            units='metric'
             addControlToMap={(c) => this.addControlToMap(c)} />
           <OL3ScaleLine
-            id="ol3-scaleline-nautical"
-            position="bottom left"
-            units="nautical"
+            id='ol3-scaleline-nautical'
+            position='bottom left'
+            units='nautical'
             addControlToMap={(c) => this.addControlToMap(c)} />
         </MetaControl>
       </div>

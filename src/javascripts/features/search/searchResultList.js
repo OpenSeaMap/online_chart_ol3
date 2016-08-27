@@ -32,23 +32,23 @@ const ResultList = ({
   switch (searchState) {
     case SEARCH_STATE_IDLE:
       return (
-        <FormattedMessage id="search-start-for-results" />
+        <FormattedMessage id='search-start-for-results' />
       )
     case SEARCH_STATE_RUNNING:
       return (
-        <FormattedMessage id="search-running" />
+        <FormattedMessage id='search-running' />
       )
     case SEARCH_STATE_COMPLETE:
       if (results.length === 0) {
         return (
-          <FormattedMessage id="search-empty-result" />
+          <FormattedMessage id='search-empty-result' />
         )
       }
       return (
         <div>
           <h2>
             <FormattedMessage
-              id="search-results"
+              id='search-results'
               values={{numberResults: results.length}} />
           </h2>
           <ListGroup>
@@ -70,7 +70,7 @@ const ResultList = ({
     case SEARCH_STATE_ERROR:
       return (
         <FormattedMessage
-          id="search-error"
+          id='search-error'
           values={{message: results}} />
       )
   }

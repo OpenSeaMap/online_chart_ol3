@@ -20,7 +20,7 @@ class MetaControl extends React.Component {
     })
     return childControls.map(control => (
       <div
-        className="flbx-control"
+        className='flbx-control'
         id={control.props.id}
         key={control.props.id}>
         { control }
@@ -31,30 +31,30 @@ class MetaControl extends React.Component {
   render () {
     return (
       <div
-        className="flbx-container"
+        className='flbx-container'
         ref={(c) => { this._container = c }}>
-        <div className="flbx-sidebar left">
+        <div className='flbx-sidebar left'>
           { this.getControlsByPosition('sidebar left') }
         </div>
-        <div className="flbx-center">
-          <div className="flbx-top">
-            <div className="flbx-top left">
+        <div className='flbx-center'>
+          <div className='flbx-top'>
+            <div className='flbx-top left'>
               { this.getControlsByPosition('top left') }
             </div>
-            <div className="flbx-top right">
+            <div className='flbx-top right'>
               { this.getControlsByPosition('top right') }
             </div>
           </div>
-          <div className="flbx-bottom">
-            <div className="flbx-bottom left">
+          <div className='flbx-bottom'>
+            <div className='flbx-bottom left'>
               { this.getControlsByPosition('bottom left') }
             </div>
-            <div className="flbx-bottom right">
+            <div className='flbx-bottom right'>
               { this.getControlsByPosition('bottom right') }
             </div>
           </div>
         </div>
-        <div className="flbx-sidebar right">
+        <div className='flbx-sidebar right'>
           { this.getControlsByPosition('sidebar right') }
         </div>
       </div>

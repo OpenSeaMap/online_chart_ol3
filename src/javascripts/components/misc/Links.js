@@ -21,7 +21,7 @@ let LinkPropTypes = {
  */
 export const NormalLink = (props) => (
   <a
-    role="link"
+    role='link'
     href={props.href}
     title={props.title || ''}
     {...props}>
@@ -35,8 +35,8 @@ NormalLink.propTypes = LinkPropTypes
  */
 export const ExternalLink = (props) => (
   <NormalLink
-    className="external"
-    target="_blank"
+    className='external'
+    target='_blank'
     {...props}>
     { props.children }
   </NormalLink>
@@ -48,7 +48,7 @@ ExternalLink.propTypes = LinkPropTypes
  */
 export const DownloadLink = (props) => (
   <ExternalLink
-    className="download"
+    className='download'
     {...props}>
     { props.children }
   </ExternalLink>

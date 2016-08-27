@@ -77,11 +77,11 @@ class TagInfo extends React.Component {
             <Button
               bsStyle={btnStyle}
               onClick={this.toggleDetails}>
-              <Glyphicon glyph="info-sign" />
+              <Glyphicon glyph='info-sign' />
             </Button>
           )}
           readOnly
-          type="text"
+          type='text'
           value={tag.value} />
         { details }
       </form>

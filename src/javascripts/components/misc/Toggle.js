@@ -22,13 +22,13 @@ class OsmToggle extends React.Component {
   render () {
     var toggleId = 'toggle_' + this.props.layerId + (this.props.checked ? '_checked' : '_unchecked')
     return (
-      <div className="toggle">
+      <div className='toggle'>
         <ReactToggle
           checked={this.props.checked}
           id={toggleId}
           onChange={this._onChange} />
         <label
-          className="toggle-label"
+          className='toggle-label'
           htmlFor={toggleId}>
             {this.props.label}
         </label>
