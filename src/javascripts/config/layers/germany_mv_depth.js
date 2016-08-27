@@ -40,7 +40,7 @@ module.exports = function (context, options) {
     additionalSetup: (
       <div>
         <FormattedMessage
-          id="copyright-layer"
+          id='copyright-layer'
           values={{
             source: (
               <ExternalLink href={'http://www.geodaten-mv.de/geomis/#94e5ed55-80f9-4af0-b43a-32ca5be7eef9'}>

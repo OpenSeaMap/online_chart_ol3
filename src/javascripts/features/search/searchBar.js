@@ -63,8 +63,8 @@ class SearchBarComponent extends React.Component {
           <InputGroup>
             <FormControl
               onChange={this.handleChange}
-              placeholder="Enter text"
-              type="text"
+              placeholder='Enter text'
+              type='text'
               value={this.state.value} />
             <InputGroup.Button>
               <Button onClick={this.handleSubmit}><MdSearch /></Button>
