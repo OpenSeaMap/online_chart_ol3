@@ -30,7 +30,7 @@ class OsmToggle extends React.Component {
         <label
           className='toggle-label'
           htmlFor={toggleId}>
-            {this.props.label}
+          {this.props.label}
         </label>
         {this.props.children}
       </div>
