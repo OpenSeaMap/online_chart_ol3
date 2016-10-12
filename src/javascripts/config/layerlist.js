@@ -12,7 +12,7 @@ import DeMvDepth from './layers/germany_mv_depth'
 import ScubaDiving from './layers/scubaDiving'
 import SeamarksDebug from './layers/seamarkDebug'
 import Search from './layers/search'
-
+import Marinetraffic from './layers/marinetraffic'
 /**
 for the old (2013) layers format see:
 https://github.com/OpenSeaMap/online_chart/blob/master/index.php#L72
@@ -85,6 +85,12 @@ export const availibleOverlayLayers = [
     LayerConstructor: Search,
     id: 'overlay_search',
     urlIndex2016: 4,
+    visibleDefault: true
+  },
+  {
+    LayerConstructor: Marinetraffic,
+    id: 'overlay_marinetraffic',
+    urlIndex2016: 5,
     visibleDefault: true
   }
 ]
