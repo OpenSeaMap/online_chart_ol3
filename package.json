@@ -84,7 +84,7 @@
     "gulp-sequence": "^0.4.0",
     "gulp-sftp": "^0.1.5",
     "gulp-sizereport": "^1.1.2",
-    "gulp-sourcemaps": "^1.5.2",
+    "gulp-sourcemaps": "^2.1.0",
     "gulp-svgstore": "^6.0.0",
     "gulp-uglify": "^2.0.0",
     "gulp-util": "^3.0.6",
