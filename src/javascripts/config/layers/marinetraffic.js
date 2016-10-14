@@ -63,25 +63,38 @@ module.exports = function (context, options) {
 
       let corsUrl = '//whateverorigin.org/get?url=' + encodeURIComponent(url) + '&callback=?'
 
-      $.getJSON(corsUrl, function (data) {
-        let features = []
+      $.ajax({
+        url: corsUrl,
+        dataType: 'json',
+        success: function (data) {
+          let features = []
 
-        let results = data.contents
-        results.forEach((res) => {
-          let featureProps = res
-          let labelCoords = ol.proj.fromLonLat([Number(res.LON), Number(res.LAT)])
-          featureProps.geometry = new ol.geom.Point(labelCoords)
+          let results = JSON.parse(data.contents)
+          results.forEach((res) => {
+            let featureProps = res
+            let labelCoords = ol.proj.fromLonLat([Number(res.LON), Number(res.LAT)])
+            featureProps.geometry = new ol.geom.Point(labelCoords)
 
-          let feature = new ol.Feature(featureProps)
-            // feature.setStyle(styleFunction)
-          feature.setId(res.MMSI)
-          features.push(feature)
-        })
+            let feature = new ol.Feature(featureProps)
+                    // feature.setStyle(styleFunction)
+            feature.setId(res.MMSI)
+            features.push(feature)
+          })
 
-        this.addFeatures(features)
-        this.dispatchEvent({type: 'tileloadend', target: this})
-      }
-      )
+          this.addFeatures(features)
+          this.dispatchEvent({type: 'tileloadend', target: this})
+        },
+        error: function (jqXHR, textStatus, errorThrown) {
+          this.dispatchEvent({
+            type: 'tileloaderror',
+            target: this,
+            textStatus: textStatus,
+            errorThrown: errorThrown
+          })
+        },
+        context: this
+      })
+
       this.dispatchEvent({type: 'tileloadstart', target: this})
     },
     strategy: ol.loadingstrategy.bbox
