@@ -8,7 +8,7 @@
 var $ = require('jquery')
 import React, { PropTypes } from 'react'
 import LanguageCodePropTypes from '../../propTypes/langCodes'
-import { Button, Input, Glyphicon, ProgressBar, Label } from 'react-bootstrap'
+import { Button, FormGroup, InputGroup, FormControl, Glyphicon, ProgressBar, Label } from 'react-bootstrap'
 
 class TagInfo extends React.Component {
   constructor (props) {
@@ -71,19 +71,23 @@ class TagInfo extends React.Component {
 
     return (
       <form>
-        <Input
-          addonBefore={tag.key}
-          buttonAfter={(
-            <Button
-              bsStyle={btnStyle}
-              onClick={this.toggleDetails}>
-              <Glyphicon glyph='info-sign' />
-            </Button>
-          )}
-          readOnly
-          type='text'
-          value={tag.value} />
-        { details }
+        <FormGroup>
+          <InputGroup>
+            <InputGroup.Addon>{tag.key}</InputGroup.Addon>
+            <FormControl
+              readOnly
+              type='text'
+              value={tag.value} />
+            <InputGroup.Button>
+              <Button
+                bsStyle={btnStyle}
+                onClick={this.toggleDetails}>
+                <Glyphicon glyph='info-sign' />
+              </Button>
+            </InputGroup.Button>
+          </InputGroup>
+          { details }
+        </FormGroup>
       </form>
       )
   }
