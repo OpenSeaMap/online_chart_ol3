@@ -91,7 +91,7 @@ export const availibleOverlayLayers = [
     LayerConstructor: Marinetraffic,
     id: 'overlay_marinetraffic',
     urlIndex2016: 5,
-    visibleDefault: true
+    visibleDefault: false
   }
 ]
 
