@@ -7,7 +7,7 @@
 var $ = require('jquery')
 import TagList from '../../components/tagList/tagList'
 
-const ignoredTags = ['geometry']
+const ignoredTags = ['geometry', '_clicked', '_hovered']
 
 const mapStateToProps = (state) => {
   const feature = state.selectedFeature.feature

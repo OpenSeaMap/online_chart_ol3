@@ -16,6 +16,8 @@ var OverpassApi = require('ol-source-overpassApi')
 import { featureClicked, layerTileLoadStateChange } from '../../store/actions'
 import { setSidebarOpen, setSidebarActiveTab } from '../../controls/sidebar/store'
 
+const FEATURE_CLICKED_PROPERTY_NAME = '_clicked'
+
 module.exports = function (context, options) {
   var defaults = {
     nameKey: 'layer-name-scuba_diving',
@@ -31,21 +33,39 @@ module.exports = function (context, options) {
       'dive_centre': new SimpleImageStyle('images/amenity-dive_centre.svg', defaults.iconSize, defaults.iconSize)
     }
   }
-
-  var styleFunction = function (feature, resolution, type) {
-    if (type === 'normal' || type === 'hovered' || type === 'clicked') {
-      for (var key in styles) {
-        var value = feature.get(key)
-        if (value !== undefined) {
-          for (var regexp in styles[key]) {
-            if (new RegExp(regexp).test(value)) {
-              return styles[key][regexp]
-            }
+  let tagBasedStyle = (feature) => {
+    for (var key in styles) {
+      var value = feature.get(key)
+      if (value !== undefined) {
+        for (var regexp in styles[key]) {
+          if (new RegExp(regexp).test(value)) {
+            return styles[key][regexp]
           }
         }
       }
     }
-    return null
+  }
+
+  let markerIcon = new ol.style.Style({
+    image: new ol.style.Icon({
+      anchor: [0.5, 1],
+      anchorXUnits: 'fraction',
+      anchorYUnits: 'fraction',
+      opacity: 1,
+      src: '//nominatim.openstreetmap.org/js/images/marker-icon.png'
+    })
+  })
+
+  var styleFunction = function (feature, resolution) {
+    let clicked = feature.get(FEATURE_CLICKED_PROPERTY_NAME)
+
+    let baseStyle = tagBasedStyle(feature)
+
+    if (clicked) {
+      return [baseStyle, markerIcon]
+    }
+
+    return baseStyle
   }
 
   let source = new OverpassApi('(node[sport=scuba_diving](bbox);node[amenity=dive_centre](bbox););out body qt;')
@@ -55,41 +75,24 @@ module.exports = function (context, options) {
 
   let layer = new ol.layer.Vector({
     source: source,
-    style: function (feature, resolution) {
-      return styleFunction(feature, resolution, 'normal')
-    }
+    style: styleFunction
   })
 
-  var selector = new ol.interaction.Select({
-    layers: [layer],
-    style: function (feature, resolution) {
-      return styleFunction(feature, resolution, 'clicked')
-    }
+  layer.on('selectFeature', function (e) {
+    let feature = e.feature
+    feature.set(FEATURE_CLICKED_PROPERTY_NAME, true)
+    context.dispatch(featureClicked(feature))
+    context.dispatch(setSidebarActiveTab(TabSidebarDetails.name))
+    context.dispatch(setSidebarOpen(true))
   })
-  var hoverer = new ol.interaction.Select({
-    layers: [layer],
-    condition: ol.events.condition.pointerMove,
-    style: function (feature, resolution) {
-      return styleFunction(feature, resolution, 'hovered')
-    }
-  })
-
-  selector.on('select', function (e) {
-    var feature = e.selected[0]
-    if (feature) {
-      context.dispatch(featureClicked(feature))
-      context.dispatch(setSidebarActiveTab(TabSidebarDetails.name))
-      context.dispatch(setSidebarOpen(true))
-    }
-    return true
+  layer.on('unselectFeature', function (e) {
+    e.feature.set(FEATURE_CLICKED_PROPERTY_NAME, false)
   })
 
   var objects = {
     layer: layer,
 
-    interactions: [
-      selector, hoverer
-    ],
+    isInteractive: true,
 
     additionalSetup: (
       <div>

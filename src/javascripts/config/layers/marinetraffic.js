@@ -15,16 +15,21 @@ import { featureClicked, layerTileLoadStateChange } from '../../store/actions'
 import { setSidebarOpen, setSidebarActiveTab } from '../../controls/sidebar/store'
 import warning from 'fbjs/lib/warning'
 
+const FEATURE_CLICKED_PROPERTY_NAME = '_clicked'
+const FEATURE_HOVERED_PROPERTY_NAME = '_hovered'
+
 module.exports = function (context, options) {
   var defaults = {
     nameKey: 'layer-name-marinetraffic'
   }
   Object.assign(defaults, options)
 
-  var styleFunction = function (feature, resolution, type) {
+  var styleFunction = function (feature, resolution) {
+    let clicked = feature.get(FEATURE_CLICKED_PROPERTY_NAME)
+    let hovered = feature.get(FEATURE_HOVERED_PROPERTY_NAME)
     let name = feature.get('SHIPNAME') || feature.get('MMSI')
     let nameElement = new ol.style.Text({
-      font: type === 'hovered' ? 'bold 12px sans-serif' : '10px sans-serif',
+      font: hovered ? 'bold 12px sans-serif' : '10px sans-serif',
       offsetY: 12,
       text: name,
       textAlign: 'center',
@@ -38,7 +43,7 @@ module.exports = function (context, options) {
       }),
       stroke: new ol.style.Stroke({
         color: 'rgba(16, 40, 68, 1)',
-        width: type === 'hovered' ? 3 : 1
+        width: hovered || clicked ? 3 : 1
       })
     })
 
@@ -118,42 +123,31 @@ module.exports = function (context, options) {
 
   let layer = new ol.layer.Vector({
     source: source,
-    style: function (feature, resolution) {
-      return styleFunction(feature, resolution, 'normal')
-    }
+    style: styleFunction
   })
 
-  var selector = new ol.interaction.Select({
-    layers: [layer],
-    style: function (feature, resolution) {
-      return styleFunction(feature, resolution, 'clicked')
-    }
+  layer.on('selectFeature', function (e) {
+    let feature = e.feature
+    feature.set(FEATURE_CLICKED_PROPERTY_NAME, true)
+    context.dispatch(featureClicked(feature))
+    context.dispatch(setSidebarActiveTab(TabSidebarDetails.name))
+    context.dispatch(setSidebarOpen(true))
   })
-  var hoverer = new ol.interaction.Select({
-    layers: [layer],
-    condition: ol.events.condition.pointerMove,
-    style: function (feature, resolution) {
-      return styleFunction(feature, resolution, 'hovered')
-    }
+  layer.on('unselectFeature', function (e) {
+    e.feature.set(FEATURE_CLICKED_PROPERTY_NAME, false)
   })
 
-  selector.on('select', function (e) {
-    var feature = e.selected[0]
-    if (feature) {
-      context.dispatch(featureClicked(feature))
-      context.dispatch(setSidebarActiveTab(TabSidebarDetails.name))
-      context.dispatch(setSidebarOpen(true))
-    }
-    return true
+  layer.on('hoverFeature', function (e) {
+    let feature = e.feature
+    feature.set(FEATURE_HOVERED_PROPERTY_NAME, true)
+  })
+  layer.on('unhoverFeature', function (e) {
+    e.feature.set(FEATURE_HOVERED_PROPERTY_NAME, false)
   })
 
   var objects = {
     layer: layer,
-
-    interactions: [
-      selector, hoverer
-    ],
-
+    isInteractive: true,
     additionalSetup: (
       <div>
         <FormattedMessage id='click-on-markers' />

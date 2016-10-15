@@ -40,8 +40,8 @@ export const SearchTab = {
   content: < SearchTabComponent / >
 }
 
-const SEARCH_FEATURE_CLICKED_PROPERTY_NAME = '_clicked'
-const SEARCH_FEATURE_HOVERED_PROPERTY_NAME = '_hovered'
+const FEATURE_CLICKED_PROPERTY_NAME = '_clicked'
+const FEATURE_HOVERED_PROPERTY_NAME = '_hovered'
 
 module.exports = function (context, options) {
   var defaults = {
@@ -52,8 +52,8 @@ module.exports = function (context, options) {
   var styleFunction = function (/* resolution */) {
     let feature = this
     let labelText = feature.get('namedetails').name
-    let hovered = feature.get(SEARCH_FEATURE_HOVERED_PROPERTY_NAME)
-    let clicked = feature.get(SEARCH_FEATURE_CLICKED_PROPERTY_NAME)
+    let hovered = feature.get(FEATURE_HOVERED_PROPERTY_NAME)
+    let clicked = feature.get(FEATURE_CLICKED_PROPERTY_NAME)
 
     let styles = []
 
@@ -136,7 +136,7 @@ module.exports = function (context, options) {
 
     let features = vectorSource.getFeatures()
     features.forEach(feature => {
-      feature.set(SEARCH_FEATURE_CLICKED_PROPERTY_NAME, false)
+      feature.set(FEATURE_CLICKED_PROPERTY_NAME, false)
     })
 
     if (!state.search.clickedFeatureId) return
@@ -144,7 +144,7 @@ module.exports = function (context, options) {
     let clickedFeature = vectorSource.getFeatureById(state.search.clickedFeatureId)
     if (!clickedFeature) return
 
-    clickedFeature.set(SEARCH_FEATURE_CLICKED_PROPERTY_NAME, true)
+    clickedFeature.set(FEATURE_CLICKED_PROPERTY_NAME, true)
     updateMapPosition(clickedFeature)
   }
 
@@ -156,14 +156,14 @@ module.exports = function (context, options) {
 
     let features = vectorSource.getFeatures()
     features.forEach(feature => {
-      feature.set(SEARCH_FEATURE_HOVERED_PROPERTY_NAME, false)
+      feature.set(FEATURE_HOVERED_PROPERTY_NAME, false)
     })
 
     if (!state.search.hoveredFeatureId) return
 
     let hoveredFeature = vectorSource.getFeatureById(state.search.hoveredFeatureId)
     if (!hoveredFeature) return
-    hoveredFeature.set(SEARCH_FEATURE_HOVERED_PROPERTY_NAME, true)
+    hoveredFeature.set(FEATURE_HOVERED_PROPERTY_NAME, true)
   }
 
   let oldSearchState = context.getState().search.state
@@ -223,40 +223,27 @@ module.exports = function (context, options) {
     source: vectorSource
   })
 
-  var selector = new ol.interaction.Select({
-    layers: [layer]
+  layer.on('selectFeature', function (e) {
+    let feature = e.feature
+    context.dispatch(searchResultClicked(feature.getId()))
+    context.dispatch(setSidebarActiveTab(SearchTab.name))
+    context.dispatch(setSidebarOpen(true))
   })
-  selector.on('select', function (e) {
-    var feature = e.selected[0]
-    if (feature) {
-      context.dispatch(searchResultClicked(feature.getId()))
-      context.dispatch(setSidebarActiveTab(SearchTab.name))
-      context.dispatch(setSidebarOpen(true))
-    }
-    return true
+  layer.on('unselectFeature', function (e) {
+    e.feature.set(FEATURE_CLICKED_PROPERTY_NAME, false)
   })
 
-  var hoverer = new ol.interaction.Select({
-    layers: [layer],
-    condition: ol.events.condition.pointerMove
+  layer.on('hoverFeature', function (e) {
+    let feature = e.feature
+    context.dispatch(searchResultHovered(feature.getId()))
   })
-  hoverer.on('select', function (e) {
-    var feature = e.selected[0]
-    if (feature) {
-      context.dispatch(searchResultHovered(feature.getId()))
-    } else {
-      context.dispatch(searchResultUnhover())
-    }
-    return true
+  layer.on('unhoverFeature', function () {
+    context.dispatch(searchResultUnhover())
   })
 
   var objects = {
     layer: layer,
-
-    interactions: [
-      selector, hoverer
-    ],
-
+    isInteractive: true,
     additionalSetup: (
       <div>
         <SearchBar / >

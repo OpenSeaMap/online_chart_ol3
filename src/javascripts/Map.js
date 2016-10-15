@@ -30,21 +30,60 @@ class Map extends React.Component {
   }
 
   componentDidMount () {
+    let self = this
     var layers = []
-    var interactions = ol.interaction.defaults({
-      altShiftDragRotate: false,
-      pinchRotate: false
-    })
+    let interactiveLayers = []
+
     this.context.layers.forEach((layer) => {
       layer.layer.setVisible(!!(this.props.layerVisible[layer.id]))
       layers.push(layer.layer)
 
-      if (layer.interactions && layer.interactions.length > 0) {
-        layer.interactions.forEach(interaction => {
-          interactions.push(interaction)
-        })
+      if (layer.isInteractive) {
+        interactiveLayers.push(layer.layer)
       }
     })
+
+    var interactions = ol.interaction.defaults({
+      altShiftDragRotate: false,
+      pinchRotate: false
+    })
+
+    this.selector = new ol.interaction.Select({
+      layers: interactiveLayers,
+      toggleCondition: ol.events.condition.never,
+      style: (feature, resolution) => {
+        let featureStyleFunc = feature.getStyleFunction()
+        if (featureStyleFunc) return featureStyleFunc(feature, resolution)
+        let featureStyle = feature.getStyle()
+        if (featureStyle) return featureStyle
+
+        let layer = self.selector.getLayer(feature)
+        if (!layer) return
+        let layerStyleFunc = layer.getStyleFunction()
+        if (layerStyleFunc) return layerStyleFunc(feature, resolution)
+        return layer.getStyle()
+      }
+    })
+    interactions.push(this.selector)
+
+    this.hoverer = new ol.interaction.Select({
+      layers: interactiveLayers,
+      condition: ol.events.condition.pointerMove,
+      toggleCondition: ol.events.condition.never,
+      style: (feature, resolution) => {
+        let featureStyleFunc = feature.getStyleFunction()
+        if (featureStyleFunc) return featureStyleFunc(feature, resolution)
+        let featureStyle = feature.getStyle()
+        if (featureStyle) return featureStyle
+
+        let layer = self.hoverer.getLayer(feature)
+        if (!layer) return
+        let layerStyleFunc = layer.getStyleFunction()
+        if (layerStyleFunc) return layerStyleFunc(feature, resolution)
+        return layer.getStyle()
+      }
+    })
+    interactions.push(this.hoverer)
 
     this.ol3Map = new ol.Map({
       renderer: 'dom',
@@ -61,6 +100,86 @@ class Map extends React.Component {
         ]),
         zoom: this.props.viewPosition.zoom
       })
+    })
+
+    let featureLayerMapSelected = {}
+    this.selectFeature = (feature, layer) => {
+      featureLayerMapSelected[ol.getUid(feature)] = layer
+
+      const event = {
+        type: 'selectFeature',
+        feature: feature,
+        layer: layer
+      }
+      layer.dispatchEvent(event)
+
+      let f = this.selector.getFeatures().remove(feature)
+      if (f) this.selector.getFeatures().push(f)
+    }
+    this.unselectFeature = (feature) => {
+      let layer = featureLayerMapSelected[ol.getUid(feature)]
+      if (!layer) return
+      delete featureLayerMapSelected[ol.getUid(feature)]
+
+      const event = {
+        type: 'unselectFeature',
+        feature: feature,
+        layer: layer
+      }
+      layer.dispatchEvent(event)
+
+      this.selector.getFeatures().remove(feature)
+    }
+
+    this.selector.on('select', function (e) {
+      e.selected.forEach((selectedFeature) => {
+        let layer = this.getLayer(selectedFeature)
+        self.selectFeature(selectedFeature, layer)
+      })
+      e.deselected.forEach((selectedFeature) => {
+        self.unselectFeature(selectedFeature)
+      })
+      return false
+    })
+
+    let featureLayerMapHovered = {}
+    this.hoverFeature = (feature, layer) => {
+      featureLayerMapHovered[ol.getUid(feature)] = layer
+
+      const event = {
+        type: 'hoverFeature',
+        feature: feature,
+        layer: layer
+      }
+      layer.dispatchEvent(event)
+
+      let f = this.hoverer.getFeatures().remove(feature)
+      if (f) this.hoverer.getFeatures().push(f)
+    }
+    this.unhoverFeature = (feature) => {
+      let layer = featureLayerMapHovered[ol.getUid(feature)]
+      if (!layer) return
+      delete featureLayerMapHovered[ol.getUid(feature)]
+
+      const event = {
+        type: 'unhoverFeature',
+        feature: feature,
+        layer: layer
+      }
+      layer.dispatchEvent(event)
+
+      this.hoverer.getFeatures().remove(feature)
+    }
+
+    this.hoverer.on('select', function (e) {
+      e.selected.forEach((selectedFeature) => {
+        let layer = this.getLayer(selectedFeature)
+        self.hoverFeature(selectedFeature, layer)
+      })
+      e.deselected.forEach((selectedFeature) => {
+        self.unhoverFeature(selectedFeature)
+      })
+      return false
     })
 
     /* add meta control to the map */
@@ -86,8 +205,19 @@ class Map extends React.Component {
   }
 
   componentWillReceiveProps (nextProps) {
+    let self = this
     this.context.layers.forEach((layer) => {
-      layer.layer.setVisible(!!(nextProps.layerVisible[layer.id]))
+      const layerVisibleNew = !!(nextProps.layerVisible[layer.id])
+      const layerVisibleOld = layer.layer.getVisible()
+      if (layerVisibleOld === layerVisibleNew) return
+
+      layer.layer.setVisible(layerVisibleNew)
+      if (!layerVisibleNew) {
+        layer.layer.getSource().getFeatures().forEach((feature) => {
+          self.unselectFeature(feature)
+          self.unhoverFeature(feature)
+        })
+      }
     })
 
     var centre = ol.proj.transform(this.ol3Map.getView().getCenter(), 'EPSG:3857', 'EPSG:4326')

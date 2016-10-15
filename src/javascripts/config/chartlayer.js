@@ -37,11 +37,7 @@ export default function (context, options) {
   self.additionalSetup = options.additionalSetup
   self.additionalTab = options.additionalTab
 
-  if (options.interactions) {
-    self.interactions = options.interactions
-  } else {
-    self.interactions = []
-  }
+  self.isInteractive = false || options.isInteractive
   return self
 }
 
@@ -60,9 +56,8 @@ export const LayerType = PropTypes.shape({
   urlIndex2016BaseLayer: PropTypes.string, // index letter for a base layer (required if isBaseLayer)
 
   layer: PropTypes.object.isRequired, // ol.layer subclass
-  interactions: PropTypes.arrayOf(
-    PropTypes.object // ol.interaction subclass
-  ),
+
+  isInteractive: PropTypes.bool, // true if this layer can handle interactions like click and hover
 
   additionalSetup: PropTypes.node, // a node to be displayed at the layer config
   additionalTab: TabType
