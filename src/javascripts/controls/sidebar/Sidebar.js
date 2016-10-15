@@ -9,7 +9,7 @@ import { FormattedMessage } from 'react-intl'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 
-import { FaAngleDoubleLeft } from 'react-icons/lib/fa'
+import FaAngleDoubleLeft from 'react-icons/lib/fa/angle-double-left'
 
 import './Sidebar.scss'
 

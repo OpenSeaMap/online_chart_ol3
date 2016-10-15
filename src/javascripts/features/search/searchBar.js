@@ -8,7 +8,8 @@ import React, { PropTypes } from 'react'
 import { connect } from 'react-redux'
 
 import {FormGroup, InputGroup, FormControl, Button} from 'react-bootstrap'
-import { MdSearch, MdClear } from 'react-icons/lib/md'
+import MdSearch from 'react-icons/lib/md/search'
+import MdClear from 'react-icons/lib/md/clear'
 
 import { searchStart, searchClear } from 'store/actions'
 import { setSidebarOpen, setSidebarActiveTab } from 'controls/sidebar/store'

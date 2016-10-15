@@ -6,10 +6,11 @@
 import React from 'react'
 
 import LayerConfig from './layerConfig/featureLayerConfig'
-import { MdLayers } from 'react-icons/lib/md'
+import MdLayers from 'react-icons/lib/md/layers'
 
 import FeatureDevelopment from './development/featureDevelopment'
-import { FaInfoCircle, FaTags } from 'react-icons/lib/fa'
+import FaInfoCircle from 'react-icons/lib/fa/info-circle'
+import FaTags from 'react-icons/lib/fa/tags'
 
 export const Tabs = [{
   name: 'sidebar-settings',
