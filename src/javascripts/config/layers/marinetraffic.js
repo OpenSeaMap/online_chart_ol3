@@ -13,6 +13,7 @@ import ChartLayer from '../chartlayer'
 
 import { featureClicked, layerTileLoadStateChange } from '../../store/actions'
 import { setSidebarOpen, setSidebarActiveTab } from '../../controls/sidebar/store'
+import warning from 'fbjs/lib/warning'
 
 module.exports = function (context, options) {
   var defaults = {
@@ -68,8 +69,20 @@ module.exports = function (context, options) {
         dataType: 'json',
         success: function (data) {
           let features = []
+          let results
 
-          let results = JSON.parse(data.contents)
+          try {
+            results = JSON.parse(data.contents)
+          } catch (e) {
+            warning(0, 'Marine traffic API returned error: "' + data.contents + '"')
+            this.dispatchEvent({
+              type: 'tileloaderror',
+              target: this,
+              textStatus: data.contents,
+              errorThrown: e
+            })
+            return
+          }
           results.forEach((res) => {
             let featureProps = res
             let labelCoords = ol.proj.fromLonLat([Number(res.LON), Number(res.LAT)])
