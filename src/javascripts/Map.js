@@ -212,7 +212,7 @@ class Map extends React.Component {
       if (layerVisibleOld === layerVisibleNew) return
 
       layer.layer.setVisible(layerVisibleNew)
-      if (!layerVisibleNew) {
+      if (!layerVisibleNew && layer.isInteractive) {
         layer.layer.getSource().getFeatures().forEach((feature) => {
           self.unselectFeature(feature)
           self.unhoverFeature(feature)
