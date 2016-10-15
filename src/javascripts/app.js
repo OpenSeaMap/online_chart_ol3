@@ -75,6 +75,7 @@ const messages = {
   'layer-name-openstreetmap-base': 'OpenStreetMap basemap',
   'layer-name-scuba_diving': 'POIs for scuba diving',
   'layer-name-seamarks-debug': 'Interactive Seamarks',
+  'layer-name-marinetraffic': 'Marine traffic',
 
   'click-on-markers': 'click on markers to see details',
   'copyright-layer': 'Layer data © {source}',
