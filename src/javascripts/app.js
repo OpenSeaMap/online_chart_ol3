@@ -107,15 +107,30 @@ MapLayerProvider.propTypes = {
   layers: PropTypes.arrayOf(LayerType.isRequired).isRequired
 }
 
-ReactDOM.render((
-  <IntlProvider
-    locale={locale}
-    messages={messages}>
-    <Provider store={store}>
-      <MapLayerProvider layers={layers}>
-        <VisibleLayers />
-      </MapLayerProvider>
-    </Provider>
-  </IntlProvider>),
+function runMyApp () {
+  ReactDOM.render((
+    <IntlProvider
+      locale={locale}
+      messages={messages}>
+      <Provider store={store}>
+        <MapLayerProvider layers={layers}>
+          <VisibleLayers />
+        </MapLayerProvider>
+      </Provider>
+    </IntlProvider>),
   document.getElementById('map')
 )
+}
+
+if (!global.Intl) {
+  require.ensure([
+    'intl',
+    'intl/locale-data/jsonp/en.js'
+  ], function (require) {
+    require('intl')
+    require('intl/locale-data/jsonp/en.js')
+    runMyApp()
+  })
+} else {
+  runMyApp()
+}
