@@ -7,3 +7,4 @@ node_modules
 **/generated/_icons.sass
 npm-debug.log
 bower_components
+debug/

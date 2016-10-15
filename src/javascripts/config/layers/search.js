@@ -9,7 +9,7 @@ import _ from 'lodash'
 
 import SearchTabComponent from 'features/search/searchTab'
 import SearchBar from 'features/search/searchBar'
-import {MdSearch} from 'react-icons/lib/md'
+import MdSearch from 'react-icons/lib/md/search'
 
 import ol from 'openlayers'
 import ChartLayer from '../chartlayer'
