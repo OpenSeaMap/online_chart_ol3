@@ -86,13 +86,16 @@ class Map extends React.Component {
     interactions.push(this.hoverer)
 
     this.ol3Map = new ol.Map({
-      renderer: 'dom',
+      // renderer: 'dom',
+      // TODO check for renderer and notify user:
+      // Int1Base with SVG only works on dom renderer
+      // Int1BaseVector only works with canvas renderer
       target: this._input,
       controls: [],
       layers: layers,
       interactions: interactions,
-      loadTilesWhileAnimating: true,
-      loadTilesWhileInteracting: true,
+      // loadTilesWhileAnimating: true,
+      // loadTilesWhileInteracting: true,
       view: new ol.View({
         center: ol.proj.fromLonLat([
           this.props.viewPosition.lon,
@@ -202,23 +205,12 @@ class Map extends React.Component {
       this.ol3Map.beforeRender()
       this.updateView()
     }.bind(this))
+
+    this.updateLayerVisible(this.props)
   }
 
   componentWillReceiveProps (nextProps) {
-    let self = this
-    this.context.layers.forEach((layer) => {
-      const layerVisibleNew = !!(nextProps.layerVisible[layer.id])
-      const layerVisibleOld = layer.layer.getVisible()
-      if (layerVisibleOld === layerVisibleNew) return
-
-      layer.layer.setVisible(layerVisibleNew)
-      if (!layerVisibleNew && layer.isInteractive) {
-        layer.layer.getSource().getFeatures().forEach((feature) => {
-          self.unselectFeature(feature)
-          self.unhoverFeature(feature)
-        })
-      }
-    })
+    this.updateLayerVisible(nextProps)
 
     var centre = ol.proj.transform(this.ol3Map.getView().getCenter(), 'EPSG:3857', 'EPSG:4326')
     let position = {
@@ -275,6 +267,24 @@ class Map extends React.Component {
       start: start
     })
     this.ol3Map.beforeRender(pan, bounce)
+  }
+
+  updateLayerVisible (nextProps) {
+    let self = this
+    this.context.layers.forEach((layer) => {
+      const layerVisibleNew = !!(nextProps.layerVisible[layer.id])
+      const layerVisibleOld = layer.layer.getVisible()
+
+      if (layerVisibleOld === layerVisibleNew) return
+
+      layer.layer.setVisible(layerVisibleNew)
+      if (!layerVisibleNew && layer.isInteractive) {
+        layer.layer.getSource().getFeatures().forEach((feature) => {
+          self.unselectFeature(feature)
+          self.unhoverFeature(feature)
+        })
+      }
+    })
   }
 
   updateView () {

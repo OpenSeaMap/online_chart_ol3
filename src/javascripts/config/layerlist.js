@@ -8,6 +8,7 @@ import _ from 'lodash'
 import Seamarks from './layers/seamarks'
 import OsmBase from './layers/openStreetMapBase'
 import Int1Base from './layers/int1base'
+import BasemapVector from './layers/basemapVector'
 import DeMvDepth from './layers/germany_mv_depth'
 import ScubaDiving from './layers/scubaDiving'
 import SeamarksDebug from './layers/seamarkDebug'
@@ -50,9 +51,16 @@ export const availibleBaseLayers = [
     visibleDefault: true
   }, {
     LayerConstructor: Int1Base,
-    id: 'overlay_intl_base',
+    id: 'base_int1_base',
     isBaseLayer: true,
     urlIndex2016BaseLayer: 'B',
+    visibleDefault: false
+  },
+  {
+    LayerConstructor: BasemapVector,
+    id: 'base_vector',
+    isBaseLayer: true,
+    urlIndex2016BaseLayer: 'C',
     visibleDefault: false
   }
 ]

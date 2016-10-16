@@ -73,6 +73,7 @@ const messages = {
   'layer-name-depth-geodaten_mv': 'Official depth data for Germany/MV',
   'layer-name-int1_base': 'INT1 style basemap',
   'layer-name-openstreetmap-base': 'OpenStreetMap basemap',
+  'layer-name-base-vector': 'Basemap (vector)',
   'layer-name-scuba_diving': 'POIs for scuba diving',
   'layer-name-seamarks-debug': 'Interactive Seamarks',
   'layer-name-marinetraffic': 'Marine traffic',
