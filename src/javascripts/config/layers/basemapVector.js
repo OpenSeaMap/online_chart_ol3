@@ -7,7 +7,6 @@
 import ol from 'openlayers'
 import ChartLayer from '../chartlayer'
 import { layerTileLoadStateChange } from '../../store/actions'
-var $ = require('jquery')
 
 module.exports = function (context, options) {
   var KEY = 'vector-tiles-DdrLAFD'
@@ -17,39 +16,16 @@ module.exports = function (context, options) {
 
   let source = new ol.source.VectorTile({
     attributions: [new ol.Attribution({html: ATTRIBUTION})],
-    format: new ol.format.GeoJSON(),
-    tileGrid: ol.tilegrid.createXYZ({tileSize: [256, 256]}),
-    url: 'https://tile.mapzen.com/mapzen/vector/v1/all/{z}/{x}/{y}.json?api_key=' + KEY,
-    tileLoadFunction: tileLoadFunction
+    format: new ol.format.MVT({
+      layers: ['earth', 'water', 'landuse', 'roads', 'buildings']
+    }),
+    tileGrid: ol.tilegrid.createXYZ({maxZoom: 22}),
+    tilePixelRatio: 16,
+    url: 'https://tile.mapzen.com/mapzen/vector/v1/all/{z}/{x}/{y}.mvt?api_key=' + KEY
   })
   source.on(['tileloadstart', 'tileloadend', 'tileloaderror'], function (ev) {
     context.dispatch(layerTileLoadStateChange(options.id, ev))
   })
-
-  function tileLoadFunction (tile, url) {
-    tile.setLoader(function () {
-      $.get(url, function (data) {
-        var format = tile.getFormat()
-        var all = []
-        const layers = ['earth', 'water', 'landuse', 'roads', 'buildings']
-
-        const tileZoom = tile.getTileCoord()[0]
-
-        layers.forEach((layer) => {
-          let features = format.readFeatures(data[layer])
-          features.forEach(f => {
-            f.set('layer', layer)
-            const featureMinZoom = f.get('min_zoom')
-            if (!featureMinZoom || featureMinZoom <= tileZoom) {
-              all.push(f)
-            }
-          })
-        })
-        tile.setFeatures(all)
-        tile.setProjection(ol.proj.get('EPSG:4326'))
-      })
-    })
-  }
 
   const staticStyles = {
     earth: {
@@ -74,10 +50,10 @@ module.exports = function (context, options) {
         polygons: new ol.style.Style({fill: new ol.style.Fill({color: '#f1cc45'})})
       },
       'allotments|camp_site|caravan_site|farm|farmland|farmyard|garden|golf_course|grass|grave_yard|meadow|park|picnic_site|plant|scrub|village_green': {
-        polygons: new ol.style.Style({fill: new ol.style.Fill({color: '#c7cc45'})})// b9cc45
+        polygons: new ol.style.Style({fill: new ol.style.Fill({color: '#c7cc45'})})
       },
       'forest|national_park|natural_.*|wood': {
-        polygons: new ol.style.Style({fill: new ol.style.Fill({color: '#a9c047'})})// 9bb340
+        polygons: new ol.style.Style({fill: new ol.style.Fill({color: '#a9c047'})})
       }
     },
     buildings: {
@@ -91,7 +67,7 @@ module.exports = function (context, options) {
     var featureLayer = feature.get('layer')
     var featureKind = feature.get('kind')
     var featureGeom = feature.getGeometry().getType()
-//    console.log('=============>>> feature', ol.getUid(feature), feature, resolution, featureGeom)
+    // console.log('=============>>> feature', ol.getUid(feature), feature, resolution, featureGeom)
 
     for (let layer in staticStyles) {
       if (layer !== featureLayer) continue
@@ -121,12 +97,9 @@ module.exports = function (context, options) {
       projection: 'EPSG:4326',
       source: source,
       renderOrder: (f1, f2) => {
-        const s1 = f1.get('sort_rank')
-        const s2 = f2.get('sort_rank')
-        if (s1 === s2) return 0
-        return s1 > s2 ? 1 : -1
+        return f1.get('sort_rank') - f2.get('sort_rank')
       },
-      preload: 6,
+      preload: Infinity,
       style: styleFunc
     })
   }
