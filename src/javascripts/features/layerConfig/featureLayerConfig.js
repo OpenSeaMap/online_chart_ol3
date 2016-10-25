@@ -64,6 +64,14 @@ class ConfigList extends React.Component {
                   label={<FormattedMessage id={layer.nameKey} />}
                   layerId={layer.id}
                   onChange={() => this.selectBaseLayer(layer.id)} />
+                <Collapse
+                  className='additionalSetup'
+                  in={layerVisible}
+                  unmountOnExit >
+                  <div>
+                    {layer.additionalSetup}
+                  </div>
+                </Collapse>
               </li>
             ) })}
         </ul>
