@@ -4,9 +4,48 @@
 */
 'use strict'
 
+import React, { PropTypes } from 'react'
 import ol from 'openlayers'
 import ChartLayer from '../chartlayer'
 import { layerTileLoadStateChange } from '../../store/actions'
+import OsmToggle from '../../components/misc/Toggle'
+import { FormattedMessage } from 'react-intl'
+
+class LayerConfig extends React.Component {
+  constructor (props) {
+    super(props)
+
+    this.state = {
+      showBuildings: false
+    }
+
+    this.render = this.render.bind(this)
+    this.handleToggleBuildings = this.handleToggleBuildings.bind(this)
+  }
+
+  componentWillReceiveProps (nextProps) {
+    this.setState({ value: nextProps.query })
+  }
+
+  handleToggleBuildings (e) {
+    this.setState({ showBuildings: !this.state.showBuildings })
+    this.props.setShowBuildings(!this.state.showBuildings)
+  }
+
+  render () {
+    return (
+      <OsmToggle
+        checked={this.state.showBuildings}
+        label={<FormattedMessage id={'vectorLayer-show-buildings'} />}
+        layerId='vectorLayer-show-buildings'
+        onChange={this.handleToggleBuildings} />
+      )
+  }
+}
+
+LayerConfig.propTypes = {
+  setShowBuildings: PropTypes.func.isRequired
+}
 
 module.exports = function (context, options) {
   var KEY = 'vector-tiles-DdrLAFD'
@@ -63,6 +102,7 @@ module.exports = function (context, options) {
     }
   }
 
+  let showBuildings = false
   function styleFunc (feature, resolution) {
     var featureLayer = feature.get('layer')
     var featureKind = feature.get('kind')
@@ -71,6 +111,8 @@ module.exports = function (context, options) {
 
     for (let layer in staticStyles) {
       if (layer !== featureLayer) continue
+
+      if (!showBuildings && layer === 'buildings') continue
 
       for (var kind in staticStyles[layer]) {
         if (!new RegExp(kind).test(featureKind)) continue
@@ -91,6 +133,11 @@ module.exports = function (context, options) {
     }
   }
 
+  function setShowBuildings (show) {
+    showBuildings = show
+    source.refresh()
+  }
+
   var defaults = {
     nameKey: 'layer-name-base-vector',
     layer: new ol.layer.VectorTile({
@@ -99,9 +146,14 @@ module.exports = function (context, options) {
       renderOrder: (f1, f2) => {
         return f1.get('sort_rank') - f2.get('sort_rank')
       },
-      preload: Infinity,
+      // preload: Infinity,
       style: styleFunc
-    })
+    }),
+    additionalSetup: (
+      <LayerConfig
+        setShowBuildings={setShowBuildings}
+      />
+      )
   }
   return new ChartLayer(context, Object.assign(defaults, options))
 }
