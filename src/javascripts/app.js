@@ -85,7 +85,8 @@ const messages = {
   'search-error': 'Your search returned an error: {message}.',
   'search-running': 'Your search is running. Please wait.',
   'search-empty-result': 'No results found.',
-  'vectorLayer-show-buildings': 'Show buildings'
+  'vectorLayer-show-buildings': 'Show buildings',
+  'vectorLayer-use-nightmode': 'Show map in night mode'
 }
 
 import { LayerType } from './config/chartlayer'
