@@ -84,16 +84,12 @@ class Map extends React.Component {
     interactions.push(this.hoverer)
 
     this.ol3Map = new ol.Map({
-      // renderer: 'dom',
-      // TODO check for renderer and notify user:
-      // Int1Base with SVG only works on dom renderer
-      // Int1BaseVector only works with canvas renderer
       target: this._input,
       controls: [],
       layers: layers,
       interactions: interactions,
-      // loadTilesWhileAnimating: true,
-      // loadTilesWhileInteracting: true,
+      loadTilesWhileAnimating: true,
+      loadTilesWhileInteracting: true,
       view: new ol.View({
         center: ol.proj.fromLonLat([
           this.props.viewPosition.position.lon,
