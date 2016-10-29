@@ -71,7 +71,6 @@ const messages = {
   'layer-name-search': 'Search',
   'layer-name-seamarks': 'OpenSeaMap seamarks',
   'layer-name-depth-geodaten_mv': 'Official depth data for Germany/MV',
-  'layer-name-int1_base': 'INT1 style basemap',
   'layer-name-openstreetmap-base': 'OpenStreetMap Carto',
   'layer-name-base-vector': 'Vectormap (simplified)',
   'layer-name-scuba_diving': 'POIs for scuba diving',
