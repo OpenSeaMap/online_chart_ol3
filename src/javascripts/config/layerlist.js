@@ -14,6 +14,7 @@ import ScubaDiving from './layers/scubaDiving'
 import SeamarksDebug from './layers/seamarkDebug'
 import Search from './layers/search'
 import Marinetraffic from './layers/marinetraffic'
+import GridWgs from './layers/grid_wgs'
 /**
 for the old (2013) layers format see:
 https://github.com/OpenSeaMap/online_chart/blob/master/index.php#L72
@@ -67,6 +68,12 @@ export const availibleBaseLayers = [
 
 export const availibleOverlayLayers = [
   {
+    LayerConstructor: GridWgs,
+    id: 'overlay_grid_wgs',
+    urlIndex2016: 6,
+    urlIndex2013: 10,
+    visibleDefault: true
+  }, {
     LayerConstructor: Seamarks,
     id: 'overlay_osm_seamarks',
     urlIndex2016: 0,

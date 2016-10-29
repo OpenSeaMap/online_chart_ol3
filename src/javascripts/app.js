@@ -77,6 +77,7 @@ const messages = {
   'layer-name-scuba_diving': 'POIs for scuba diving',
   'layer-name-seamarks-debug': 'Interactive Seamarks',
   'layer-name-marinetraffic': 'Marine traffic',
+  'layer-name-grid-wgs': 'Coordinate grid',
 
   'click-on-markers': 'click on markers to see details',
   'copyright-layer': 'Layer data © {source}',
