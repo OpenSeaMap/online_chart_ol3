@@ -29,7 +29,7 @@ class Sidebar extends React.Component {
         onClick={this.props.setSidebarOpen}>
         <FaAngleDoubleLeft className={this.props.isOpen ? 'open' : 'closed'} />
       </button>
-      )
+    )
   }
 
   _getIsActiveClassName (tabName) {

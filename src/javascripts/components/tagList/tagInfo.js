@@ -89,7 +89,7 @@ class TagInfo extends React.Component {
           { details }
         </FormGroup>
       </form>
-      )
+    )
   }
 }
 

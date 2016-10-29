@@ -74,7 +74,7 @@ class SearchBarComponent extends React.Component {
           </InputGroup>
         </FormGroup>
       </form>
-      )
+    )
   }
 }
 

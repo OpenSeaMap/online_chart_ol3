@@ -132,7 +132,7 @@ class FeatureDevelopment extends React.Component {
           </section>
         </div>
       </IntlProvider>
-      )
+    )
   }
 }
 
