@@ -19,8 +19,6 @@ class Map extends React.Component {
 
   constructor (props) {
     super(props)
-    this.updateView = this.updateView.bind(this)
-    this.viewIsMoving = false // set to true during animations to prevent position updates
 
     /* array of controls.
      * this controls must be added/removed from the map.
@@ -98,10 +96,10 @@ class Map extends React.Component {
       // loadTilesWhileInteracting: true,
       view: new ol.View({
         center: ol.proj.fromLonLat([
-          this.props.viewPosition.lon,
-          this.props.viewPosition.lat
+          this.props.viewPosition.position.lon,
+          this.props.viewPosition.position.lat
         ]),
-        zoom: this.props.viewPosition.zoom
+        zoom: this.props.viewPosition.position.zoom
       })
     })
 
@@ -194,17 +192,18 @@ class Map extends React.Component {
     /* add all controls to the map */
     this._controls.map((control) => this.ol3Map.addControl(control))
 
-    this.ol3Map.on('moveend', function () {
-      this.viewIsMoving = false
+    this.ol3Map.on('moveend', () => {
       this.ol3Map.beforeRender()
-      this.updateView()
-    }.bind(this))
 
-    this.ol3Map.getView().on('change:resolution', function () {
-      this.viewIsMoving = false
-      this.ol3Map.beforeRender()
-      this.updateView()
-    }.bind(this))
+      var centre = ol.proj.transform(this.ol3Map.getView().getCenter(), 'EPSG:3857', 'EPSG:4326')
+      let position = {
+        lon: centre[0],
+        lat: centre[1],
+        zoom: this.ol3Map.getView().getZoom()
+      }
+      if (this.props.viewPosition.position && positionsEqual(position, this.props.viewPosition.position)) return
+      this.props.onViewPositionChange(position)
+    })
 
     this.updateLayerVisible(this.props)
   }
@@ -218,19 +217,19 @@ class Map extends React.Component {
       lat: centre[1],
       zoom: this.ol3Map.getView().getZoom()
     }
-    if (!positionsEqual(nextProps.viewPosition, position)) {
+    if (nextProps.viewPosition.position && !positionsEqual(nextProps.viewPosition.position, position)) {
       let view = this.ol3Map.getView()
       this.setupMoveAnimations()
 
       view.setCenter(ol.proj.fromLonLat([
-        nextProps.viewPosition.lon,
-        nextProps.viewPosition.lat
+        nextProps.viewPosition.position.lon,
+        nextProps.viewPosition.position.lat
       ]))
-      view.setZoom(nextProps.viewPosition.zoom)
+      view.setZoom(nextProps.viewPosition.position.zoom)
     }
 
-    if (nextProps.viewExtent !== this.props.viewExtent) {
-      if (nextProps.viewExtent && nextProps.viewExtent.length === 4) {
+    if (nextProps.viewPosition.extent && nextProps.viewPosition.extent !== this.props.viewPosition.extent) {
+      if (nextProps.viewPosition.extent && nextProps.viewPosition.extent.length === 4) {
         let mapSize = this.ol3Map.getSize()
         let width = mapSize[0]
         let height = mapSize[1]
@@ -239,10 +238,7 @@ class Map extends React.Component {
           maxZoom: 18
         }
         this.setupMoveAnimations()
-        this.ol3Map.getView().fit(nextProps.viewExtent, mapSize, options)
-        this.props.onViewExtentChange([])
-        this.viewIsMoving = false
-        this.updateView() // trigger state update
+        this.ol3Map.getView().fit(nextProps.viewPosition.extent, mapSize, options)
       }
     }
   }
@@ -285,18 +281,6 @@ class Map extends React.Component {
         })
       }
     })
-  }
-
-  updateView () {
-    if (this.viewIsMoving) return
-    var centre = ol.proj.transform(this.ol3Map.getView().getCenter(), 'EPSG:3857', 'EPSG:4326')
-    let position = {
-      lon: centre[0],
-      lat: centre[1],
-      zoom: this.ol3Map.getView().getZoom()
-    }
-    if (positionsEqual(position, this.props.viewPosition)) return
-    this.props.onViewPositionChange(position)
   }
 
   render () {
@@ -346,17 +330,13 @@ class Map extends React.Component {
   }
 }
 
-Map.defaultProps = {
-  renderer: 'dom'
-}
-
 Map.propTypes = {
   layerVisible: PropTypes.objectOf(PropTypes.bool).isRequired,
-  onViewExtentChange: PropTypes.func.isRequired,
   onViewPositionChange: PropTypes.func.isRequired,
-  renderer: PropTypes.string,
-  viewExtent: PropTypes.arrayOf(PropTypes.number),
-  viewPosition: PropTypes.objectOf(PropTypes.number)
+  viewPosition: PropTypes.shape({
+    position: PropTypes.objectOf(PropTypes.number),
+    extent: PropTypes.arrayOf(PropTypes.number)
+  }).isRequired
 }
 
 import { LayerType } from './config/chartlayer'

@@ -31,7 +31,7 @@ import {
     SEARCH_STATE_COMPLETE
 } from 'store/reducers'
 
-import { setViewToExtent } from 'store/actions'
+import { setViewPosition } from 'store/actions'
 
 export const SearchTab = {
   name: 'sidebar-search',
@@ -125,7 +125,7 @@ module.exports = function (context, options) {
     let topLeft = ol.proj.fromLonLat([Number(bound[2]), Number(bound[0])])
     let bottomRight = ol.proj.fromLonLat([Number(bound[3]), Number(bound[1])])
     let extent = [topLeft[0], topLeft[1], bottomRight[0], bottomRight[1]]
-    context.dispatch(setViewToExtent(extent))
+    context.dispatch(setViewPosition(undefined, extent))
   }
 
   let oldClickState = context.getState().search.clickedFeatureId
@@ -209,7 +209,7 @@ module.exports = function (context, options) {
       vectorSource.addFeature(feature)
     })
     if (results.length > 0) {
-      context.dispatch(setViewToExtent(vectorSource.getExtent()))
+      context.dispatch(setViewPosition(undefined, vectorSource.getExtent()))
     }
   }
   let storeChangeHandler = function () {

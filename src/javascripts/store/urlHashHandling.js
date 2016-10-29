@@ -92,8 +92,9 @@ function decompressVisibleLayers (layersString) {
 export const writeToUrlHash = store => next => action => {
   let result = next(action)
   let state = store.getState()
+  if (!state.viewPosition.position) return result
   let options = Object.assign({},
-    compressPosition(state.viewPosition),
+    compressPosition(state.viewPosition.position),
     {
       layers: compressVisibleLayers(state.layerVisible)
     }
@@ -114,9 +115,11 @@ export function getStateFromUrlHash (defaults) {
   if (res.options.lon && res.options.lat && res.options.zoom) {
     pos = {
       viewPosition: {
-        lon: parseFloat(res.options.lon),
-        lat: parseFloat(res.options.lat),
-        zoom: parseFloat(res.options.zoom)
+        position: {
+          lon: parseFloat(res.options.lon),
+          lat: parseFloat(res.options.lat),
+          zoom: parseFloat(res.options.zoom)
+        }
       }
     }
   }

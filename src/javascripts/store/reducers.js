@@ -14,7 +14,6 @@ import {
     SET_LAYER_VISIBLE,
     INIT_LAYER_VISIBLE,
     SET_VIEW_POSITION,
-    SET_VIEW_TO_EXTENT,
     FEATURE_CLICKED,
     LAYER_TILE_LOAD_CHANGE,
     SEARCH_START,
@@ -47,17 +46,7 @@ function layerVisible (state = {}, action) {
 function viewPosition (state = {}, action) {
   switch (action.type) {
     case SET_VIEW_POSITION:
-      return Object.assign({}, state, action.position)
-
-    default:
-      return state
-  }
-}
-
-function viewExtent (state = [], action) {
-  switch (action.type) {
-    case SET_VIEW_TO_EXTENT:
-      return action.extent
+      return Object.assign({}, state, {position: action.position, extent: action.extent})
 
     default:
       return state
@@ -191,7 +180,6 @@ const mapApp = combineReducers({
   sidebarSelectedTab,
   layerVisible,
   viewPosition,
-  viewExtent,
   selectedFeature,
   layerTileLoadState,
   search

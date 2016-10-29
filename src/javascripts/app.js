@@ -39,8 +39,8 @@ function onHashChange () {
   let oldState = store.getState()
   let newState = getStateFromUrlHash(oldState)
 
-  if (!positionsEqual(newState.viewPosition, oldState.viewPosition)) {
-    store.dispatch(setViewPosition(newState.viewPosition))
+  if (!positionsEqual(newState.viewPosition.position, oldState.viewPosition.position)) {
+    store.dispatch(setViewPosition(newState.viewPosition.position))
   }
 
   if (oldState.layerVisible !== newState.layerVisible) {

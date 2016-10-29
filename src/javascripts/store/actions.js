@@ -22,17 +22,10 @@ export function initLayerVisible (visibleList) {
 }
 
 export const SET_VIEW_POSITION = 'SET_VIEW_POSITION'
-export function setViewPosition (position) {
+export function setViewPosition (position, extent) {
   return {
     type: SET_VIEW_POSITION,
-    position: position
-  }
-}
-
-export const SET_VIEW_TO_EXTENT = 'SET_VIEW_TO_EXTENT'
-export function setViewToExtent (extent) {
-  return {
-    type: SET_VIEW_TO_EXTENT,
+    position: position,
     extent: extent
   }
 }
