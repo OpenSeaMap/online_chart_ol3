@@ -7,7 +7,7 @@
 import React from 'react'
 import { FormattedMessage } from 'react-intl'
 import { ExternalLink } from '../../components/misc/Links'
-
+import controlIds from '../../controls/ol3/controls'
 import ol from 'openlayers'
 import ChartLayer from '../chartlayer'
 import { layerTileLoadStateChange } from '../../store/actions'
@@ -49,7 +49,8 @@ module.exports = function (context, options) {
             )
           }} />
       </div>
-    )
+    ),
+    additionalControls: [controlIds.attribution]
   }
   return new ChartLayer(context, Object.assign(defaults, options))
 }

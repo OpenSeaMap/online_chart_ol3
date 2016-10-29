@@ -4,16 +4,10 @@
 */
 'use strict'
 
-import OL3Attribution from './OL3Attribution'
-import OL3Control from './OL3Control'
-import OL3Fullscreen from './OL3Fullscreen'
-import OL3ScaleLine from './OL3ScaleLine'
-import OL3Zoom from './OL3Zoom'
-
 module.exports = {
-  OL3Attribution: OL3Attribution,
-  OL3Control: OL3Control,
-  OL3Fullscreen: OL3Fullscreen,
-  OL3ScaleLine: OL3ScaleLine,
-  OL3Zoom: OL3Zoom
+  attribution: 'ol3-attribution',
+  fullscreen: 'ol3-fullscreen',
+  scaleline_nautical: 'ol3-scaleline-nautical',
+  scaleline_metric: 'ol3-scaleline-metric',
+  zoom: 'ol3-zoom'
 }

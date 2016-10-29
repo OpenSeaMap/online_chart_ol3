@@ -11,20 +11,22 @@ import { positionsEqual } from './utils'
 
 import MetaControl from './controls/metaControl/MetaControl'
 import Sidebar from './controls/sidebar/Sidebar'
-import { OL3Attribution, OL3Fullscreen, OL3ScaleLine, OL3Zoom } from './controls/ol3/controls'
 
+import controlIds from './controls/ol3/controls'
+import OL3Attribution from './controls/ol3/OL3Attribution'
+import OL3Fullscreen from './controls/ol3/OL3Fullscreen'
+import OL3ScaleLine from './controls/ol3/OL3ScaleLine'
+import OL3Zoom from './controls/ol3/OL3Zoom'
+
+import { alwaysOnControls } from './SETTINGS'
 import { Tabs } from './features/tabs'
 
-class Map extends React.Component {
+class Ol3Map extends React.Component {
 
   constructor (props) {
     super(props)
 
-    /* array of controls.
-     * this controls must be added/removed from the map.
-     *TODO: add functions to all/remove a control at a later time
-     */
-    this._controls = []
+    this._controls = new Map()
   }
 
   componentDidMount () {
@@ -185,9 +187,6 @@ class Map extends React.Component {
       target: this.ol3Map.getTargetElement()
     }))
 
-    /* add all controls to the map */
-    this._controls.map((control) => this.ol3Map.addControl(control))
-
     this.ol3Map.on('moveend', () => {
       this.ol3Map.beforeRender()
 
@@ -239,8 +238,8 @@ class Map extends React.Component {
     }
   }
 
-  addControlToMap (control) {
-    this._controls.push(control)
+  addControlToMap (id, control) {
+    this._controls.set(id, control)
   }
 
   setupMoveAnimations () {
@@ -263,9 +262,16 @@ class Map extends React.Component {
 
   updateLayerVisible (nextProps) {
     let self = this
+    let requestedControlsIds = new Set(alwaysOnControls)
     this.context.layers.forEach((layer) => {
       const layerVisibleNew = !!(nextProps.layerVisible[layer.id])
       const layerVisibleOld = layer.layer.getVisible()
+
+      if (layerVisibleNew && layer.additionalControls) {
+        layer.additionalControls.forEach((id) => {
+          requestedControlsIds.add(id)
+        })
+      }
 
       if (layerVisibleOld === layerVisibleNew) return
 
@@ -277,6 +283,11 @@ class Map extends React.Component {
         })
       }
     })
+
+    for (var [id, control] of this._controls) {
+      const map = requestedControlsIds.has(id) ? this.ol3Map : null
+      control.setMap(map)
+    }
   }
 
   render () {
@@ -299,34 +310,34 @@ class Map extends React.Component {
             position='sidebar left'
             tabs={Tabs.concat(additionalTabs)} />
           <OL3Attribution
-            id='ol3-attribution'
+            id={controlIds.attribution}
             position='bottom right'
-            addControlToMap={(c) => this.addControlToMap(c)} />
+            addControlToMap={(id, c) => this.addControlToMap(id, c)} />
           <OL3Fullscreen
-            id='ol3-fullscreen'
+            id={controlIds.fullscreen}
             position='top right'
-            addControlToMap={(c) => this.addControlToMap(c)} />
+            addControlToMap={(id, c) => this.addControlToMap(id, c)} />
           <OL3Zoom
-            id='ol3-zoom'
+            id={controlIds.zoom}
             position='top left'
-            addControlToMap={(c) => this.addControlToMap(c)} />
+            addControlToMap={(id, c) => this.addControlToMap(id, c)} />
           <OL3ScaleLine
-            id='ol3-scaleline-metric'
+            id={controlIds.scaleline_metric}
             position='bottom left'
             units='metric'
-            addControlToMap={(c) => this.addControlToMap(c)} />
+            addControlToMap={(id, c) => this.addControlToMap(id, c)} />
           <OL3ScaleLine
-            id='ol3-scaleline-nautical'
+            id={controlIds.scaleline_nautical}
             position='bottom left'
             units='nautical'
-            addControlToMap={(c) => this.addControlToMap(c)} />
+            addControlToMap={(id, c) => this.addControlToMap(id, c)} />
         </MetaControl>
       </div>
     )
   }
 }
 
-Map.propTypes = {
+Ol3Map.propTypes = {
   layerVisible: PropTypes.objectOf(PropTypes.bool).isRequired,
   onViewPositionChange: PropTypes.func.isRequired,
   viewPosition: PropTypes.shape({
@@ -337,8 +348,8 @@ Map.propTypes = {
 
 import { LayerType } from './config/chartlayer'
 
-Map.contextTypes = {
+Ol3Map.contextTypes = {
   layers: PropTypes.arrayOf(LayerType)
 }
 
-export default Map
+export default Ol3Map

@@ -7,6 +7,7 @@
 import ol from 'openlayers'
 import ChartLayer from '../chartlayer'
 import { layerTileLoadStateChange } from '../../store/actions'
+import controlIds from '../../controls/ol3/controls'
 
 module.exports = function (context, options) {
   let source = new ol.source.OSM({
@@ -23,7 +24,8 @@ module.exports = function (context, options) {
     layer: new ol.layer.Tile({
       preload: 6,
       source: source
-    })
+    }),
+    additionalControls: [controlIds.attribution]
   }
   return new ChartLayer(context, Object.assign(defaults, options))
 }

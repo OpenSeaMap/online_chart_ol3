@@ -9,6 +9,7 @@ import ol from 'openlayers'
 import ChartLayer from '../chartlayer'
 import { FormattedMessage } from 'react-intl'
 import {TabSidebarDetails} from 'features/tabs'
+import controlIds from '../../controls/ol3/controls'
 
 var SimpleImageStyle = require('ol-style-simpleImageStyle')
 var OverpassApi = require('ol-source-overpassApi')
@@ -99,7 +100,8 @@ module.exports = function (context, options) {
         <FormattedMessage id='click-on-markers' />
       </div>
     ),
-    additionalTab: TabSidebarDetails
+    additionalTab: TabSidebarDetails,
+    additionalControls: [controlIds.attribution]
   }
 
   return new ChartLayer(context, Object.assign(defaults, objects))

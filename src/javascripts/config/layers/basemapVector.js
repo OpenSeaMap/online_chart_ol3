@@ -10,6 +10,7 @@ import ChartLayer from '../chartlayer'
 import { layerTileLoadStateChange } from '../../store/actions'
 import OsmToggle from '../../components/misc/Toggle'
 import { FormattedMessage } from 'react-intl'
+import controlIds from '../../controls/ol3/controls'
 
 class LayerConfig extends React.Component {
   constructor (props) {
@@ -217,7 +218,8 @@ module.exports = function (context, options) {
         setShowBuildings={setShowBuildings}
         setUseNightMode={setUseNightMode}
       />
-      )
+    ),
+    additionalControls: [controlIds.attribution]
   }
   return new ChartLayer(context, Object.assign(defaults, options))
 }

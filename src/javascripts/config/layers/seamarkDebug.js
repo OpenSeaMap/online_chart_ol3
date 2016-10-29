@@ -7,6 +7,7 @@
 import React from 'react'
 import { FormattedMessage } from 'react-intl'
 import {TabSidebarDetails} from 'features/tabs'
+import controlIds from '../../controls/ol3/controls'
 
 import ol from 'openlayers'
 import ChartLayer from '../chartlayer'
@@ -97,7 +98,8 @@ module.exports = function (context, options) {
         <FormattedMessage id='click-on-markers' />
       </div>
     ),
-    additionalTab: TabSidebarDetails
+    additionalTab: TabSidebarDetails,
+    additionalControls: [controlIds.attribution, controlIds.scaleline_nautical]
   }
 
   return new ChartLayer(context, Object.assign(defaults, objects))

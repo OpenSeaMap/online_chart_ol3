@@ -38,6 +38,8 @@ export default function (context, options) {
   self.additionalTab = options.additionalTab
 
   self.isInteractive = false || options.isInteractive
+
+  self.additionalControls = options.additionalControls
   return self
 }
 
