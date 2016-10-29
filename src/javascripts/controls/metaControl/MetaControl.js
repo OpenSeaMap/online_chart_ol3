@@ -62,10 +62,8 @@ class MetaControl extends React.Component {
   }
 }
 
-import OL3Control from '../ol3/OL3Control'
-
 MetaControl.propTypes = {
-  children: React.PropTypes.arrayOf(OL3Control.propTypes).isRequired
+  children: React.PropTypes.arrayOf(React.PropTypes.element).isRequired
 }
 
 export default MetaControl

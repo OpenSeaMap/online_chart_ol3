@@ -7,7 +7,6 @@
 import React from 'react'
 import OL3Control from './OL3Control'
 import ol from 'openlayers'
-import _ from 'lodash'
 
 class OL3ScaleLine extends OL3Control {
   _createControl () {
@@ -19,7 +18,7 @@ class OL3ScaleLine extends OL3Control {
     return this._control
   }
 }
-OL3ScaleLine.propTypes = _.extend(OL3Control.propTypes, {
+OL3ScaleLine.propTypes = Object.assign({}, OL3Control.propTypes, {
   units: React.PropTypes.string.isRequired
 })
 
