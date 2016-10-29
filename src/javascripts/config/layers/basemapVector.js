@@ -209,7 +209,7 @@ module.exports = function (context, options) {
       renderOrder: (f1, f2) => {
         return f1.get('sort_rank') - f2.get('sort_rank')
       },
-      // preload: Infinity,
+      preload: 10,
       style: styleFunc
     }),
     additionalSetup: (

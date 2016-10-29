@@ -1,8 +1,8 @@
 
 export const defaultViewPosition = {
   position: {
-    lon: 11.48,
-    lat: 53.615,
+    lon: 12.0561,
+    lat: 54.1910,
     zoom: 14
   }
 }
