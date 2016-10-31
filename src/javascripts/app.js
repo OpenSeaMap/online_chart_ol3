@@ -77,6 +77,7 @@ const messages = {
   'layer-name-seamarks-debug': 'Interactive Seamarks',
   'layer-name-marinetraffic': 'Marine traffic',
   'layer-name-grid-wgs': 'Coordinate grid',
+  'layer-name-download_bundles': 'Download map bundles',
 
   'click-on-markers': 'click on markers to see details',
   'copyright-layer': 'Layer data © {source}',

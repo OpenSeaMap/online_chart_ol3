@@ -14,6 +14,8 @@ import SeamarksDebug from './layers/seamarkDebug'
 import Search from './layers/search'
 import Marinetraffic from './layers/marinetraffic'
 import GridWgs from './layers/grid_wgs'
+import Download from './layers/downloadBundles'
+
 /**
 for the old (2013) layers format see:
 https://github.com/OpenSeaMap/online_chart/blob/master/index.php#L72
@@ -99,6 +101,13 @@ export const availibleOverlayLayers = [
     LayerConstructor: Marinetraffic,
     id: 'overlay_marinetraffic',
     urlIndex2016: 5,
+    visibleDefault: false
+  },
+  {
+    LayerConstructor: Download,
+    id: 'overlay_download',
+    urlIndex2013: 8,
+    urlIndex2016: 7,
     visibleDefault: false
   }
 ]
