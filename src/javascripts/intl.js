@@ -35,7 +35,7 @@ export const IntlAppProviderInternal = ({locale, children}) => (
 )
 
 IntlAppProviderInternal.propTypes = {
-  locale: PropTypes.oneOf(['de', 'en']),
+  locale: PropTypes.oneOf(allLocales),
   children: PropTypes.element
 }
 

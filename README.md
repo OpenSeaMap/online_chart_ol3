@@ -67,13 +67,13 @@ container because all packages are installed and cached inside.
 
 
 ```
-docker-compose up lint
+docker-compose run lint
 ```
 
 Runs the lint scripts and exits.
 
 ```
-docker-compose up test
+docker-compose run test
 ```
 
 Builds and runs all tests.
@@ -86,4 +86,4 @@ Builds the project in release mode and serves them to [localhost:5000](http://lo
 
 ## Use directly with `npm`
 
-You can use for own install of npm. See [gulpfile.js/README.md](./gulpfile.js/README.md) for details.
+You can use for own install of npm. See [gulpfile.babel.js/README.md](./gulpfile.js/README.md) for details.

@@ -4,8 +4,8 @@
   "description": "OpenSeaMap charting framework",
   "license": "AGPL-3.0",
   "engines": {
-    "node": "4.4.3",
-    "npm": "2.15.1"
+    "node": "4",
+    "npm": "3"
   },
   "homepage": "http://aaxee.github.io/online_chart_ol3",
   "repository": "https://github.com/aAXEe/online_chart_ol3",
@@ -15,10 +15,15 @@
   "scripts": {
     "deploy": "gulp deploy",
     "production": "gulp production",
-    "demo": "gulp production && gulp server",
     "gulp": "gulp",
-    "development": "gulp",
-    "test": "gulp production && karma start --single-run"
+
+    "pretest": "gulp production",
+    "test": "karma start --single-run",
+
+    "prestart": "gulp production",
+    "start": "gulp server",
+
+    "postinstall": "bower install"
   },
   "dependencies": {
     "fbjs": "^0.8.3",
@@ -32,6 +37,7 @@
     "react": "^15.3.0",
     "react-bootstrap": "^0.30.0",
     "react-dom": "^15.3.2",
+    "react-icons": "^2.0.1",
     "react-intl": "^2.0.0-beta-2",
     "react-redux": "^4.4.0",
     "react-toggle": "~2.1.1",
@@ -62,18 +68,17 @@
     "eslint-plugin-standard": "^2.0.0",
     "estraverse": "^4.1.1",
     "express": "^4.13.1",
+    "glob": "^7.1.1",
     "gulp": "^3.9.0",
     "gulp-autoprefixer": "^3.1.0",
     "gulp-changed": "^1.2.1",
     "gulp-clean-css": "^2.0.6",
     "gulp-concat-css": "^2.2.0",
     "gulp-cssimport": "^4.0.1",
-    "gulp-data": "^1.2.0",
     "gulp-eslint": "^3.0.1",
     "gulp-filesize": "0.0.6",
     "gulp-gh-pages": "^0.5.2",
     "gulp-htmlmin": "~3.0.0",
-    "gulp-iconfont": "^8.0.1",
     "gulp-if": "~2.0.0",
     "gulp-imagemin": "^3.0.2",
     "gulp-notify": "^2.2.0",
@@ -108,12 +113,12 @@
     "mkdirp": "^0.5.1",
     "mocha": "^3.0.0",
     "morgan": "^1.6.1",
+    "node-sass": "^3.4.2",
     "object-assign": "^4.0.1",
     "open": "0.0.5",
     "pretty-hrtime": "~1.0.0",
     "raw-loader": "^0.5.1",
     "rc-progress": "^2.0.0",
-    "react-icons": "^2.0.1",
     "redux-devtools": "^3.1.0",
     "require-dir": "^0.3.0",
     "sass-loader": "4.0.2",

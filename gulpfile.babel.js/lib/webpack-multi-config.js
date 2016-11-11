@@ -9,7 +9,7 @@ module.exports = function (env) {
   var jsSrc = path.resolve(config.root.src, config.tasks.js.src)
   var jsDest = path.resolve(config.root.dest, config.tasks.js.dest)
   var publicPath = path.join(config.tasks.js.dest, '/')
-  var filenamePattern = env === 'production' ? '[name]-[hash].js' : '[name].js'
+  var filenamePattern = '[name].js'
   var extensions = config.tasks.js.extensions.map(function (extension) {
     return '.' + extension
   })
@@ -22,7 +22,8 @@ module.exports = function (env) {
         jQuery: 'jquery',
         'window.jQuery': 'jquery'
       }),
-      new webpack.BannerPlugin(licenseBanner)
+      new webpack.BannerPlugin(licenseBanner),
+      new webpack.optimize.LimitChunkCountPlugin({maxChunks: 1})
     ],
     resolve: {
       root: jsSrc,
@@ -97,6 +98,7 @@ module.exports = function (env) {
           'NODE_ENV': JSON.stringify('production')
         }
       }),
+      new webpack.optimize.OccurrenceOrderPlugin(),
       new webpack.optimize.DedupePlugin(),
       new webpack.optimize.UglifyJsPlugin({
         'compress': false,

@@ -1,5 +1,3 @@
-// Include this if using an Icon Font
-@import "generated/icons";
 
 @import "colors";
 
@@ -13,7 +11,6 @@ $list-group-active-text-color: $text-color;
 $list-group-active-color: $list-group-active-text-color;
 
 @import "bower_components/bootstrap-sass/assets/stylesheets/_bootstrap.scss";
-@import "bootstrap-callout";
 
 @import "/node_modules/openlayers/css/ol.css";
 

@@ -1,7 +1,6 @@
-var config        = require('./gulpfile.js/config')
-var karmaWebpack  = require('karma-webpack')
-var webpackConfig = require('./gulpfile.js/lib/webpack-multi-config')
-var path          = require('path')
+var config = require('./gulpfile.babel.js/config')
+var webpackConfig = require('./gulpfile.babel.js/lib/webpack-multi-config')
+var path = require('path')
 
 var testSrc = path.join(config.root.src, config.tasks.js.src, '/**/__tests__/*')
 
@@ -17,6 +16,6 @@ var karmaConfig = {
 
 karmaConfig.preprocessors[testSrc] = ['webpack']
 
-module.exports = function(config) {
+module.exports = function (config) {
   config.set(karmaConfig)
 }

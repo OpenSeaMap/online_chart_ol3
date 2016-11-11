@@ -6,6 +6,8 @@
 import './Links.scss'
 
 import React from 'react'
+import MdDownload from 'react-icons/lib/md/file-download'
+import FaLink from 'react-icons/lib/fa/external-link'
 
 let LinkPropTypes = {
   children: React.PropTypes.oneOfType([
@@ -39,6 +41,8 @@ export const ExternalLink = (props) => (
     target='_blank'
     {...props}>
     { props.children }
+    {' '}
+    <FaLink />
   </NormalLink>
 )
 ExternalLink.propTypes = LinkPropTypes
@@ -47,10 +51,13 @@ ExternalLink.propTypes = LinkPropTypes
  * Link to file to download
  */
 export const DownloadLink = (props) => (
-  <ExternalLink
+  <NormalLink
     className='download'
+    target='_blank'
     {...props}>
     { props.children }
-  </ExternalLink>
+    {' '}
+    <MdDownload />
+  </NormalLink>
 )
 DownloadLink.propTypes = LinkPropTypes
