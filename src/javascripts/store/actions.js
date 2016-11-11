@@ -98,3 +98,54 @@ export function searchResultUnclick () {
     featureId: null
   }
 }
+
+export const DOWNLOAD_SET_FEATURES = 'DOWNLOAD_SET_FEATURES'
+export function downloadSetFeatures (features) {
+  return {
+    type: DOWNLOAD_SET_FEATURES,
+    features: features
+  }
+}
+export const DOWNLOAD_SET_FILTER = 'DOWNLOAD_SET_FILTER'
+export function downloadSetFilter (filter) {
+  return {
+    type: DOWNLOAD_SET_FILTER,
+    filter: filter
+  }
+}
+export const DOWNLOAD_HOVERED = 'DOWNLOAD_HOVERED'
+export function downloadHovered (featureId) {
+  return {
+    type: DOWNLOAD_HOVERED,
+    featureId: featureId
+  }
+}
+// to remove the hover from any feature
+export function downloadUnhover () {
+  return {
+    type: DOWNLOAD_HOVERED,
+    featureId: null
+  }
+}
+
+export const DOWNLOAD_CLICKED = 'DOWNLOAD_CLICKED'
+export function downloadClicked (featureId) {
+  return {
+    type: DOWNLOAD_CLICKED,
+    featureId: featureId
+  }
+}
+// clear the last clicked element
+export function downloadUnclick () {
+  return {
+    type: DOWNLOAD_CLICKED,
+    featureId: null
+  }
+}
+
+export const downloadFeatureMatchesFilter = (feature, filter) => {
+  for (const key in filter) {
+    if (!new RegExp(filter[key]).test(feature[key])) return false
+  }
+  return true
+}

@@ -16,7 +16,7 @@ export const SearchResultDisplay = ({
 }) => (
   <ListGroupItem
     active={isClicked}
-    bsStyle={isHovered ? 'info' : ''}
+    bsStyle={isHovered && !isClicked ? 'info' : null}
     onClick={onResultClicked}
     onMouseOut={onResultUnhover}
     onMouseOver={onResultHovered} >

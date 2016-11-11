@@ -87,7 +87,12 @@ const messages = {
   'search-running': 'Your search is running. Please wait.',
   'search-empty-result': 'No results found.',
   'vectorLayer-show-buildings': 'Show buildings',
-  'vectorLayer-use-nightmode': 'Show map in night mode'
+  'vectorLayer-use-nightmode': 'Show map in night mode',
+
+  'download-file-date': 'Date: {formatedDate}',
+  'download-file-format': 'Format: {format}',
+  'download-file-application': 'Application: {app}',
+  'download-file-download': 'Download file'
 }
 
 import { LayerType } from './config/chartlayer'

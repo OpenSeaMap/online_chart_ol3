@@ -20,7 +20,11 @@ import {
     SEARCH_CLEAR,
     SEARCH_END,
     SEARCH_RESULT_HOVERED,
-    SEARCH_RESULT_CLICKED
+    SEARCH_RESULT_CLICKED,
+    DOWNLOAD_SET_FEATURES,
+    DOWNLOAD_SET_FILTER,
+    DOWNLOAD_HOVERED,
+    DOWNLOAD_CLICKED
 } from './actions'
 
 import {
@@ -175,6 +179,37 @@ function search (state = searchDefaultState, action) {
   }
 }
 
+const downloadDefaultState = {
+  features: [],
+  filter: {},
+  hoveredFeatureId: null,
+  clickedFeatureId: null
+}
+const downloadBundles = (state = downloadDefaultState, action) => {
+  switch (action.type) {
+    case DOWNLOAD_SET_FEATURES: {
+      return Object.assign({}, state, {features: action.features})
+    }
+    case DOWNLOAD_SET_FILTER: {
+      return Object.assign({}, state, {filter: action.filter})
+    }
+    case DOWNLOAD_HOVERED: {
+      let obj = {
+        hoveredFeatureId: action.featureId
+      }
+      return Object.assign({}, state, obj)
+    }
+    case DOWNLOAD_CLICKED: {
+      let obj = {
+        clickedFeatureId: action.featureId
+      }
+      return Object.assign({}, state, obj)
+    }
+    default:
+      return state
+  }
+}
+
 const mapApp = combineReducers({
   sidebarIsOpen,
   sidebarSelectedTab,
@@ -182,7 +217,8 @@ const mapApp = combineReducers({
   viewPosition,
   selectedFeature,
   layerTileLoadState,
-  search
+  search,
+  downloadBundles
 })
 
 import { writeToUrlHash } from './urlHashHandling'

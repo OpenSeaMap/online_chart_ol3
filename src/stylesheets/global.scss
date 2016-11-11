@@ -3,9 +3,15 @@
 
 @import "colors";
 
-
 $icon-font-path: '../fonts/';
 $grid-gutter-width: 20px;
+@import "bower_components/bootstrap-sass/assets/stylesheets/bootstrap/_variables.scss";
+
+$list-group-active-border: $brand-primary;
+$list-group-active-bg: lighten($brand-primary, 40%);
+$list-group-active-text-color: $text-color;
+$list-group-active-color: $list-group-active-text-color;
+
 @import "bower_components/bootstrap-sass/assets/stylesheets/_bootstrap.scss";
 @import "bootstrap-callout";
 
