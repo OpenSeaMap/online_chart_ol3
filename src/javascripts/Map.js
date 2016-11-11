@@ -51,18 +51,7 @@ class Ol3Map extends React.Component {
     this.selector = new ol.interaction.Select({
       layers: interactiveLayers,
       toggleCondition: ol.events.condition.never,
-      style: (feature, resolution) => {
-        let featureStyleFunc = feature.getStyleFunction()
-        if (featureStyleFunc) return featureStyleFunc(feature, resolution)
-        let featureStyle = feature.getStyle()
-        if (featureStyle) return featureStyle
-
-        let layer = self.selector.getLayer(feature)
-        if (!layer) return
-        let layerStyleFunc = layer.getStyleFunction()
-        if (layerStyleFunc) return layerStyleFunc(feature, resolution)
-        return layer.getStyle()
-      }
+      style: []
     })
     interactions.push(this.selector)
 
@@ -131,12 +120,12 @@ class Ol3Map extends React.Component {
     }
 
     this.selector.on('select', function (e) {
+      e.deselected.forEach((selectedFeature) => {
+        self.unselectFeature(selectedFeature)
+      })
       e.selected.forEach((selectedFeature) => {
         let layer = this.getLayer(selectedFeature)
         self.selectFeature(selectedFeature, layer)
-      })
-      e.deselected.forEach((selectedFeature) => {
-        self.unselectFeature(selectedFeature)
       })
       return false
     })
@@ -171,12 +160,12 @@ class Ol3Map extends React.Component {
     }
 
     this.hoverer.on('select', function (e) {
+      e.deselected.forEach((selectedFeature) => {
+        self.unhoverFeature(selectedFeature)
+      })
       e.selected.forEach((selectedFeature) => {
         let layer = this.getLayer(selectedFeature)
         self.hoverFeature(selectedFeature, layer)
-      })
-      e.deselected.forEach((selectedFeature) => {
-        self.unhoverFeature(selectedFeature)
       })
       return false
     })
