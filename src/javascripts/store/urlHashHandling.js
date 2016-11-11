@@ -6,6 +6,7 @@ import uniloc from 'uniloc'
 import _ from 'lodash'
 import {SearchTab} from 'config/layers/search'
 import {DownloadTab} from 'config/layers/downloadBundles'
+import {getExistingLocaleForCode, defaultLocale} from 'intl'
 
 import {
   searchDefaultState, SEARCH_STATE_RUNNING,
@@ -17,7 +18,8 @@ import {
   setViewPosition,
   searchStart,
   downloadSetFilter,
-  downloadClicked
+  downloadClicked,
+  setLocale
 } from './actions'
 import { positionsEqual } from 'utils'
 
@@ -120,6 +122,7 @@ export const writeToUrlHash = store => next => action => {
       layers: compressVisibleLayers(state.layerVisible)
     }
   )
+  options.lang = state.locale
 
   let routeName = 'default'
   if (state.sidebar.selectedTab === SearchTab.name) {
@@ -165,8 +168,14 @@ export function getStateFromUrlHash (defaults) {
       layerVisible: decompressVisibleLayers(res.options.layers)
     }
   }
-
   let additions = {}
+
+  if (res.options.lang) {
+    additions.locale = getExistingLocaleForCode(res.options.lang)
+  } else {
+    additions.locale = defaultLocale
+  }
+
   switch (res.name) {
     case 'search':
       additions.sidebar = sidebarDefaultState
@@ -220,6 +229,10 @@ function onHashChange () {
 
   if (oldState.layerVisible !== newState.layerVisible) {
     store.dispatch(initLayerVisible(newState.layerVisible))
+  }
+
+  if (oldState.locale !== newState.locale) {
+    store.dispatch(setLocale(newState.locale))
   }
 }
 

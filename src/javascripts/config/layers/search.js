@@ -33,6 +33,18 @@ import {
 
 import { setViewPosition } from 'store/actions'
 
+import { defineMessages } from 'react-intl'
+export const messages = defineMessages({
+  layerName: {
+    id: 'layer-name-search',
+    defaultMessage: 'Search places'
+  },
+  sidebarName: {
+    id: 'sidebar-search',
+    defaultMessage: 'Search'
+  }
+})
+
 export const SearchTab = {
   name: 'sidebar-search',
   align: 'top',

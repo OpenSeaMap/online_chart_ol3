@@ -9,8 +9,15 @@ import ol from 'openlayers'
 import ChartLayer from '../chartlayer'
 import { layerTileLoadStateChange } from '../../store/actions'
 import OsmToggle from '../../components/misc/Toggle'
-import { FormattedMessage } from 'react-intl'
 import controlIds from '../../controls/ol3/controls'
+
+import { FormattedMessage, defineMessages } from 'react-intl'
+export const messages = defineMessages({
+  layerName: {
+    id: 'layer-name-base-vector',
+    defaultMessage: 'Vectormap (simplified)'
+  }
+})
 
 class LayerConfig extends React.Component {
   constructor (props) {
@@ -46,12 +53,20 @@ class LayerConfig extends React.Component {
       <div>
         <OsmToggle
           checked={this.state.showBuildings}
-          label={<FormattedMessage id={'vectorLayer-show-buildings'} />}
+          label={
+            <FormattedMessage
+              id={'vectorLayer.showBuildings'}
+              defaultMessage='Show buildings' />
+          }
           layerId='vectorLayer-show-buildings'
           onChange={this.handleToggleBuildings} />
         <OsmToggle
           checked={this.state.useNightMode}
-          label={<FormattedMessage id={'vectorLayer-use-nightmode'} />}
+          label={
+            <FormattedMessage
+              id={'vectorLayer.useNightmode'}
+              defaultMessage='Night mode' />
+          }
           layerId='vectorLayer-use-nightmode'
           onChange={this.handleToggleNight} />
       </div>

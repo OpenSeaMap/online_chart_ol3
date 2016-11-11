@@ -5,7 +5,7 @@
 'use strict'
 
 import React from 'react'
-import { FormattedMessage } from 'react-intl'
+import { ClickOnMarkersMessage } from 'utils'
 import {TabSidebarDetails} from 'features/tabs'
 var $ = require('jquery')
 import ol from 'openlayers'
@@ -14,6 +14,14 @@ import ChartLayer from '../chartlayer'
 import { featureClicked, layerTileLoadStateChange } from '../../store/actions'
 import { setSidebarOpen, setSidebarActiveTab } from '../../controls/sidebar/store'
 import warning from 'fbjs/lib/warning'
+
+import { defineMessages } from 'react-intl'
+export const messages = defineMessages({
+  layerName: {
+    id: 'layer-name-marinetraffic',
+    defaultMessage: 'Marine traffic'
+  }
+})
 
 const FEATURE_CLICKED_PROPERTY_NAME = '_clicked'
 const FEATURE_HOVERED_PROPERTY_NAME = '_hovered'
@@ -150,7 +158,7 @@ module.exports = function (context, options) {
     isInteractive: true,
     additionalSetup: (
       <div>
-        <FormattedMessage id='click-on-markers' />
+        <ClickOnMarkersMessage />
       </div>
     ),
     additionalTab: TabSidebarDetails

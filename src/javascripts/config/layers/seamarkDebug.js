@@ -5,7 +5,7 @@
 'use strict'
 
 import React from 'react'
-import { FormattedMessage } from 'react-intl'
+import { ClickOnMarkersMessage } from 'utils'
 import {TabSidebarDetails} from 'features/tabs'
 import controlIds from '../../controls/ol3/controls'
 
@@ -16,6 +16,14 @@ import OverpassApi from 'ol-source-overpassApi'
 
 import { featureClicked, layerTileLoadStateChange } from '../../store/actions'
 import { setSidebarOpen, setSidebarActiveTab } from '../../controls/sidebar/store'
+
+import { defineMessages } from 'react-intl'
+export const messages = defineMessages({
+  layerName: {
+    id: 'layer-name-seamarks-debug',
+    defaultMessage: 'Interactive seamarks'
+  }
+})
 
 const FEATURE_CLICKED_PROPERTY_NAME = '_clicked'
 const FEATURE_HOVERED_PROPERTY_NAME = '_hovered'
@@ -95,7 +103,7 @@ module.exports = function (context, options) {
     isInteractive: true,
     additionalSetup: (
       <div>
-        <FormattedMessage id='click-on-markers' />
+        <ClickOnMarkersMessage />
       </div>
     ),
     additionalTab: TabSidebarDetails,

@@ -5,8 +5,6 @@
 'use strict'
 
 import React, { PropTypes } from 'react'
-// import { FormattedMessage } from 'react-intl';
-
 import { ListGroupItem } from 'react-bootstrap'
 
 export const SearchResultDisplay = ({

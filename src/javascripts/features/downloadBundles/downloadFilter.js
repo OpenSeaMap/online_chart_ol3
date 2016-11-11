@@ -7,6 +7,7 @@
 import React, { PropTypes } from 'react'
 import { connect } from 'react-redux'
 
+import { FormattedMessage } from 'react-intl'
 import {FormGroup, FormControl, ControlLabel} from 'react-bootstrap'
 
 import { downloadSetFilter } from 'store/actions'
@@ -18,17 +19,20 @@ export const DownloadFilterControl = ({features, setFilter, filter}) => {
   }
   return (
     <FormGroup controlId='formControlsSelect'>
-      <ControlLabel>Download type:</ControlLabel>
+      <ControlLabel>
+        <FormattedMessage
+          id='download-choose-type'
+          defaultMessage='Download type:' />
+      </ControlLabel>
       <FormControl
         componentClass='select'
-        placeholder='select'
+        value={filter.format}
         onChange={setFilter}>
         {
           [...types].map(type => (
             <option
               key={type[0]}
               value={type[1]}
-              selected={filter.format === type[1]}
               >
               {type[0]}
             </option>

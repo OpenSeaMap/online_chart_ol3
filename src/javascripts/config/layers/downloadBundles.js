@@ -9,7 +9,7 @@ import _ from 'lodash'
 import React from 'react'
 import ol from 'openlayers'
 import ChartLayer from '../chartlayer'
-import { FormattedMessage } from 'react-intl'
+import { ClickOnMarkersMessage, hashCode } from 'utils'
 import MdDownload from 'react-icons/lib/md/file-download'
 
 import DownloadTabControl from 'features/downloadBundles/downloadTabControl'
@@ -26,7 +26,18 @@ import {
 } from '../../store/actions'
 
 import { setViewPosition } from 'store/actions'
-import {hashCode} from 'utils'
+
+import { defineMessages } from 'react-intl'
+export const messages = defineMessages({
+  layerName: {
+    id: 'layer-name-download_bundles',
+    defaultMessage: 'Download map bundles'
+  },
+  sidebarName: {
+    id: 'sidebar-download',
+    defaultMessage: 'Download maps'
+  }
+})
 
 const FEATURE_CLICKED_PROPERTY_NAME = '_clicked'
 const FEATURE_HOVERED_PROPERTY_NAME = '_hovered'
@@ -153,7 +164,7 @@ export default function (context, options) {
     updateWhileAnimating: true,
     updateWhileInteracting: true,
     renderOrder: (f1, f2) => {
-      return new Date(f2.get('date')) - new Date(f1.get('date'))
+      return new Date(f2.get('date')).getTime() - new Date(f1.get('date')).getTime()
     }
   })
 
@@ -236,7 +247,7 @@ export default function (context, options) {
     isInteractive: true,
     additionalSetup: (
       <div>
-        <FormattedMessage id='click-on-markers' />
+        <ClickOnMarkersMessage />
       </div>
     ),
     additionalTab: DownloadTab

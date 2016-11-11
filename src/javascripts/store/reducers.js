@@ -11,6 +11,7 @@ import {
 } from 'redux'
 
 import {
+    SET_LOCALE,
     SET_LAYER_VISIBLE,
     INIT_LAYER_VISIBLE,
     SET_VIEW_POSITION,
@@ -28,6 +29,7 @@ import {
 } from './actions'
 
 import { sidebar } from '../controls/sidebar/store'
+import {defaultLocale, getExistingLocaleForCode} from 'intl'
 
 function layerVisible (state = {}, action) {
   switch (action.type) {
@@ -207,6 +209,16 @@ const downloadBundles = (state = downloadDefaultState, action) => {
   }
 }
 
+const locale = (state = defaultLocale, action) => {
+  switch (action.type) {
+    case SET_LOCALE: {
+      return getExistingLocaleForCode(action.locale)
+    }
+    default:
+      return state
+  }
+}
+
 const mapApp = combineReducers({
   sidebar,
   layerVisible,
@@ -214,7 +226,8 @@ const mapApp = combineReducers({
   selectedFeature,
   layerTileLoadState,
   search,
-  downloadBundles
+  downloadBundles,
+  locale
 })
 
 import { writeToUrlHash } from './urlHashHandling'
