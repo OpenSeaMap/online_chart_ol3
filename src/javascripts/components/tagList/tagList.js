@@ -7,14 +7,17 @@
 
 import React, { PropTypes } from 'react'
 import TagInfo from './tagInfo'
+import { ClickOnMarkersMessage } from 'utils'
 import { FormattedMessage } from 'react-intl'
 
 import './tagList.scss'
 
 const TagList = ({tags}) => (
   <div className='tagList'>
-    <h2><FormattedMessage id='tags' /></h2>
-    <FormattedMessage id='click-on-markers' />
+    <h2>
+      <FormattedMessage id='heading.tags' defaultMessage='Tags' />
+    </h2>
+    <ClickOnMarkersMessage />
     { tags.map(tag => (
       <TagInfo
         key={tag.key}

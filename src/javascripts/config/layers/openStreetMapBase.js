@@ -9,6 +9,14 @@ import ChartLayer from '../chartlayer'
 import { layerTileLoadStateChange } from '../../store/actions'
 import controlIds from '../../controls/ol3/controls'
 
+import { defineMessages } from 'react-intl'
+export const messages = defineMessages({
+  layerName: {
+    id: 'layer-name-openstreetmap-base',
+    defaultMessage: 'OpenStreetMap carto'
+  }
+})
+
 module.exports = function (context, options) {
   let source = new ol.source.OSM({
     url: '//{a-c}.tile.openstreetmap.org/{z}/{x}/{y}.png',

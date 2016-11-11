@@ -5,12 +5,19 @@
 'use strict'
 
 import React from 'react'
-import { FormattedMessage } from 'react-intl'
 import { ExternalLink } from '../../components/misc/Links'
 import controlIds from '../../controls/ol3/controls'
 import ol from 'openlayers'
 import ChartLayer from '../chartlayer'
 import { layerTileLoadStateChange } from '../../store/actions'
+
+import { defineMessages, FormattedMessage } from 'react-intl'
+export const messages = defineMessages({
+  layerName: {
+    id: 'layer-name-depth-geodaten_mv',
+    defaultMessage: 'Official depth data for Germany/MV'
+  }
+})
 
 module.exports = function (context, options) {
   let source = new ol.source.TileWMS({
@@ -40,7 +47,8 @@ module.exports = function (context, options) {
     additionalSetup: (
       <div>
         <FormattedMessage
-          id='copyright-layer'
+          id='layer.copyright'
+          defaultMessage='Layer data © {source}'
           values={{
             source: (
               <ExternalLink href={'http://www.geodaten-mv.de/geomis/#94e5ed55-80f9-4af0-b43a-32ca5be7eef9'}>

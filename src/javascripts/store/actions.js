@@ -4,6 +4,14 @@
 */
 'use strict'
 
+export const SET_LOCALE = 'SET_LOCALE'
+export function setLocale (locale) {
+  return {
+    type: SET_LOCALE,
+    locale: locale
+  }
+}
+
 export const SET_LAYER_VISIBLE = 'SET_LAYER_VISIBLE'
 
 export const INIT_LAYER_VISIBLE = 'INIT_LAYER_VISIBLE'

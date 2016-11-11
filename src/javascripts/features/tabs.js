@@ -12,6 +12,22 @@ import FeatureDevelopment from './development/featureDevelopment'
 import FaInfoCircle from 'react-icons/lib/fa/info-circle'
 import FaTags from 'react-icons/lib/fa/tags'
 
+import { defineMessages } from 'react-intl'
+export const messages = defineMessages({
+  sidebarSettings: {
+    id: 'sidebar-settings',
+    defaultMessage: 'Settings'
+  },
+  sidebarDevelopment: {
+    id: 'sidebar-development',
+    defaultMessage: 'About'
+  },
+  sidebarDetails: {
+    id: 'sidebar-details',
+    defaultMessage: 'Details'
+  }
+})
+
 export const Tabs = [{
   name: 'sidebar-settings',
   align: 'top',

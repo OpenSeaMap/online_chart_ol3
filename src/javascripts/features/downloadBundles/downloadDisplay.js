@@ -5,10 +5,9 @@
 'use strict'
 
 import React, { PropTypes } from 'react'
-// import { FormattedMessage } from 'react-intl';
 
 import { ListGroupItem, Collapse } from 'react-bootstrap'
-import { FormattedMessage, FormattedDate } from 'react-intl'
+import { FormattedMessage, FormattedRelative } from 'react-intl'
 import { DownloadLink } from '../../components/misc/Links'
 
 export const DownloadDisplay = ({
@@ -29,19 +28,29 @@ export const DownloadDisplay = ({
       <div className='list-group-item-text'>
         <FormattedMessage
           id='download-file-date'
-          values={{formatedDate: <FormattedDate value={feature.date} />}} />
+          defaultMessage='Date: {rawDate, date, short} ({formatedRelative})'
+          description='Display a file date as a absolute date and a relative timespan'
+          values={{
+            rawDate: new Date(feature.date),
+            formatedRelative: <FormattedRelative value={feature.date} />
+          }} />
         <br />
         <FormattedMessage
           id='download-file-format'
+          defaultMessage='Format: {format}'
+          description='Display a file format name'
           values={{format: feature.format}} />
         <br />
         <FormattedMessage
           id='download-file-application'
+          defaultMessage='Application: {app}'
+          description='Display an application name'
           values={{app: feature.app}} />
         <br />
         <DownloadLink href={feature.downloadUrl}>
           <FormattedMessage
-            id='download-file-download' />
+            id='download-file-download'
+            defaultMessage='Download file' />
         </DownloadLink>
       </div>
     </Collapse>

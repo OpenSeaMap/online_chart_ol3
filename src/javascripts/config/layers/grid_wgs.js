@@ -7,6 +7,14 @@
 import ol from 'openlayers'
 import ChartLayer from '../chartlayer'
 
+import { defineMessages } from 'react-intl'
+export const messages = defineMessages({
+  layerName: {
+    id: 'layer-name-grid-wgs',
+    defaultMessage: 'Coordinate grid'
+  }
+})
+
 // maps the number of degrees spanned by the current view (A)
 // onto the distance of the gird lines to be displayed (B)
 // both numbers are in degrees (decimal)

@@ -25,3 +25,13 @@ export function hashCode (str) {
   return str.split('').reduce((prevHash, currVal) =>
     ((prevHash << 5) - prevHash) + currVal.charCodeAt(0), 0)
 }
+
+import React from 'react'
+import { FormattedMessage } from 'react-intl'
+export const ClickOnMarkersMessage = () => (
+  <FormattedMessage
+    id='click-on-markers'
+    description='Inform users about interactive map elements'
+    defaultMessage='Click on the markers on the map.'
+  />
+)

@@ -7,7 +7,7 @@
 import React from 'react'
 import ol from 'openlayers'
 import ChartLayer from '../chartlayer'
-import { FormattedMessage } from 'react-intl'
+import { ClickOnMarkersMessage } from 'utils'
 import {TabSidebarDetails} from 'features/tabs'
 import controlIds from '../../controls/ol3/controls'
 
@@ -16,6 +16,14 @@ var OverpassApi = require('ol-source-overpassApi')
 
 import { featureClicked, layerTileLoadStateChange } from '../../store/actions'
 import { setSidebarOpen, setSidebarActiveTab } from '../../controls/sidebar/store'
+
+import { defineMessages } from 'react-intl'
+export const messages = defineMessages({
+  layerName: {
+    id: 'layer-name-scuba_diving',
+    defaultMessage: 'POIs for scuba diving'
+  }
+})
 
 const FEATURE_CLICKED_PROPERTY_NAME = '_clicked'
 
@@ -97,7 +105,7 @@ module.exports = function (context, options) {
 
     additionalSetup: (
       <div>
-        <FormattedMessage id='click-on-markers' />
+        <ClickOnMarkersMessage />
       </div>
     ),
     additionalTab: TabSidebarDetails,

@@ -13,6 +13,7 @@ import { LayerType } from '../../config/chartlayer'
 import OsmToggle from '../../components/misc/Toggle'
 
 import LayerProgressBar from './layerProgressBar'
+import LocaleSwitch from 'components/localeSwitch'
 
 import './featureLayerConfig.scss'
 
@@ -47,7 +48,10 @@ class ConfigList extends React.Component {
     return (
       <div>
         <div>
-          <FormattedMessage id={'layerlist-baselayer'} />
+          <FormattedMessage
+            id={'layerlist-baselayer'}
+            defaultMessage='Base map'
+            description='Heading test for the base map list' />
         </div>
         <ul className='layerList base'>
           {this.context.layers.map(layer => {
@@ -76,7 +80,10 @@ class ConfigList extends React.Component {
             ) })}
         </ul>
         <div>
-          <FormattedMessage id={'layerlist-overlaylayer'} />
+          <FormattedMessage
+            id={'layerlist-overlaylayer'}
+            defaultMessage='Overlays'
+            description='Heading text for map overlay list' />
         </div>
         <ul className='layerList overlays'>
           {this.context.layers.map(layer => {
@@ -104,6 +111,7 @@ class ConfigList extends React.Component {
               </li>
             ) })}
         </ul>
+        <LocaleSwitch />
       </div>
     )
   }
