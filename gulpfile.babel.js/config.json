@@ -61,25 +61,6 @@
       "extensions": ["jpg", "png", "svg", "gif"]
     },
 
-    "fonts": {
-      "src": "fonts",
-      "dest": "fonts",
-      "extensions": ["woff2", "woff", "eot", "ttf", "svg"]
-    },
-
-    "iconFont": {
-      "src": "icons",
-      "dest": "fonts",
-      "sassDest": "generated",
-      "extensions": ["woff2", "woff", "eot", "ttf", "svg"]
-    },
-
-    "svgSprite": {
-      "src": "sprites",
-      "dest": "images",
-      "extensions": ["svg"]
-    },
-
     "lint": {
       "options": {
       }

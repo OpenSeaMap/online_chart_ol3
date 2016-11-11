@@ -15,17 +15,16 @@ All commands should be run in the top level folder.
 #### Install Dependencies
 ```
 npm install
-bower install
 ```
+
+Note: this will call `bower install` automatically.
 
 #### Start compiling, serving, and watching files
 ```
 npm run gulp
 ```
 
-(or `npm run development`)
-
-This runs `gulp` from `./node_modules/bin`, using the version installed with this project, rather than a globally installed instance. All commands in the package.json `scripts` work this way. The `gulp` command runs the `default` task, defined in `gulpfile.js/tasks/default.js`.
+This runs `gulp` from `./node_modules/bin`, using the version installed with this project, rather than a globally installed instance. All commands in the package.json `scripts` work this way. The `gulp` command runs the `default` task, defined in `gulpfile.babel.js/tasks/default.js`.
 
 All files will compile in development mode (uncompressed with source maps). [BrowserSync](http://www.browsersync.io/) will serve up files to [localhost:3000](http://localhost:3000) and will stream live changes to the code and assets to all connected browsers. Don't forget about the additional BrowserSync tools available on [localhost:3001](http://localhost:3001)!
 
@@ -55,7 +54,7 @@ npm run production
 This will compile revisioned and compressed files to `./public`. To build production files and preview them localy, run
 
 ```
-npm run demo
+npm start
 ```
 
 This will start a static server that serves your production files to http://localhost:5000. This is primarily meant as a way to preview your production build locally, not necessarily for use as a live production server.
@@ -68,7 +67,7 @@ This task compiles production code and then uses [gulp-gh-pages](https://github.
 
 GitHub Pages isn't the most robust of hosting solutions (you'll eventually run into relative path issues), but it's a great place to quickly share in-progress work, and you get it for free.
 
-[Divshot](https://divshot.com/) and [Surge.sh](http://surge.sh/) are a couple great alternatives for production-ready static hosting to check out, and are just as easy to deploy to. Where ever you're deploying to, all you need to do is `npm run gulp production` and transfer the contents of the `public` folder to your server however you see fit.
+[Surge.sh](http://surge.sh/) is a great alternative for production-ready static hosting to check out, and are just as easy to deploy to. Where ever you're deploying to, all you need to do is `npm run gulp production` and transfer the contents of the `public` folder to your server however you see fit.
 
 # Task Details
 
@@ -100,86 +99,6 @@ Your Sass gets run through Autoprefixer, so don't prefix! The examples use the i
 gulpfile.js/tasks/html
 ```
 Robust templating with [Nunjucks](https://mozilla.github.io/nunjucks/). Nunjucks is nearly identical in syntax to Twig (PHP), and replaces Swig (and Twig-like js templating language), which is no longer maintained.
-
-A global data file is set up at [src/html/data/global.json](src/html/data/global.json), is read in by the `html` task, and exposes the propertiesto your html templates. See [social-icons-font.html](src/html/shared/social-icons-font.html) for example usage.
-
-#### Fonts
-```
-gulpfile.js/tasks/fonts
-```
-All this task does is copy fonts from `./src/fonts` to `./public/fonts`. A sass `+font-face` mixin is included in `./src/stylesheets/base/mixins`.
-
-#### IconFont
-```
-gulpfile.js/tasks/iconFont
-```
-SVGs added to `src/icons` will be automatically compiled into an iconFont, and output to `./public/fonts`. At the same time, a `.sass` file will be output to `src/stylesheets/generated/_icons.sass`. This file contains mixins and classes based on the svg filename. If you want to edit the template that generates this file, it's at `gulpfile.js/tasks/iconFont/template.sass`
-
-##### Usage:
-With generated classes:
-```
-<span class="icon -twitter"></span>
-```
-
-With mixins:
-```sass
-.lil-birdy-guy
-  +icon--twitter
-```
-
-```scss
-.lil-birdy-guy {
-  @include icon--twitter;
-}
-```
-
-```html
-<span class="lil-birdy-guy"></span>
-```
-
-*Don't forget about accessibility!*
-
-```html
-<span aria-label="Twitter" class="icon -twitter"></span>
-<!-- or -->
-<div class="icon -twitter"><span class="screen-reader">Twitter</span></div>
-```
-
-#### SVG Sprites
-```
-gulpfile.js/tasks/svgSprite
-```
-SVGs sprites are super powerful. This particular setup allows styling 2 different colors from your css. You can have unlimited colors hard coded into your svg.  
-
-In the following example, the first path will be `red`, the second will be `white`, and the third will be `blue`. Paths **without a fill attribute** will inherit the `fill` property from css. Paths with **fill="currentColor"** will inherit the current css `color` value, and hard-coded fills will not be overwritten, since inline styles trump css values.
-
-```sass
-.sprite
-  fill: red
-  color: white
-```
-
-```svg
-  <svg xmlns="http://www.w3.org/2000/svg">
-    <path d="..."/>
-    <path fill="currentColor" d="..."/>
-    <path fill="blue" d="..."/>
-  </svg>
-```
-
-I've included a helper to generate the required svg markup in `src/html/macros/helpers.html`, so you can just do:
-```html
-  {{ sprite('my-icon') }}
-```
-Which spits out:
-
-```html
-  <span class='sprite -my-icon'>
-    <svg viewBox="0 0 1 1"><use xlink:href='images/spritesheets/sprites.svg#my-icon' /></use></svg>
-  </span>
-```
-
-I recommend setting up your SVGs on a 500 x 500 canvas, centering your artwork, and expanding/combining any shapes of the same color. This last step is important.
 
 #### Static Files (favicons, app icons, etc.)
 There are some files that belong in your root destination directory that you won't want to process or revision in production. Things like [favicons, app icons, etc.](http://realfavicongenerator.net/), should go in `src/static`, and will get copied over to `public` as a last step (after revisioning in production). *Nothing* should ever go directly in `public`, since it gets completely trashed and re-built when running the `default` or `production` tasks.

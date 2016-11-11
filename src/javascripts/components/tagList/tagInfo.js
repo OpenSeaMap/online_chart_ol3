@@ -8,7 +8,8 @@
 var $ = require('jquery')
 import React, { PropTypes } from 'react'
 import LanguageCodePropTypes from '../../propTypes/langCodes'
-import { Button, FormGroup, InputGroup, FormControl, Glyphicon, ProgressBar, Label } from 'react-bootstrap'
+import { Button, FormGroup, InputGroup, FormControl, ProgressBar, Label } from 'react-bootstrap'
+import FaInfo from 'react-icons/lib/fa/info-circle'
 
 class TagInfo extends React.Component {
   constructor (props) {
@@ -82,7 +83,7 @@ class TagInfo extends React.Component {
               <Button
                 bsStyle={btnStyle}
                 onClick={this.toggleDetails}>
-                <Glyphicon glyph='info-sign' />
+                <FaInfo />
               </Button>
             </InputGroup.Button>
           </InputGroup>

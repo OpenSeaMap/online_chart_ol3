@@ -1,23 +1,5 @@
 a[role="link"] {
 
-  @mixin glyphicons {
-    font-size: 10px;
-    font-family: 'Glyphicons Halflings';
-    -webkit-font-smoothing: antialiased;
-  }
-
-  &.external:before {
-    @include glyphicons;
-    padding-right: 3px;
-    content: '\e144';
-  }
-
-  &.download:before {
-    @include glyphicons;
-    padding-right: 3px;
-    content: '\e025';
-  }
-
   &.button {
     display: inline-block;
     text-decoration: none;
