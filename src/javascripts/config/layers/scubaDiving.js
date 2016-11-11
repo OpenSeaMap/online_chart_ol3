@@ -10,8 +10,11 @@ import ChartLayer from '../chartlayer'
 import { ClickOnMarkersMessage } from 'utils'
 import {TabSidebarDetails} from 'features/tabs'
 import controlIds from '../../controls/ol3/controls'
+import mapMarker from 'components/mapMarker'
+import ScubaDivingSvg from './sport-scuba_diving.svg'
+import DiveCentreSvg from './amenity-dive_centre.svg'
 
-var SimpleImageStyle = require('ol-style-simpleImageStyle')
+var SimpleImageSvgStyle = require('ol-style-simpleImageSvgStyle')
 var OverpassApi = require('ol-source-overpassApi')
 
 import { featureClicked, layerTileLoadStateChange } from '../../store/actions'
@@ -36,10 +39,10 @@ module.exports = function (context, options) {
 
   var styles = {
     'sport': {
-      'scuba_diving': new SimpleImageStyle('images/sport-scuba_diving.svg', defaults.iconSize, defaults.iconSize)
+      'scuba_diving': new SimpleImageSvgStyle(ScubaDivingSvg, defaults.iconSize, defaults.iconSize)
     },
     'amenity': {
-      'dive_centre': new SimpleImageStyle('images/amenity-dive_centre.svg', defaults.iconSize, defaults.iconSize)
+      'dive_centre': new SimpleImageSvgStyle(DiveCentreSvg, defaults.iconSize, defaults.iconSize)
     }
   }
   let tagBasedStyle = (feature) => {
@@ -55,23 +58,13 @@ module.exports = function (context, options) {
     }
   }
 
-  let markerIcon = new ol.style.Style({
-    image: new ol.style.Icon({
-      anchor: [0.5, 1],
-      anchorXUnits: 'fraction',
-      anchorYUnits: 'fraction',
-      opacity: 1,
-      src: '//nominatim.openstreetmap.org/js/images/marker-icon.png'
-    })
-  })
-
   var styleFunction = function (feature, resolution) {
     let clicked = feature.get(FEATURE_CLICKED_PROPERTY_NAME)
 
     let baseStyle = tagBasedStyle(feature)
 
     if (clicked) {
-      return [baseStyle, markerIcon]
+      return [baseStyle, mapMarker]
     }
 
     return baseStyle

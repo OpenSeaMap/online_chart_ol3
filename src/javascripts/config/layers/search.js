@@ -10,6 +10,7 @@ import _ from 'lodash'
 import SearchTabComponent from 'features/search/searchTab'
 import SearchBar from 'features/search/searchBar'
 import MdSearch from 'react-icons/lib/md/search'
+import mapMarker from 'components/mapMarker'
 
 import ol from 'openlayers'
 import ChartLayer from '../chartlayer'
@@ -84,17 +85,7 @@ export default function (context, options) {
     }
 
     if (clicked) {
-      let markerIcon = new ol.style.Style({
-        geometry: 'labelPoint',
-        image: new ol.style.Icon({
-          anchor: [0.5, 1],
-          anchorXUnits: 'fraction',
-          anchorYUnits: 'fraction',
-          opacity: 1,
-          src: '//nominatim.openstreetmap.org/js/images/marker-icon.png'
-        })
-      })
-      styles.push(markerIcon)
+      styles.push(mapMarker)
     } else {
       let markerCircle = new ol.style.Style({
         geometry: 'labelPoint',

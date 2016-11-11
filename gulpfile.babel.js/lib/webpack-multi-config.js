@@ -50,6 +50,10 @@ module.exports = function (env) {
           loader: 'raw-loader',
           exclude: [/node_modules/, /bower_components/]
         }, {
+          test: /\.svg$/,
+          loader: 'raw-loader',
+          exclude: [/node_modules/, /bower_components/]
+        }, {
           test: /\.json$/,
           loader: 'json'
         }, {
