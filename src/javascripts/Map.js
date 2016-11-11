@@ -27,6 +27,7 @@ class Ol3Map extends React.Component {
     super(props)
 
     this._controls = new Map()
+    this.forceSetViewPosition = false
   }
 
   componentDidMount () {
@@ -185,8 +186,13 @@ class Ol3Map extends React.Component {
         lat: centre[1],
         zoom: this.ol3Map.getView().getZoom()
       }
-      if (this.props.viewPosition.position && positionsEqual(position, this.props.viewPosition.position)) return
+      if (!this.forceSetViewPosition &&
+        this.props.viewPosition.position &&
+        positionsEqual(position, this.props.viewPosition.position)) {
+        return
+      }
       this.props.onViewPositionChange(position)
+      this.forceSetViewPosition = false
     })
 
     this.updateLayerVisible(this.props)
@@ -222,7 +228,18 @@ class Ol3Map extends React.Component {
           maxZoom: 18
         }
         this.setupMoveAnimations()
+        this.forceSetViewPosition = true
         this.ol3Map.getView().fit(nextProps.viewPosition.extent, mapSize, options)
+        // get view position after move
+        centre = ol.proj.transform(this.ol3Map.getView().getCenter(), 'EPSG:3857', 'EPSG:4326')
+        const newPosition = {
+          lon: centre[0],
+          lat: centre[1],
+          zoom: this.ol3Map.getView().getZoom()
+        }
+        if (positionsEqual(position, newPosition)) { // manually trigger the moveend
+          this.ol3Map.dispatchEvent({type: 'moveend', target: this})
+        }
       }
     }
   }

@@ -27,10 +27,7 @@ import {
     DOWNLOAD_CLICKED
 } from './actions'
 
-import {
-    sidebarIsOpen,
-    sidebarSelectedTab
-} from '../controls/sidebar/store'
+import { sidebar } from '../controls/sidebar/store'
 
 function layerVisible (state = {}, action) {
   switch (action.type) {
@@ -132,7 +129,7 @@ export const SEARCH_STATES = [
   SEARCH_STATE_ERROR
 ]
 
-const searchDefaultState = {
+export const searchDefaultState = {
   state: SEARCH_STATE_IDLE,
   query: '',
   response: [],
@@ -179,9 +176,9 @@ function search (state = searchDefaultState, action) {
   }
 }
 
-const downloadDefaultState = {
+export const downloadDefaultState = {
   features: [],
-  filter: {},
+  filter: {format: '.*'},
   hoveredFeatureId: null,
   clickedFeatureId: null
 }
@@ -211,8 +208,7 @@ const downloadBundles = (state = downloadDefaultState, action) => {
 }
 
 const mapApp = combineReducers({
-  sidebarIsOpen,
-  sidebarSelectedTab,
+  sidebar,
   layerVisible,
   viewPosition,
   selectedFeature,

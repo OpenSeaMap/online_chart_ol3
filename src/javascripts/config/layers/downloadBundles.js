@@ -4,6 +4,7 @@
 */
 'use strict'
 
+import $ from 'jquery'
 import _ from 'lodash'
 import React from 'react'
 import ol from 'openlayers'
@@ -11,7 +12,7 @@ import ChartLayer from '../chartlayer'
 import { FormattedMessage } from 'react-intl'
 import MdDownload from 'react-icons/lib/md/file-download'
 
-import DownloadTabControl from 'features/downloadBundles/downloadTab'
+import DownloadTabControl from 'features/downloadBundles/downloadTabControl'
 import { setSidebarOpen, setSidebarActiveTab } from '../../controls/sidebar/store'
 
 import {
@@ -25,6 +26,7 @@ import {
 } from '../../store/actions'
 
 import { setViewPosition } from 'store/actions'
+import {hashCode} from 'utils'
 
 const FEATURE_CLICKED_PROPERTY_NAME = '_clicked'
 const FEATURE_HOVERED_PROPERTY_NAME = '_hovered'
@@ -37,7 +39,7 @@ export const DownloadTab = {
   content: < DownloadTabControl / >
 }
 
-module.exports = function (context, options) {
+export default function (context, options) {
   var defaults = {
     nameKey: 'layer-name-download_bundles'
   }
@@ -90,48 +92,85 @@ module.exports = function (context, options) {
   let source = new ol.source.Vector({
     url: 'https://t1.openseamap.org/bundles/overview.geojson',
     format: new ol.format.GeoJSON(),
-    strategy: ol.loadingstrategy.all
+    strategy: ol.loadingstrategy.all,
+    loader: function (extent, resolution, projection) {
+      $.ajax({
+        url: this.getUrl(),
+        success: function (data) {
+          const clickedId = context.getState().downloadBundles.clickedFeatureId
+          const hoveredId = context.getState().downloadBundles.hoveredFeatureId
+          let format = this.getFormat()
+          let features = format.readFeatures(data, {featureProjection: projection})
+          for (let f of features) {
+            const id = hashCode(f.get('downloadUrl') + f.get('date') + f.get('filesize'))
+            f.setId(id)
+            if (f.getId() === clickedId) {
+              f.set(FEATURE_CLICKED_PROPERTY_NAME, true)
+            }
+            if (f.getId() === hoveredId) {
+              f.set(FEATURE_HOVERED_PROPERTY_NAME, true)
+            }
+          }
+          this.addFeatures(features)
+          this.dispatchEvent({type: 'tileloadend', target: this})
+        },
+        error: function (jqXHR, textStatus, errorThrown) {
+          this.dispatchEvent({
+            type: 'tileloaderror',
+            target: this,
+            textStatus: textStatus,
+            errorThrown: errorThrown
+          })
+        },
+        context: this
+      })
+      this.dispatchEvent({type: 'tileloadstart', target: this})
+    }
   })
+  const filterFeatures = (filter) => {
+    let features = source.getFeatures()
+    features.forEach(feature => {
+      const isActive = downloadFeatureMatchesFilter(feature.getProperties(), filter)
+      feature.set(FEATURE_FILTERED_OUT_PROPERTY_NAME, !isActive)
+    })
+  }
   source.on(['tileloadstart', 'tileloadend', 'tileloaderror'], function (ev) {
     context.dispatch(layerTileLoadStateChange(options.id, ev))
     if (ev.type === 'tileloadend') {
-      context.dispatch(downloadSetFeatures(source.getFeatures()))
+      filterFeatures(context.getState().downloadBundles.filter)
+
+      let featuresCompressed = []
+      for (const f of source.getFeatures()) {
+        featuresCompressed.push(Object.assign({_id: f.getId()}, _.omit(f.getProperties(), 'geometry')))
+      }
+      context.dispatch(downloadSetFeatures(featuresCompressed))
     }
-  })
-  source.on('addfeature', (ev) => {
-    let features = []
-    for (let f of source.getFeatures()) {
-      features.push(Object.assign({_id: ol.getUid(f)}, _.omit(f.getProperties(), 'geometry')))
-      f.setId(ol.getUid(f))
-    }
-    context.dispatch(downloadSetFeatures(features))
   })
 
   let layer = new ol.layer.Vector({
     source: source,
     style: styleFunction,
     updateWhileAnimating: true,
-    updateWhileInteracting: true
+    updateWhileInteracting: true,
+    renderOrder: (f1, f2) => {
+      return new Date(f2.get('date')) - new Date(f1.get('date'))
+    }
   })
 
   layer.on('selectFeature', function (e) {
     let feature = e.feature
-    // feature.set(FEATURE_CLICKED_PROPERTY_NAME, true)
     context.dispatch(downloadClicked(feature.getId()))
     context.dispatch(setSidebarActiveTab(DownloadTab.name))
     context.dispatch(setSidebarOpen(true))
   })
   layer.on('unselectFeature', function (e) {
-    // e.feature.set(FEATURE_CLICKED_PROPERTY_NAME, false)
     context.dispatch(downloadUnclick())
   })
   layer.on('hoverFeature', function (e) {
     let feature = e.feature
-    // feature.set(FEATURE_HOVERED_PROPERTY_NAME, true)
     context.dispatch(downloadHovered(feature.getId()))
   })
   layer.on('unhoverFeature', function (e) {
-    // e.feature.set(FEATURE_HOVERED_PROPERTY_NAME, false)
     context.dispatch(downloadUnhover())
   })
 
@@ -182,12 +221,7 @@ module.exports = function (context, options) {
     let state = context.getState()
     if (oldFilterState === state.downloadBundles.filter) return
     oldFilterState = state.downloadBundles.filter
-
-    let features = source.getFeatures()
-    features.forEach(feature => {
-      const isActive = downloadFeatureMatchesFilter(feature.getProperties(), state.downloadBundles.filter)
-      feature.set(FEATURE_FILTERED_OUT_PROPERTY_NAME, !isActive)
-    })
+    filterFeatures(state.downloadBundles.filter)
   }
 
   let storeChangeHandler = function () {

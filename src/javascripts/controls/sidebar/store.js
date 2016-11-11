@@ -34,30 +34,22 @@ export function setSidebarActiveTab (tabName) {
 /**
  * REDUCERS
  */
-export function sidebarIsOpen (state, action) {
-  // set default value
-  if (typeof state === 'undefined') {
-    // close the sidebar in mobile devices
-    return !isMobile()
-  }
-
-  switch (action.type) {
-    case TOGGLE_SIDEBAR_OPEN:
-      return !state
-
-    case SET_SIDEBAR_OPEN:
-      return action.setOpen
-
-    default:
-      return state
-  }
+export const sidebarDefaultState = {
+  isOpen: !isMobile(),
+  selectedTab: 'sidebar-settings'
 }
 
-export function sidebarSelectedTab (state = 'sidebar-settings', action) {
+export const sidebar = (state = sidebarDefaultState, action) => {
   switch (action.type) {
-    case SET_SIDEBAR_ACTIVE_TAB:
-      return action.tabName
-
+    case TOGGLE_SIDEBAR_OPEN: {
+      return Object.assign({}, state, {isOpen: !state.isOpen})
+    }
+    case SET_SIDEBAR_OPEN: {
+      return Object.assign({}, state, {isOpen: action.setOpen})
+    }
+    case SET_SIDEBAR_ACTIVE_TAB: {
+      return Object.assign({}, state, {selectedTab: action.tabName})
+    }
     default:
       return state
   }

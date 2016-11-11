@@ -110,8 +110,8 @@ Sidebar.propTypes = {
 
 function mapStateToProps (state) {
   return {
-    isOpen: state.sidebarIsOpen,
-    sidebarSelectedTab: state.sidebarSelectedTab
+    isOpen: state.sidebar.isOpen,
+    sidebarSelectedTab: state.sidebar.selectedTab
   }
 }
 

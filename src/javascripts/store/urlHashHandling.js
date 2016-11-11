@@ -4,9 +4,27 @@
 */
 import uniloc from 'uniloc'
 import _ from 'lodash'
+import {SearchTab} from 'config/layers/search'
+import {DownloadTab} from 'config/layers/downloadBundles'
+
+import {
+  searchDefaultState, SEARCH_STATE_RUNNING,
+  downloadDefaultState
+} from './reducers'
+import {sidebarDefaultState, setSidebarActiveTab} from 'controls/sidebar/store'
+import {
+  initLayerVisible,
+  setViewPosition,
+  searchStart,
+  downloadSetFilter,
+  downloadClicked
+} from './actions'
+import { positionsEqual } from 'utils'
 
 const router = uniloc({
-  default: 'GET /'
+  default: 'GET /',
+  search: 'GET /search/:query',
+  download: 'GET /download/:format/:clickedId'
 })
 
 let hashUrl = ''
@@ -89,10 +107,13 @@ function decompressVisibleLayers (layersString) {
   return layers
 }
 
+let hashIsChangingFromSystem = false
+
 export const writeToUrlHash = store => next => action => {
   let result = next(action)
   let state = store.getState()
-  if (!state.viewPosition.position) return result
+  if (!state.viewPosition.position) return result // skip if view is not stable
+
   let options = Object.assign({},
     compressPosition(state.viewPosition.position),
     {
@@ -100,8 +121,22 @@ export const writeToUrlHash = store => next => action => {
     }
   )
 
-  hashUrl = '#' + router.generate('default', options)
+  let routeName = 'default'
+  if (state.sidebar.selectedTab === SearchTab.name) {
+    routeName = 'search'
+    options.query = state.search.query
+  }
+  if (state.sidebar.selectedTab === DownloadTab.name) {
+    routeName = 'download'
+    options.format = state.downloadBundles.filter.format
+    options.clickedId = state.downloadBundles.clickedFeatureId
+  }
+
+  hashUrl = '#' + router.generate(routeName, options)
+
+  hashIsChangingFromSystem = true
   window.location.hash = hashUrl
+  hashIsChangingFromSystem = false
 
   return result
 }
@@ -131,5 +166,65 @@ export function getStateFromUrlHash (defaults) {
     }
   }
 
-  return Object.assign({}, defaults, pos, layers)
+  let additions = {}
+  switch (res.name) {
+    case 'search':
+      additions.sidebar = sidebarDefaultState
+      additions.sidebar.selectedTab = SearchTab.name
+      if (res.options.query) {
+        additions.search = searchDefaultState
+        additions.search.query = res.options.query
+        additions.search.state = SEARCH_STATE_RUNNING
+      }
+      break
+    case 'download':
+      additions.sidebar = sidebarDefaultState
+      additions.sidebar.selectedTab = DownloadTab.name
+      if (res.options.format) {
+        additions.downloadBundles = downloadDefaultState
+        if (res.options.format) {
+          additions.downloadBundles.filter = {format: res.options.format}
+        }
+        if (res.options.clickedId) {
+          additions.downloadBundles.clickedFeatureId = Number(res.options.clickedId)
+        }
+      }
+      break
+  }
+
+  return Object.assign({}, defaults, pos, layers, additions)
+}
+
+let store
+function onHashChange () {
+  if (hashIsChangingFromSystem) return
+  let oldState = store.getState()
+  let newState = getStateFromUrlHash(oldState)
+
+  store.dispatch(setSidebarActiveTab(newState.sidebar.selectedTab))
+
+  if (oldState.search.query !== newState.search.query) {
+    store.dispatch(searchStart(newState.search.query))
+  }
+
+  if (oldState.downloadBundles.filter !== newState.downloadBundles.filter) {
+    store.dispatch(downloadSetFilter(newState.downloadBundles.filter))
+  }
+  if (oldState.downloadBundles.clickedFeatureId !== newState.downloadBundles.clickedFeatureId) {
+    store.dispatch(downloadClicked(newState.downloadBundles.clickedFeatureId))
+  }
+
+  if (!positionsEqual(newState.viewPosition.position, oldState.viewPosition.position)) {
+    store.dispatch(setViewPosition(newState.viewPosition.position))
+  }
+
+  if (oldState.layerVisible !== newState.layerVisible) {
+    store.dispatch(initLayerVisible(newState.layerVisible))
+  }
+}
+
+export const initHashChangeHandling = (store_) => {
+  store = store_
+  // Handle browser navigation events
+  window.addEventListener('hashchange', onHashChange, false)
 }

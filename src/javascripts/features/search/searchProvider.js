@@ -19,6 +19,7 @@ class SearchProviderComponent extends React.Component {
     this.render = this.render.bind(this)
     this.componentWillReceiveProps = this.componentWillReceiveProps.bind(this)
     this.onDataReceived = this.onDataReceived.bind(this)
+    this.componentWillReceiveProps(props)
   }
 
   componentWillReceiveProps (nextProps) {

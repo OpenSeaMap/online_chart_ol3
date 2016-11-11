@@ -43,7 +43,7 @@ export const SearchTab = {
 const FEATURE_CLICKED_PROPERTY_NAME = '_clicked'
 const FEATURE_HOVERED_PROPERTY_NAME = '_hovered'
 
-module.exports = function (context, options) {
+export default function (context, options) {
   var defaults = {
     nameKey: 'layer-name-search'
   }
