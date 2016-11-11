@@ -13,9 +13,8 @@ import { IntlProvider } from 'react-intl'
 import VisibleLayers from './visibleLayers'
 import { createLayers } from './config/layerlist'
 import configureStore from './store/reducers'
-import { initLayerVisible, setViewPosition } from './store/actions'
-import { getStateFromUrlHash } from './store/urlHashHandling'
-import { positionsEqual } from './utils'
+import { initLayerVisible } from './store/actions'
+import { getStateFromUrlHash, initHashChangeHandling } from './store/urlHashHandling'
 import { defaultViewPosition } from './SETTINGS'
 
 let hashState = getStateFromUrlHash({
@@ -35,21 +34,7 @@ if (hashState.layerVisible) { // use layer state from url if provided
 }
 store.dispatch(initLayerVisible(defaultVisibleList))
 
-function onHashChange () {
-  let oldState = store.getState()
-  let newState = getStateFromUrlHash(oldState)
-
-  if (!positionsEqual(newState.viewPosition.position, oldState.viewPosition.position)) {
-    store.dispatch(setViewPosition(newState.viewPosition.position))
-  }
-
-  if (oldState.layerVisible !== newState.layerVisible) {
-    store.dispatch(initLayerVisible(newState.layerVisible))
-  }
-}
-
-// Handle browser navigation events
-window.addEventListener('hashchange', onHashChange, false)
+initHashChangeHandling(store)
 
 import { Provider } from 'react-redux'
 

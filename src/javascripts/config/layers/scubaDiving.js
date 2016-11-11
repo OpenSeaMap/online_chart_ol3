@@ -82,7 +82,7 @@ module.exports = function (context, options) {
   layer.on('selectFeature', function (e) {
     let feature = e.feature
     feature.set(FEATURE_CLICKED_PROPERTY_NAME, true)
-    context.dispatch(featureClicked(feature))
+    context.dispatch(featureClicked(feature.getProperties()))
     context.dispatch(setSidebarActiveTab(TabSidebarDetails.name))
     context.dispatch(setSidebarOpen(true))
   })

@@ -14,13 +14,13 @@ const mapStateToProps = (state) => {
 
   let taglist = []
   if (state.selectedFeature.hasFeature) {
-    feature.getKeys().forEach(function (key) {
+    Object.keys(feature).forEach(function (key) {
       if ($.inArray(key, ignoredTags) > -1) {
         return
       }
       taglist.push({
         key: key,
-        value: feature.get(key)
+        value: feature[key]
       })
     })
   }
