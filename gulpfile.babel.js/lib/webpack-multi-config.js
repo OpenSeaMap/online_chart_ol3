@@ -30,7 +30,6 @@ module.exports = function (env) {
       extensions: [''].concat(extensions),
       modulesDirectories: ['bower_components', 'node_modules'],
       alias: {
-        openlayers: 'openlayers/dist/ol-debug.js',
         jquerySidebar: 'sidebar-v2/js/jquery-sidebar.js',
 
         bootstrap: 'bootstrap-sass/assets/javascripts/bootstrap/',
@@ -92,6 +91,9 @@ module.exports = function (env) {
   if (env === 'development') {
     webpackConfig.devtool = 'source-map'
     webpack.debug = true
+
+    // load debug version of openlayers
+    webpackConfig.resolve.alias.openlayers = 'openlayers/dist/ol-debug.js'
   }
 
   if (env === 'production') {
