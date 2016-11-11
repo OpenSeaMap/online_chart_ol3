@@ -28,6 +28,7 @@
   "license-links": "Diese Webanwendung ist {linkFoss} und unter {linkLicense} lizenziert.",
   "license-links-foss-text": "Free/Libre Open Source Software",
   "license-authors": "Autoren:",
+  "license-additional": "Weitere Lizenzen:",
   "download-file-date": "Datum: {rawDate, date, short} ({formatedRelative})",
   "download-file-format": "Format: {format}",
   "download-file-application": "Anwendung: {app}",

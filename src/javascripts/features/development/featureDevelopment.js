@@ -88,7 +88,7 @@ class FeatureDevelopment extends React.Component {
         </section>
         <section>
           <h2>
-            <FormattedMessage id='license-authors' defaultMessage='The authors:' />
+            <FormattedMessage id='license-authors' defaultMessage='Authors:' />
           </h2>
           <div>
             <AuthorsList authors={authorsParser(AUTHORS)} />
@@ -96,7 +96,8 @@ class FeatureDevelopment extends React.Component {
         </section>
         <section>
           <div>
-            <h2>{ 'Additional licenses' }</h2>
+            <h2>
+              <FormattedMessage id='license-additional' defaultMessage='Additional licenses:' /></h2>
             <ul>
               <li>
                 <ExternalLink href='https://www.google.com/design/icons/'>
