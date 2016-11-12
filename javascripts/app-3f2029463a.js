@@ -134,7 +134,7 @@ function i(e,t){if(!n.canUseDOM||t&&!("addEventListener"in document)){return fal
 	* @license AGPL-3.0
 	* @author aAXEe (https://github.com/aAXEe)
 	*/
-"use strict";var n=r(310);var o=i(n);function i(e){return e&&e.__esModule?e:{default:e}}var a=r(17);var s=48;var p=48;var u=document.createElement("IMG");u.src="data:image/svg+xml;charset=utf-8,"+o.default;var l=[u.naturalWidth,u.naturalHeight];var c=s/u.naturalWidth;var f=p/u.naturalHeight;var d=Math.min(c,f);e.exports=new a.style.Style({image:new a.style.Icon({anchor:[.5,1],anchorXUnits:"fraction",anchorYUnits:"fraction",opacity:1,img:u,imgSize:l,scale:d})})},function(e,t,r){/**
+"use strict";var n=r(310);var o=i(n);function i(e){return e&&e.__esModule?e:{default:e}}var a=r(17);var s=48;var p=48;var u=document.createElement("IMG");u.src="data:image/svg+xml;charset=utf-8,"+encodeURIComponent(o.default);var l=[u.naturalWidth,u.naturalHeight];var c=s/u.naturalWidth;var f=p/u.naturalHeight;var d=Math.min(c,f);e.exports=new a.style.Style({image:new a.style.Icon({anchor:[.5,1],anchorXUnits:"fraction",anchorYUnits:"fraction",opacity:1,img:u,imgSize:l,scale:d})})},function(e,t,r){/**
 	* @license AGPL-3.0
 	* @author mojoaxel (https://github.com/mojoaxel)
 	*/
@@ -299,7 +299,7 @@ var s=function e(t){var r=t.loadState,n=t.enabled;var i=100;if(n&&r.loading){i=r
 	* @license AGPL-3.0
 	* @author aAXEe (https://github.com/aAXEe)
 	*/
-"use strict";var n=r(17);e.exports=function(e,t,r){var o=document.createElement("IMG");o.src="data:image/svg+xml;charset=utf-8,"+e;var i=[o.naturalWidth,o.naturalHeight];var a=t/o.naturalWidth;var s=r/o.naturalHeight;var p=Math.min(a,s);var u=new n.style.Style({image:new n.style.Icon({anchor:[.5,.5],anchorXUnits:"fraction",anchorYUnits:"fraction",opacity:.75,img:o,imgSize:i,scale:p})});return u}},function(e,t){"use strict";function r(e){function t(t,r,n){var o=t[r];var i="Invalid prop `"+r+"` supplied to `"+n+"`. ";switch(e.toUpperCase()){case"ISO639-1":if(/^[a-zA-Z]{2}$/.test(o))return;break;case"ISO639-2":if(/^[a-zA-Z]{3}$/.test(o))return;break;default:return new Error(i+"Unknown language code type: "+e)}return new Error(i+'"'+o+'" is not a valid '+e+" code.")}return t}var n={iso638_1:r("ISO639-1"),iso638_2:r("ISO639-2")};e.exports=n},function(e,t,r){"use strict";Object.defineProperty(t,"__esModule",{value:true});var n=r(245);var o=s(n);var i=r(14);var a=r(24);function s(e){return e&&e.__esModule?e:{default:e}}/**
+"use strict";var n=r(17);e.exports=function(e,t,r){var o=document.createElement("IMG");o.src="data:image/svg+xml;charset=utf-8,"+encodeURIComponent(e);var i=[o.naturalWidth,o.naturalHeight];var a=t/o.naturalWidth;var s=r/o.naturalHeight;var p=Math.min(a,s);var u=new n.style.Style({image:new n.style.Icon({anchor:[.5,.5],anchorXUnits:"fraction",anchorYUnits:"fraction",opacity:.75,img:o,imgSize:i,scale:p})});return u}},function(e,t){"use strict";function r(e){function t(t,r,n){var o=t[r];var i="Invalid prop `"+r+"` supplied to `"+n+"`. ";switch(e.toUpperCase()){case"ISO639-1":if(/^[a-zA-Z]{2}$/.test(o))return;break;case"ISO639-2":if(/^[a-zA-Z]{3}$/.test(o))return;break;default:return new Error(i+"Unknown language code type: "+e)}return new Error(i+'"'+o+'" is not a valid '+e+" code.")}return t}var n={iso638_1:r("ISO639-1"),iso638_2:r("ISO639-2")};e.exports=n},function(e,t,r){"use strict";Object.defineProperty(t,"__esModule",{value:true});var n=r(245);var o=s(n);var i=r(14);var a=r(24);function s(e){return e&&e.__esModule?e:{default:e}}/**
 	* @license AGPL-3.0
 	* @author aAXEe (https://github.com/aAXEe)
 	*/
