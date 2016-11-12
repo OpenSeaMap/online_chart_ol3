@@ -93,7 +93,7 @@ class Ol3Map extends React.Component {
 
     let featureLayerMapSelected = {}
     this.selectFeature = (feature, layer) => {
-      featureLayerMapSelected[ol.getUid(feature)] = layer
+      featureLayerMapSelected[feature.getId()] = layer
 
       const event = {
         type: 'selectFeature',
@@ -106,9 +106,9 @@ class Ol3Map extends React.Component {
       if (f) this.selector.getFeatures().push(f)
     }
     this.unselectFeature = (feature) => {
-      let layer = featureLayerMapSelected[ol.getUid(feature)]
+      let layer = featureLayerMapSelected[feature.getId()]
       if (!layer) return
-      delete featureLayerMapSelected[ol.getUid(feature)]
+      delete featureLayerMapSelected[feature.getId()]
 
       const event = {
         type: 'unselectFeature',
@@ -133,7 +133,7 @@ class Ol3Map extends React.Component {
 
     let featureLayerMapHovered = {}
     this.hoverFeature = (feature, layer) => {
-      featureLayerMapHovered[ol.getUid(feature)] = layer
+      featureLayerMapHovered[feature.getId()] = layer
 
       const event = {
         type: 'hoverFeature',
@@ -146,9 +146,9 @@ class Ol3Map extends React.Component {
       if (f) this.hoverer.getFeatures().push(f)
     }
     this.unhoverFeature = (feature) => {
-      let layer = featureLayerMapHovered[ol.getUid(feature)]
+      let layer = featureLayerMapHovered[feature.getId()]
       if (!layer) return
-      delete featureLayerMapHovered[ol.getUid(feature)]
+      delete featureLayerMapHovered[feature.getId()]
 
       const event = {
         type: 'unhoverFeature',
