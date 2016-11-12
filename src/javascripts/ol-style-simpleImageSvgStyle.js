@@ -7,7 +7,7 @@ var ol = require('openlayers')
 
 module.exports = function (svg, maxWidth, maxHeight) {
   const img = document.createElement('IMG')
-  img.src = 'data:image/svg+xml;charset=utf-8,' + svg
+  img.src = 'data:image/svg+xml;charset=utf-8,' + encodeURIComponent(svg)
   const imgSize = [img.naturalWidth, img.naturalHeight]
 
   const scaleWidth = maxWidth / img.naturalWidth

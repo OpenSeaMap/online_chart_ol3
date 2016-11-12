@@ -11,7 +11,7 @@ const maxWidth = 48
 const maxHeight = 48
 
 const img = document.createElement('IMG')
-img.src = 'data:image/svg+xml;charset=utf-8,' + Marker
+img.src = 'data:image/svg+xml;charset=utf-8,' + encodeURIComponent(Marker)
 const imgSize = [img.naturalWidth, img.naturalHeight]
 
 const scaleWidth = maxWidth / img.naturalWidth
