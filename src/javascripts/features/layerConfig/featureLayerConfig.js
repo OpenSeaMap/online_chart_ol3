@@ -77,7 +77,8 @@ class ConfigList extends React.Component {
                   </div>
                 </Collapse>
               </li>
-            ) })}
+            )
+          })}
         </ul>
         <div>
           <FormattedMessage
@@ -109,7 +110,8 @@ class ConfigList extends React.Component {
                   </div>
                 </Collapse>
               </li>
-            ) })}
+            )
+          })}
         </ul>
         <LocaleSwitch />
       </div>
