@@ -34,7 +34,7 @@
     "openlayers": "^3.3.0",
     "parse-authors": "^0.2.4",
     "parse-repo": "^1.0.1",
-    "react": "^15.3.0",
+    "react": "^15.4.0",
     "react-bootstrap": "^0.30.0",
     "react-dom": "^15.4.0",
     "react-icons": "^2.0.1",
