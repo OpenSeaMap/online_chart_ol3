@@ -1,26 +1,26 @@
 version: '2'
 
 services:
-  dev:
+  gulp:
     extends:
       file: docker-common-node.yml
       service: base
     ports:
      - "3000:3000"
      - "3001:3001"
-    command: gulp
+    command: npm run gulp
 
   test:
     extends:
       file: docker-common-node.yml
       service: base
-    command: test
+    command: npm test
 
   lint:
     extends:
       file: docker-common-node.yml
       service: base
-    command: lint
+    command: npm run gulp lint
 
   demo:
     extends:
@@ -28,4 +28,4 @@ services:
       service: base
     ports:
      - "5000:5000"
-    command: demo
+    command: npm start
