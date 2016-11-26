@@ -39,7 +39,7 @@ You need:
 ### Prepare the development environment
 
 ```
-docker-compose build dev
+docker-compose build gulp
 ```
 
 This will build a docker image with `npm` and all dependencies. The build
@@ -50,7 +50,7 @@ will take some time. Grab a cup of tea.  :tea:
 To start up the development build:
 
 ```
-docker-compose up dev
+docker-compose up gulp
 ```
 
 All files will compile in development mode (uncompressed with source maps). [BrowserSync](http://www.browsersync.io/) will serve up files to [localhost:3000](http://localhost:3000) and will stream live changes to the code and assets to all connected browsers. Don't forget about the additional BrowserSync tools available on [localhost:3001](http://localhost:3001)!

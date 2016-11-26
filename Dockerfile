@@ -1,17 +1,14 @@
 FROM node:4
 
-RUN mkdir -p /code
-WORKDIR /code
+RUN mkdir -p /app && mkdir -p /home/node && \
+    chown -R node:node /app && \
+        chown -R node:node /home/node
+WORKDIR /app
 
-# Install app dependencies
-RUN npm install bower -g  --loglevel=warn
-
-COPY package.json /code
+USER node
+COPY *.json /app/
 RUN npm install  --loglevel=warn
 
-COPY bower.json /code
-RUN bower install  --loglevel=warn --allow-root
+COPY . /app
 
-COPY . /code
-
-ENTRYPOINT [ "npm", "run" ]
+CMD [ "npm", "start" ]
