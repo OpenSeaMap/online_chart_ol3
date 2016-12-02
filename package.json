@@ -16,13 +16,10 @@
     "deploy": "gulp deploy",
     "production": "gulp production",
     "gulp": "gulp",
-
     "pretest": "gulp production",
     "test": "karma start --single-run",
-
     "prestart": "gulp production",
     "start": "gulp server",
-
     "postinstall": "bower install"
   },
   "dependencies": {
@@ -34,6 +31,7 @@
     "parse-authors": "^0.2.4",
     "parse-repo": "^1.0.1",
     "react": "^15.4.1",
+    "react-addons-shallow-compare": "^15.4.1",
     "react-bootstrap": "^0.30.0",
     "react-dom": "^15.4.1",
     "react-icons": "^2.0.1",
