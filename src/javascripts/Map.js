@@ -178,8 +178,6 @@ class Ol3Map extends React.Component {
     }))
 
     this.ol3Map.on('moveend', () => {
-      this.ol3Map.beforeRender()
-
       var centre = ol.proj.transform(this.ol3Map.getView().getCenter(), 'EPSG:3857', 'EPSG:4326')
       let position = {
         lon: centre[0],
@@ -209,13 +207,13 @@ class Ol3Map extends React.Component {
     }
     if (nextProps.viewPosition.position && !positionsEqual(nextProps.viewPosition.position, position)) {
       let view = this.ol3Map.getView()
-      this.setupMoveAnimations()
-
-      view.setCenter(ol.proj.fromLonLat([
-        nextProps.viewPosition.position.lon,
-        nextProps.viewPosition.position.lat
-      ]))
-      view.setZoom(nextProps.viewPosition.position.zoom)
+      view.animate({
+        zoom: nextProps.viewPosition.position.zoom,
+        center: ol.proj.fromLonLat([
+          nextProps.viewPosition.position.lon,
+          nextProps.viewPosition.position.lat
+        ])
+      })
     }
 
     if (nextProps.viewPosition.extent && nextProps.viewPosition.extent !== this.props.viewPosition.extent) {
@@ -225,9 +223,9 @@ class Ol3Map extends React.Component {
         let height = mapSize[1]
         let options = {
           padding: [height / 4, width / 4, height / 4, width / 4],
-          maxZoom: 18
+          maxZoom: 18,
+          duration: 1000
         }
-        this.setupMoveAnimations()
         this.forceSetViewPosition = true
         this.ol3Map.getView().fit(nextProps.viewPosition.extent, mapSize, options)
         // get view position after move
@@ -246,24 +244,6 @@ class Ol3Map extends React.Component {
 
   addControlToMap (id, control) {
     this._controls.set(id, control)
-  }
-
-  setupMoveAnimations () {
-    let view = this.ol3Map.getView()
-    let start = +new Date()
-    let pan = ol.animation.pan({
-      duration: 1000,
-      easing: ol.easing.inAndOut,
-      source: view.getCenter(),
-      start: start
-    })
-    var bounce = ol.animation.zoom({
-      duration: 1000,
-      easing: ol.easing.inAndOut,
-      resolution: view.getResolution(),
-      start: start
-    })
-    this.ol3Map.beforeRender(pan, bounce)
   }
 
   updateLayerVisible (nextProps) {
