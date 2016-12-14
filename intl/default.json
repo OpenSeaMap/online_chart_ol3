@@ -9,6 +9,7 @@
   "layer-name-depth-geodaten_mv": "Official depth data for Germany/MV",
   "layer.copyright": "Layer data © {source}",
   "layer-name-grid-wgs": "Coordinate grid",
+  "layer-name-marineProfile": "Marine profile",
   "layer-name-marinetraffic": "Marine traffic",
   "layer-name-openstreetmap-base": "OpenStreetMap carto",
   "layer-name-scuba_diving": "POIs for scuba diving",

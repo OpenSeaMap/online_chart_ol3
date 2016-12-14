@@ -9,6 +9,7 @@
   "layer-name-depth-geodaten_mv": "Offizielle Tiefendaten DE/MV",
   "layer.copyright": "Daten © {source}",
   "layer-name-grid-wgs": "Koordinatengitter",
+  "layer-name-marineProfile": "Meeresprofil",
   "layer-name-marinetraffic": "Schiffsverkehr",
   "layer-name-openstreetmap-base": "OpenStreetMap Karte",
   "layer-name-scuba_diving": "Punkte zum Sporttauchen",

@@ -15,6 +15,7 @@ import Search from './layers/search'
 import Marinetraffic from './layers/marinetraffic'
 import GridWgs from './layers/grid_wgs'
 import Download from './layers/downloadBundles'
+import MarineProfile from './layers/marineProfile'
 
 /**
 for the old (2013) layers format see:
@@ -63,6 +64,12 @@ export const availibleBaseLayers = [
 
 export const availibleOverlayLayers = [
   {
+    LayerConstructor: MarineProfile,
+    id: 'overlay_marineProfile',
+    urlIndex2016: 8,
+    urlIndex2013: 6,
+    visibleDefault: false
+  }, {
     LayerConstructor: GridWgs,
     id: 'overlay_grid_wgs',
     urlIndex2016: 6,
