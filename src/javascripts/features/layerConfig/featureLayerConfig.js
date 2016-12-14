@@ -73,7 +73,8 @@ class ConfigList extends React.Component {
                   </div>
                 </Collapse>
               </li>
-            ) })}
+            )
+          })}
         </ul>
         <div>
           <FormattedMessage id={'layerlist-overlaylayer'} />
@@ -102,7 +103,8 @@ class ConfigList extends React.Component {
                   </div>
                 </Collapse>
               </li>
-            ) })}
+            )
+          })}
         </ul>
       </div>
     )

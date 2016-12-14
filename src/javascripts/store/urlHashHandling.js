@@ -95,9 +95,9 @@ export const writeToUrlHash = store => next => action => {
   if (!state.viewPosition.position) return result
   let options = Object.assign({},
     compressPosition(state.viewPosition.position),
-    {
-      layers: compressVisibleLayers(state.layerVisible)
-    }
+                              {
+                                layers: compressVisibleLayers(state.layerVisible)
+                              }
   )
 
   hashUrl = '#' + router.generate('default', options)
