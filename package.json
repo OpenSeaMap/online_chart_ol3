@@ -116,7 +116,7 @@
     "rc-progress": "^2.0.0",
     "redux-devtools": "^3.1.0",
     "require-dir": "^0.3.0",
-    "sass-loader": "4.0.2",
+    "sass-loader": "4.1.0",
     "sinon": "^1.17.3",
     "sinon-chai": "^2.8.0",
     "style-loader": "^0.13.1",
