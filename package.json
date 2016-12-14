@@ -108,7 +108,7 @@
     "mkdirp": "^0.5.1",
     "mocha": "^3.0.0",
     "morgan": "^1.6.1",
-    "node-sass": "^3.4.2",
+    "node-sass": "^4.0.0",
     "object-assign": "^4.0.1",
     "open": "0.0.5",
     "pretty-hrtime": "~1.0.0",
