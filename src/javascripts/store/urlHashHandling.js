@@ -118,9 +118,9 @@ export const writeToUrlHash = store => next => action => {
 
   let options = Object.assign({},
     compressPosition(state.viewPosition.position),
-                              {
-                                layers: compressVisibleLayers(state.layerVisible)
-                              }
+    {
+      layers: compressVisibleLayers(state.layerVisible)
+    }
   )
   options.lang = state.locale
 
