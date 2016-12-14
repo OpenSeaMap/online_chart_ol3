@@ -208,26 +208,31 @@ module.exports = function (context, options) {
     }
   }
 
+  const layer = new ol.layer.VectorTile({
+    projection: 'EPSG:4326',
+    source: source,
+    renderOrder: (f1, f2) => {
+      return f1.get('sort_rank') - f2.get('sort_rank')
+    },
+    preload: 10,
+    style: styleFunc
+  })
+
   function setShowBuildings (show) {
+    if (showBuildings === show) return
     showBuildings = show
-    source.refresh()
+    layer.changed()
   }
   function setUseNightMode (activate) {
-    mapMode = activate ? 'night' : 'day'
-    source.refresh()
+    const newMode = activate ? 'night' : 'day'
+    if (newMode === mapMode) return
+    mapMode = newMode
+    layer.changed()
   }
 
   var defaults = {
     nameKey: 'layer-name-base-vector',
-    layer: new ol.layer.VectorTile({
-      projection: 'EPSG:4326',
-      source: source,
-      renderOrder: (f1, f2) => {
-        return f1.get('sort_rank') - f2.get('sort_rank')
-      },
-      preload: 10,
-      style: styleFunc
-    }),
+    layer: layer,
     additionalSetup: (
       <LayerConfig
         setShowBuildings={setShowBuildings}
