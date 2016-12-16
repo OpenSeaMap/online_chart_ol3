@@ -16,6 +16,7 @@ import Marinetraffic from './layers/marinetraffic'
 import GridWgs from './layers/grid_wgs'
 import Download from './layers/downloadBundles'
 import MarineProfile from './layers/marineProfile'
+import BingBase from './layers/bingBase'
 
 /**
 for the old (2013) layers format see:
@@ -58,6 +59,14 @@ export const availibleBaseLayers = [
     id: 'base_vector',
     isBaseLayer: true,
     urlIndex2016BaseLayer: 'B',
+    visibleDefault: false
+  },
+  {
+    LayerConstructor: BingBase,
+    id: 'base_bing',
+    isBaseLayer: true,
+    urlIndex2013: 12,
+    urlIndex2016BaseLayer: 'C',
     visibleDefault: false
   }
 ]
