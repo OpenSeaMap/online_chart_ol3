@@ -7,6 +7,7 @@
   "layer-name-bing-aerial": "Bing Luftbilder",
   "layer-name-download_bundles": "Kartenpakete herunterladen",
   "sidebar-download": "Karte herunterladen",
+  "layer-name-elevationProfile": "Höhenprofil",
   "layer-name-depth-geodaten_mv": "Offizielle Tiefendaten DE/MV",
   "layer.copyright": "Daten © {source}",
   "layer-name-grid-wgs": "Koordinatengitter",

@@ -16,6 +16,7 @@ import Marinetraffic from './layers/marinetraffic'
 import GridWgs from './layers/grid_wgs'
 import Download from './layers/downloadBundles'
 import MarineProfile from './layers/marineProfile'
+import ElevationProfile from './layers/elevationProfile'
 import BingBase from './layers/bingBase'
 
 /**
@@ -77,6 +78,12 @@ export const availibleOverlayLayers = [
     id: 'overlay_marineProfile',
     urlIndex2016: 8,
     urlIndex2013: 6,
+    visibleDefault: false
+  }, {
+    LayerConstructor: ElevationProfile,
+    id: 'overlay_elevationProfile',
+    urlIndex2016: 9,
+    urlIndex2013: 20,
     visibleDefault: false
   }, {
     LayerConstructor: GridWgs,
