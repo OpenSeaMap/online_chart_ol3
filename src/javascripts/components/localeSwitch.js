@@ -9,7 +9,7 @@ import { connect } from 'react-redux'
 import { FormattedMessage } from 'react-intl'
 import {Form, FormGroup, FormControl, ControlLabel} from 'react-bootstrap'
 import { setLocale } from 'store/actions'
-import {allLocales} from 'intl'
+import {allLocales} from 'intlProvider'
 
 export const LocaleSwitchControl = ({locale, setLocale}) => (
   <Form componentClass='fieldset' inline>
