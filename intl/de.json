@@ -19,6 +19,7 @@
   "layer-name-seamarks": "OpenSeaMap Seezeichen",
   "layer-name-search": "Suchen",
   "sidebar-search": "Suchen",
+  "layer-name-tileCoordinates": "Tile-Nummern",
   "issues-title": "Fehler & Erweiterungen",
   "issues-bug-found": "Wenn du einen Fehler gefunden hast oder eine Erweiterungsidee hast, melde einen neuen {linkGitHubIssues}.",
   "issues-bug-found-new": "GitHub Issue (en)",
