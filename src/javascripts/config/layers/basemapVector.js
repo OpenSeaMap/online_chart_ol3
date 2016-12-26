@@ -85,12 +85,13 @@ module.exports = function (context, options) {
         '© <a href="http://www.openstreetmap.org/copyright">' +
   'OpenStreetMap contributors</a>'
 
+  const baseGrid = ol.tilegrid.createXYZ({maxZoom: 22})
   let source = new ol.source.VectorTile({
     attributions: [new ol.Attribution({html: ATTRIBUTION})],
     format: new ol.format.MVT({
       layers: ['earth', 'water', 'landuse', 'roads', 'buildings']
     }),
-    tileGrid: ol.tilegrid.createXYZ({maxZoom: 22}),
+    tileGrid: baseGrid,
     tilePixelRatio: 16,
     url: 'https://tile.mapzen.com/mapzen/vector/v1/all/{z}/{x}/{y}.mvt?api_key=' + KEY
   })
@@ -174,9 +175,12 @@ module.exports = function (context, options) {
   let showBuildings = false
   let mapMode = 'day'
   function styleFunc (feature, resolution) {
+    const z = baseGrid.getZForResolution(resolution)
     var featureLayer = feature.get('layer')
     var featureKind = feature.get('kind')
     var featureGeom = feature.getGeometry().getType()
+    const minZ = feature.get('min_zoom')
+    if (minZ && minZ > z) return
     // console.log('=============>>> feature', ol.getUid(feature), feature, resolution, featureGeom)
 
     for (let styleMode in staticStyles) {
@@ -208,13 +212,15 @@ module.exports = function (context, options) {
     }
   }
 
+  const renderOrderer = (f1, f2) => {
+    return f1.get('sort_rank') - f2.get('sort_rank')
+  }
+
   const layer = new ol.layer.VectorTile({
     projection: 'EPSG:4326',
     source: source,
-    renderOrder: (f1, f2) => {
-      return f1.get('sort_rank') - f2.get('sort_rank')
-    },
-    preload: 10,
+    renderOrder: renderOrderer,
+    preload: 6,
     style: styleFunc
   })
 
