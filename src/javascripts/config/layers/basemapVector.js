@@ -216,7 +216,7 @@ module.exports = function (context, options) {
     return f1.get('sort_rank') - f2.get('sort_rank')
   }
 
-  const layer = new ol.layer.VectorTile({
+  const baseLayer = new ol.layer.VectorTile({
     projection: 'EPSG:4326',
     source: source,
     renderOrder: renderOrderer,
@@ -227,18 +227,171 @@ module.exports = function (context, options) {
   function setShowBuildings (show) {
     if (showBuildings === show) return
     showBuildings = show
-    layer.changed()
+    baseLayer.changed()
   }
   function setUseNightMode (activate) {
     const newMode = activate ? 'night' : 'day'
     if (newMode === mapMode) return
     mapMode = newMode
-    layer.changed()
+    baseLayer.changed()
   }
+
+  // --- show labels by using ol.layer.Vector
+
+  // return the url to get the tile at [z, x, -y]
+  function tileUrlFunction (tileCoord) {
+    return ('https://tile.mapzen.com/mapzen/vector/v1/places/{z}/{x}/{y}.json?api_key=' + KEY)
+              .replace('{z}', String(tileCoord[0]))
+              .replace('{x}', String(tileCoord[1]))
+              .replace('{y}', String(-tileCoord[2]))
+  }
+  // xyz grid for tile access
+  const labelGrid = ol.tilegrid.createXYZ({maxZoom: 22})
+
+  // return the url to be fetched to get the data inside the resoultion area
+  function mapExtentToTile (extent, resoltuion) {
+    let coords = []
+    labelGrid.forEachTileCoord(extent, labelGrid.getZForResolution(resoltuion), (coord) => {
+      coords.push(coord)
+    })
+    const coord = coords[0]
+    return tileUrlFunction(coord)
+  }
+
+  let sourceLabels = new ol.source.Vector({
+    format: new ol.format.GeoJSON(),
+    url: mapExtentToTile,
+    strategy: ol.loadingstrategy.tile(labelGrid)
+  })
+
+  sourceLabels.on(['tileloadstart', 'tileloadend', 'tileloaderror'], function (ev) {
+    context.dispatch(layerTileLoadStateChange(options.id, ev))
+  })
+
+  // the locale for the layer
+  let mapLocale = context.getState().locale
+
+  const textStrokeStyle = new ol.style.Stroke({color: 'rgba(255,255,255,0.8)', width: 2})
+  const fontDefault = '12px sans-serif'
+
+  const staticLabelStyles = {
+    /* kind = */continent: {
+      font: 'small-caps 20px sans-serif',
+      fillColor: '#973c00'
+    },
+    country: {
+      font: '14px sans-serif',
+      fillColor: '#973c00'
+    },
+    region: {
+      font: '12px sans-serif',
+      fillColor: '#973c00'
+    },
+
+    locality: {
+      font: '12px sans-serif',
+      fillColor: '#333'
+    },
+    neighbourhood: {
+      font: '10px sans-serif',
+      fillColor: '#333'
+    }
+  }
+
+  function styleFuncLabels (feature, resolution) {
+    const z = labelGrid.getZForResolution(resolution)
+
+    const minZ = feature.get('min_zoom')
+    if (minZ && minZ > z) return
+    const maxZ = feature.get('max_zoom')
+    if (maxZ && maxZ < z) return
+
+    const featureKind = feature.get('kind')
+    const name = feature.get('name:' + mapLocale) || feature.get('name')
+
+    let font = fontDefault
+    let fillColor = '#444'
+    let baseline = 'center'
+    let circleRadius = 0
+    for (const styleKind in staticLabelStyles) {
+      if (featureKind !== styleKind) continue
+      const kindStyle = staticLabelStyles[styleKind]
+
+      font = kindStyle.font || font
+      fillColor = kindStyle.fillColor || fillColor
+      if (featureKind === 'locality') {
+        baseline = 'top'
+        circleRadius = Math.max(1, Math.round(Math.log10(feature.get('population'))))
+
+        if (z === 8 && feature.get('population') < 50e3) return
+        if (z === 9 && feature.get('population') < 25e3) return
+      }
+      break
+    }
+    if (feature.get('country_capital')) {
+      font = '600 ' + font
+    }
+
+    const textFill = new ol.style.Fill({
+      color: fillColor
+    })
+    const nameElement = new ol.style.Style({
+      text: new ol.style.Text({
+        text: name,
+        textAlign: 'center',
+        textBaseline: baseline,
+        offsetY: circleRadius * 1.2,
+        font: font,
+        stroke: textStrokeStyle,
+        fill: textFill
+      })
+    })
+
+    if (featureKind === 'locality') { // display text + dot for cities
+      const localityPoint = new ol.style.Style({
+        image: new ol.style.Circle({
+          radius: circleRadius,
+          stroke: textStrokeStyle,
+          fill: textFill
+        })
+      })
+      return [localityPoint, nameElement]
+    }
+
+    return nameElement
+  }
+
+  const labelLayer = new ol.layer.Vector({
+    source: sourceLabels,
+    style: styleFuncLabels,
+    renderOrder: renderOrderer,
+    zIndex: 1,
+    updateWhileAnimating: false,
+    updateWhileInteracting: true
+  })
+
+  let oldZ = context.getState().viewPosition.position.zoom
+  let storeHandler = function () {
+    let state = context.getState()
+    if (state.viewPosition.position.zoom !== oldZ) {
+      oldZ = state.viewPosition.position.zoom
+      sourceLabels.clear()
+      sourceLabels.refresh()
+    }
+    if (state.locale !== mapLocale) {
+      mapLocale = state.locale
+      labelLayer.changed()
+    }
+  }
+  context.subscribe(storeHandler)
 
   var defaults = {
     nameKey: 'layer-name-base-vector',
-    layer: layer,
+    layer: new ol.layer.Group({
+      layers: [
+        baseLayer, labelLayer
+      ]
+    }),
     additionalSetup: (
       <LayerConfig
         setShowBuildings={setShowBuildings}
