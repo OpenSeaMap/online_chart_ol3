@@ -6,7 +6,7 @@ import uniloc from 'uniloc'
 import _ from 'lodash'
 import {SearchTab} from 'config/layers/search'
 import {DownloadTab} from 'config/layers/downloadBundles'
-import {getExistingLocaleForCode, defaultLocale} from 'intl'
+import {getExistingLocaleForCode, defaultLocale} from '../intlProvider'
 
 import {
   searchDefaultState, SEARCH_STATE_RUNNING,

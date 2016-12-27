@@ -9,7 +9,7 @@ import ReactDOM from 'react-dom'
 import React, { PropTypes } from 'react'
 
 import { addLocaleData } from 'react-intl'
-import IntlProvider from './intl'
+import IntlProvider from './intlProvider'
 
 import VisibleLayers from './visibleLayers'
 import { createLayers } from './config/layerlist'

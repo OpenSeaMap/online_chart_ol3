@@ -29,7 +29,7 @@ import {
 } from './actions'
 
 import { sidebar } from '../controls/sidebar/store'
-import {defaultLocale, getExistingLocaleForCode} from 'intl'
+import {defaultLocale, getExistingLocaleForCode} from 'intlProvider'
 
 function layerVisible (state = {}, action) {
   switch (action.type) {
