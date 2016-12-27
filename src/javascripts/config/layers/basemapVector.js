@@ -325,10 +325,13 @@ module.exports = function (context, options) {
 
         if (z === 8 && feature.get('population') < 50e3) return
         if (z === 9 && feature.get('population') < 25e3) return
+        if (z <= 5 && !feature.get('country_capital')) return
       }
+      if (z <= 6 && featureKind === 'region') return
+      if (z <= 4 && featureKind === 'country' && feature.get('population') < 10e6) return
       break
     }
-    if (feature.get('country_capital')) {
+    if (feature.get('country_capital') && z > 5) {
       font = '600 ' + font
     }
 
