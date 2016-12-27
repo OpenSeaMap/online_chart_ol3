@@ -89,7 +89,7 @@ module.exports = function (context, options) {
   let source = new ol.source.VectorTile({
     attributions: [new ol.Attribution({html: ATTRIBUTION})],
     format: new ol.format.MVT({
-      layers: ['earth', 'water', 'landuse', 'roads', 'buildings']
+      layers: ['earth', 'water', 'landuse', 'roads', 'buildings', 'boundaries']
     }),
     tileGrid: baseGrid,
     tilePixelRatio: 16,
@@ -133,6 +133,17 @@ module.exports = function (context, options) {
         'building|building_part': {
           polygons: new ol.style.Style({fill: new ol.style.Fill({color: '#c1ab5b'})})
         }
+      },
+      boundaries: {
+        country: {
+          lines: new ol.style.Style({stroke: new ol.style.Stroke({color: '#973c00', width: 1})})
+        },
+        region: {
+          lines: {
+            style: new ol.style.Style({stroke: new ol.style.Stroke({color: '#973c00', width: 0.5})}),
+            min_zoom: 7
+          }
+        }
       }
     },
     night: {
@@ -167,6 +178,17 @@ module.exports = function (context, options) {
       buildings: {
         'building|building_part': {
           polygons: new ol.style.Style({fill: new ol.style.Fill({color: '#171f27'})})
+        }
+      },
+      boundaries: {
+        country: {
+          lines: new ol.style.Style({stroke: new ol.style.Stroke({color: '#973c00', width: 1})})
+        },
+        region: {
+          lines: {
+            style: new ol.style.Style({stroke: new ol.style.Stroke({color: '#973c00', width: 0.5})}),
+            min_zoom: 7
+          }
         }
       }
     }
@@ -205,7 +227,12 @@ module.exports = function (context, options) {
             if (featureGeom === 'Point' && geomType !== 'points') continue
             if (featureGeom === 'MultiPoint' && geomType !== 'points') continue
 
-            return stylesType[geomType]
+            const minZ = stylesType[geomType].min_zoom
+            const style = stylesType[geomType].style || stylesType[geomType]
+
+            if (minZ && minZ > z) continue
+
+            return style
           }
         }
       }
