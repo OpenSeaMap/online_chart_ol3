@@ -11,6 +11,7 @@ import SearchTabComponent from 'features/search/searchTab'
 import SearchBar from 'features/search/searchBar'
 import MdSearch from 'react-icons/lib/md/search'
 import mapMarker from 'components/mapMarker'
+import orderIds from '../layerOrderNumbers'
 
 import ol from 'openlayers'
 import ChartLayer from '../chartlayer'
@@ -223,7 +224,8 @@ export default function (context, options) {
   context.subscribe(storeChangeHandler)
 
   let layer = new ol.layer.Vector({
-    source: vectorSource
+    source: vectorSource,
+    zIndex: orderIds.user_over_all
   })
 
   layer.on('selectFeature', function (e) {

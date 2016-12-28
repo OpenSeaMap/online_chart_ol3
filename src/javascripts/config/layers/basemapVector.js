@@ -10,6 +10,7 @@ import ChartLayer from '../chartlayer'
 import { layerTileLoadStateChange } from '../../store/actions'
 import OsmToggle from '../../components/misc/Toggle'
 import controlIds from '../../controls/ol3/controls'
+import orderIds from '../layerOrderNumbers'
 
 import { FormattedMessage, defineMessages } from 'react-intl'
 export const messages = defineMessages({
@@ -251,7 +252,8 @@ module.exports = function (context, options) {
     source: source,
     renderOrder: renderOrderer,
     preload: 6,
-    style: styleFunc
+    style: styleFunc,
+    zIndex: orderIds.earth
   })
 
   function setShowBuildings (show) {
@@ -398,7 +400,7 @@ module.exports = function (context, options) {
     source: sourceLabels,
     style: styleFuncLabels,
     renderOrder: renderOrderer,
-    zIndex: 1,
+    zIndex: orderIds.labels,
     updateWhileAnimating: false,
     updateWhileInteracting: true
   })

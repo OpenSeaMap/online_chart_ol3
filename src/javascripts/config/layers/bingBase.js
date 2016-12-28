@@ -8,6 +8,7 @@ import ol from 'openlayers'
 import ChartLayer from '../chartlayer'
 import { layerTileLoadStateChange } from '../../store/actions'
 import controlIds from '../../controls/ol3/controls'
+import orderIds from '../layerOrderNumbers'
 
 import { defineMessages } from 'react-intl'
 export const messages = defineMessages({
@@ -32,7 +33,8 @@ module.exports = function (context, options) {
     nameKey: 'layer-name-bing-aerial',
     layer: new ol.layer.Tile({
       preload: 6,
-      source: source
+      source: source,
+      zIndex: orderIds.earth
     }),
     additionalControls: [controlIds.attribution]
   }

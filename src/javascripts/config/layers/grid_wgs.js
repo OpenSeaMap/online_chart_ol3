@@ -6,6 +6,7 @@
 
 import ol from 'openlayers'
 import ChartLayer from '../chartlayer'
+import orderIds from '../layerOrderNumbers'
 
 import { defineMessages } from 'react-intl'
 export const messages = defineMessages({
@@ -107,7 +108,8 @@ module.exports = function (context, options) {
 
   let source = new ol.source.Vector({
     loader: gridLoader,
-    strategy: ol.loadingstrategy.bbox
+    strategy: ol.loadingstrategy.bbox,
+    zIndex: orderIds.grid
   })
 
   // delete all cached lines on zoom change

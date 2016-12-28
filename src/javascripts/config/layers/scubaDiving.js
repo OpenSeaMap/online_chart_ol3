@@ -10,6 +10,7 @@ import ChartLayer from '../chartlayer'
 import { ClickOnMarkersMessage } from 'utils'
 import {TabSidebarDetails} from 'features/tabs'
 import controlIds from '../../controls/ol3/controls'
+import orderIds from '../layerOrderNumbers'
 import mapMarker from 'components/mapMarker'
 import ScubaDivingSvg from './sport-scuba_diving.svg'
 import DiveCentreSvg from './amenity-dive_centre.svg'
@@ -77,7 +78,8 @@ module.exports = function (context, options) {
 
   let layer = new ol.layer.Vector({
     source: source,
-    style: styleFunction
+    style: styleFunction,
+    zIndex: orderIds.user_overlay
   })
 
   layer.on('selectFeature', function (e) {

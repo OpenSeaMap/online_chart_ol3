@@ -8,6 +8,7 @@ import React from 'react'
 import { ClickOnMarkersMessage } from 'utils'
 import {TabSidebarDetails} from 'features/tabs'
 import controlIds from '../../controls/ol3/controls'
+import orderIds from '../layerOrderNumbers'
 
 import ol from 'openlayers'
 import ChartLayer from '../chartlayer'
@@ -76,7 +77,8 @@ module.exports = function (context, options) {
     source: source,
     style: function (feature, resolution) {
       return styleFunction(feature, resolution, 'normal')
-    }
+    },
+    zIndex: orderIds.user_overlay
   })
 
   layer.on('selectFeature', function (e) {

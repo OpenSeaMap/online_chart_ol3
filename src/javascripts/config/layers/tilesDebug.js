@@ -6,6 +6,7 @@
 
 import ol from 'openlayers'
 import ChartLayer from '../chartlayer'
+import orderIds from '../layerOrderNumbers'
 
 import { defineMessages } from 'react-intl'
 export const messages = defineMessages({
@@ -22,7 +23,8 @@ module.exports = function (context, options) {
       source: new ol.source.TileDebug({
         projection: 'EPSG:3857',
         tileGrid: ol.tilegrid.createXYZ({maxZoom: 22})
-      })
+      }),
+      zIndex: orderIds.user_over_all
     })
   }
   return new ChartLayer(context, Object.assign(defaults, options))

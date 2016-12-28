@@ -10,6 +10,7 @@ import {TabSidebarDetails} from 'features/tabs'
 var $ = require('jquery')
 import ol from 'openlayers'
 import ChartLayer from '../chartlayer'
+import orderIds from '../layerOrderNumbers'
 
 import { featureClicked, layerTileLoadStateChange } from '../../store/actions'
 import { setSidebarOpen, setSidebarActiveTab } from '../../controls/sidebar/store'
@@ -131,7 +132,8 @@ module.exports = function (context, options) {
 
   let layer = new ol.layer.Vector({
     source: source,
-    style: styleFunction
+    style: styleFunction,
+    zIndex: orderIds.user_overlay
   })
 
   layer.on('selectFeature', function (e) {

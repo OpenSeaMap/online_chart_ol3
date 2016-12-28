@@ -8,6 +8,7 @@ import ol from 'openlayers'
 import ChartLayer from '../chartlayer'
 import { layerTileLoadStateChange } from '../../store/actions'
 import controlIds from '../../controls/ol3/controls'
+import orderIds from '../layerOrderNumbers'
 
 import { defineMessages } from 'react-intl'
 export const messages = defineMessages({
@@ -31,7 +32,8 @@ module.exports = function (context, options) {
     nameKey: 'layer-name-marineProfile',
     layer: new ol.layer.Tile({
       source: source,
-      opacity: 0.7
+      opacity: 0.7,
+      zIndex: orderIds.user_under_roads
     }),
     additionalControls: [controlIds.scaleline_nautical]
   }

@@ -8,6 +8,7 @@ import ol from 'openlayers'
 import ChartLayer from '../chartlayer'
 import { layerTileLoadStateChange } from '../../store/actions'
 import controlIds from '../../controls/ol3/controls'
+import orderIds from '../layerOrderNumbers'
 
 import { defineMessages } from 'react-intl'
 export const messages = defineMessages({
@@ -30,7 +31,8 @@ module.exports = function (context, options) {
   var defaults = {
     nameKey: 'layer-name-seamarks',
     layer: new ol.layer.Tile({
-      source: source
+      source: source,
+      zIndex: orderIds.user_overlay
     }),
     additionalControls: [controlIds.scaleline_nautical, controlIds.attribution]
   }
