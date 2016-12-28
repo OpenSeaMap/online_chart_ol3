@@ -81,9 +81,12 @@ LayerConfig.propTypes = {
 
 module.exports = function (context, options) {
   var KEY = 'vector-tiles-DdrLAFD'
-  var ATTRIBUTION = '© <a href="https://mapzen.com/">Mapzen</a> ' +
-        '© <a href="http://www.openstreetmap.org/copyright">' +
-  'OpenStreetMap contributors</a>'
+  var ATTRIBUTION = 'Vector tiles by <a href="https://mapzen.com/">Mapzen</a>; ' +
+        'Map data © ' +
+  '<a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>, ' +
+  '<a href="http://whosonfirst.mapzen.com">Who’s On First</a> (<a href="http://whosonfirst.mapzen.com#License">License</a>), ' +
+  '<a href="http://www.naturalearthdata.com/">Natural Earth</a>, ' +
+  '<a href="http://openstreetmapdata.com/">openstreetmapdata.com</a>'
 
   const baseGrid = ol.tilegrid.createXYZ({maxZoom: 22})
   let source = new ol.source.VectorTile({
@@ -403,7 +406,7 @@ module.exports = function (context, options) {
   let oldZ = context.getState().viewPosition.position.zoom
   let storeHandler = function () {
     let state = context.getState()
-    if (state.viewPosition.position.zoom !== oldZ) {
+    if (state.viewPosition.position && state.viewPosition.position.zoom !== oldZ) {
       oldZ = state.viewPosition.position.zoom
       sourceLabels.clear()
       sourceLabels.refresh()
