@@ -48,12 +48,12 @@ module.exports = function (context, options) {
         new ol.layer.Tile({
           source: sourceHillshade,
           opacity: 0.5,
-          zIndex: orderIds.user_under_water
+          zIndex: orderIds.user_under_structures
         }),
         new ol.layer.Tile({
           source: sourceLines,
           maxResolution: 9.55, // zoom 14, see https://msdn.microsoft.com/en-us/library/aa940990.aspx
-          zIndex: orderIds.user_under_water
+          zIndex: orderIds.user_under_structures
         })
       ]
     }),

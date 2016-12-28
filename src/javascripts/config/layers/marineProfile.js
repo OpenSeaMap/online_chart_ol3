@@ -33,7 +33,7 @@ module.exports = function (context, options) {
     layer: new ol.layer.Tile({
       source: source,
       opacity: 0.7,
-      zIndex: orderIds.user_under_roads
+      zIndex: orderIds.user_under_structures
     }),
     additionalControls: [controlIds.scaleline_nautical]
   }

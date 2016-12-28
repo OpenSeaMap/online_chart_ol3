@@ -108,8 +108,7 @@ module.exports = function (context, options) {
 
   let source = new ol.source.Vector({
     loader: gridLoader,
-    strategy: ol.loadingstrategy.bbox,
-    zIndex: orderIds.grid
+    strategy: ol.loadingstrategy.bbox
   })
 
   // delete all cached lines on zoom change
@@ -173,7 +172,8 @@ module.exports = function (context, options) {
       updateWhileAnimating: true,
       updateWhileInteracting: true,
       renderBuffer: 0,
-      style: styleFunction
+      style: styleFunction,
+      zIndex: orderIds.grid
     })
   }
   return new ChartLayer(context, Object.assign(defaults, options))

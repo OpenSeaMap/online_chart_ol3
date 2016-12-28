@@ -44,7 +44,7 @@ module.exports = function (context, options) {
     nameKey: 'layer-name-depth-geodaten_mv',
     layer: new ol.layer.Tile({
       source: source,
-      zIndex: orderIds.user_under_roads
+      zIndex: orderIds.user_under_structures
     }),
     additionalSetup: (
       <div>

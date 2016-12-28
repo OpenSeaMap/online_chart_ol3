@@ -90,16 +90,29 @@ module.exports = function (context, options) {
   '<a href="http://openstreetmapdata.com/">openstreetmapdata.com</a>'
 
   const baseGrid = ol.tilegrid.createXYZ({maxZoom: 22})
-  let source = new ol.source.VectorTile({
+
+  const sourceBase = new ol.source.VectorTile({
     attributions: [new ol.Attribution({html: ATTRIBUTION})],
     format: new ol.format.MVT({
-      layers: ['earth', 'water', 'landuse', 'roads', 'buildings', 'boundaries']
+      layers: ['earth', 'water', 'landuse']
     }),
     tileGrid: baseGrid,
     tilePixelRatio: 16,
     url: 'https://tile.mapzen.com/mapzen/vector/v1/all/{z}/{x}/{y}.mvt?api_key=' + KEY
   })
-  source.on(['tileloadstart', 'tileloadend', 'tileloaderror'], function (ev) {
+  sourceBase.on(['tileloadstart', 'tileloadend', 'tileloaderror'], function (ev) {
+    context.dispatch(layerTileLoadStateChange(options.id, ev))
+  })
+
+  const sourceStructures = new ol.source.VectorTile({
+    format: new ol.format.MVT({
+      layers: ['roads', 'buildings', 'boundaries']
+    }),
+    tileGrid: baseGrid,
+    tilePixelRatio: 16,
+    url: 'https://tile.mapzen.com/mapzen/vector/v1/all/{z}/{x}/{y}.mvt?api_key=' + KEY
+  })
+  sourceStructures.on(['tileloadstart', 'tileloadend', 'tileloaderror'], function (ev) {
     context.dispatch(layerTileLoadStateChange(options.id, ev))
   })
 
@@ -248,24 +261,31 @@ module.exports = function (context, options) {
   }
 
   const baseLayer = new ol.layer.VectorTile({
-    projection: 'EPSG:4326',
-    source: source,
+    source: sourceBase,
     renderOrder: renderOrderer,
     preload: 6,
     style: styleFunc,
     zIndex: orderIds.earth
   })
+  const structureLayer = new ol.layer.VectorTile({
+    source: sourceStructures,
+    renderOrder: renderOrderer,
+    preload: 6,
+    style: styleFunc,
+    zIndex: orderIds.boundaries
+  })
 
   function setShowBuildings (show) {
     if (showBuildings === show) return
     showBuildings = show
-    baseLayer.changed()
+    structureLayer.changed()
   }
   function setUseNightMode (activate) {
     const newMode = activate ? 'night' : 'day'
     if (newMode === mapMode) return
     mapMode = newMode
     baseLayer.changed()
+    structureLayer.changed()
   }
 
   // --- show labels by using ol.layer.Vector
@@ -424,7 +444,7 @@ module.exports = function (context, options) {
     nameKey: 'layer-name-base-vector',
     layer: new ol.layer.Group({
       layers: [
-        baseLayer, labelLayer
+        baseLayer, structureLayer, labelLayer
       ]
     }),
     additionalSetup: (

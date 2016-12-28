@@ -9,27 +9,24 @@ export default {
   user_under_everything: 0,
 
   earth: 10,
-  landuse: 20,
+  water: 20,
+  landuse: 30,
 
-  // user layers to displayed above earth and landuse.
-  user_under_water: 190,
+  // Under structures like roads and buildings. Above water, landuse, and earth.
+  user_under_structures: 290,
 
-  water: 200,
-  boundaries: 210,
-
-  // Under roads. Above borders, water, landuse, and earth.
-  user_under_roads: 290,
-
-  roads: 300,
+  boundaries: 300,
+  roads: 305,
   transit: 310,
   buildings: 320,
   grid: 330,
 
+  // above the base mapbut under the labels
   user_overlay: 490,
 
   shields: 550,
   labels: 560,
 
-    // user layers to be displayed over all other layers
+  // user layers to be displayed over all other layers
   user_over_all: 999
 }
