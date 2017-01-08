@@ -62,20 +62,29 @@ module.exports = function (context, options) {
     })
   }
 
+    // return the url to get the tile at [z, x, -y]
+  function tileUrlFunction (tileCoord) {
+    return ('http://www.marinetraffic.com/getData/get_data_json_3/z:{z}/X:{x}/Y:{y}/station:0')
+                .replace('{z}', String(tileCoord[0] + 1))
+                .replace('{x}', String(tileCoord[1]))
+                .replace('{y}', String(-tileCoord[2]) - 1)
+  }
+    // xyz grid for tile access
+  const labelGrid = ol.tilegrid.createXYZ({maxZoom: 9, tileSize: [512, 512]})
+
+    // return the url to be fetched to get the data inside the resoultion area
+  function mapExtentToTile (extent, resoltuion) {
+    let coords = []
+    labelGrid.forEachTileCoord(extent, labelGrid.getZForResolution(resoltuion), (coord) => {
+      coords.push(coord)
+    })
+    const coord = coords[0]
+    return tileUrlFunction(coord)
+  }
+
   let source = new ol.source.Vector({
     loader: function (extent, resolution, projection) {
-      var epsg4326Extent = ol.proj.transformExtent(extent, projection, 'EPSG:4326')
-
-      let apikey = '7b58e3ad9855067acc7404a3199268d929af9287'
-      let minlat = epsg4326Extent[1]
-      let minlon = epsg4326Extent[0]
-      let maxlat = epsg4326Extent[3]
-      let maxlon = epsg4326Extent[2]
-      var url = 'http://services.marinetraffic.com/api/exportvessels/' +
-        `${apikey}/` +
-        `MINLAT:${minlat}/MAXLAT:${maxlat}/MINLON:${minlon}/MAXLON:${maxlon}/` +
-        'protocol:jsono'
-
+      var url = mapExtentToTile(extent, resolution)
       let corsUrl = '//whateverorigin.org/get?url=' + encodeURIComponent(url) + '&callback=?'
 
       $.ajax({
@@ -84,6 +93,12 @@ module.exports = function (context, options) {
         success: function (data) {
           let features = []
           let results
+
+          if (!data.contents) {
+            // empty response received: no ships in this area
+            this.dispatchEvent({type: 'tileloadend', target: this})
+            return
+          }
 
           try {
             results = JSON.parse(data.contents)
@@ -97,19 +112,20 @@ module.exports = function (context, options) {
             })
             return
           }
-          results.forEach((res) => {
+          this.dispatchEvent({type: 'tileloadend', target: this})
+          const resultList = results.data.rows
+          resultList.forEach((res) => {
             let featureProps = res
             let labelCoords = ol.proj.fromLonLat([Number(res.LON), Number(res.LAT)])
             featureProps.geometry = new ol.geom.Point(labelCoords)
 
             let feature = new ol.Feature(featureProps)
                     // feature.setStyle(styleFunction)
-            feature.setId(res.MMSI)
+            feature.setId(res.SHIP_ID)
             features.push(feature)
           })
 
           this.addFeatures(features)
-          this.dispatchEvent({type: 'tileloadend', target: this})
         },
         error: function (jqXHR, textStatus, errorThrown) {
           this.dispatchEvent({
@@ -124,7 +140,7 @@ module.exports = function (context, options) {
 
       this.dispatchEvent({type: 'tileloadstart', target: this})
     },
-    strategy: ol.loadingstrategy.bbox
+    strategy: ol.loadingstrategy.tile(labelGrid)
   })
   source.on(['tileloadstart', 'tileloadend', 'tileloaderror'], function (ev) {
     context.dispatch(layerTileLoadStateChange(options.id, ev))
@@ -133,7 +149,7 @@ module.exports = function (context, options) {
   let layer = new ol.layer.Vector({
     source: source,
     style: styleFunction,
-    zIndex: orderIds.user_overlay
+    zIndex: orderIds.user_over_all
   })
 
   layer.on('selectFeature', function (e) {
