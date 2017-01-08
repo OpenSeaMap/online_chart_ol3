@@ -62,6 +62,8 @@ module.exports = function (context, options) {
     })
   }
 
+  var ATTRIBUTION = 'Ship data by <a href="https://marinetraffic.com/">MarineTraffic</a>'
+
     // return the url to get the tile at [z, x, -y]
   function tileUrlFunction (tileCoord) {
     return ('http://www.marinetraffic.com/getData/get_data_json_3/z:{z}/X:{x}/Y:{y}/station:0')
@@ -83,6 +85,7 @@ module.exports = function (context, options) {
   }
 
   let source = new ol.source.Vector({
+    attributions: [new ol.Attribution({html: ATTRIBUTION})],
     loader: function (extent, resolution, projection) {
       var url = mapExtentToTile(extent, resolution)
       let corsUrl = '//whateverorigin.org/get?url=' + encodeURIComponent(url) + '&callback=?'
