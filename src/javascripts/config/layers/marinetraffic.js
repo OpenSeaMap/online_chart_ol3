@@ -88,7 +88,7 @@ module.exports = function (context, options) {
     attributions: [new ol.Attribution({html: ATTRIBUTION})],
     loader: function (extent, resolution, projection) {
       var url = mapExtentToTile(extent, resolution)
-      let corsUrl = '//whateverorigin.org/get?url=' + encodeURIComponent(url) + '&callback=?'
+      let corsUrl = 'https://whateverorigin.herokuapp.com/get?url=' + encodeURIComponent(url) + '&callback=?'
 
       $.ajax({
         url: corsUrl,
