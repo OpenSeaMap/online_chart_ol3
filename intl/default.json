@@ -19,6 +19,7 @@
   "layer-name-seamarks": "OpenSeaMap seamarks",
   "layer-name-search": "Search places",
   "sidebar-search": "Search",
+  "layer-name-tileCoordinates": "Debug tiles",
   "issues-title": "Bugs & Features",
   "issues-bug-found": "If you found a bug or if you have an idea for a new feature please file a new {linkGitHubIssues}.",
   "issues-bug-found-new": "github issue",

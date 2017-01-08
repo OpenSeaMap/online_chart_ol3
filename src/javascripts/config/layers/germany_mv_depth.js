@@ -10,6 +10,7 @@ import controlIds from '../../controls/ol3/controls'
 import ol from 'openlayers'
 import ChartLayer from '../chartlayer'
 import { layerTileLoadStateChange } from '../../store/actions'
+import orderIds from '../layerOrderNumbers'
 
 import { defineMessages, FormattedMessage } from 'react-intl'
 export const messages = defineMessages({
@@ -42,7 +43,8 @@ module.exports = function (context, options) {
   var defaults = {
     nameKey: 'layer-name-depth-geodaten_mv',
     layer: new ol.layer.Tile({
-      source: source
+      source: source,
+      zIndex: orderIds.user_under_structures
     }),
     additionalSetup: (
       <div>

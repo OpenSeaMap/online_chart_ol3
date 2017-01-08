@@ -6,6 +6,7 @@
 
 import ol from 'openlayers'
 import ChartLayer from '../chartlayer'
+import orderIds from '../layerOrderNumbers'
 
 import { defineMessages } from 'react-intl'
 export const messages = defineMessages({
@@ -171,7 +172,8 @@ module.exports = function (context, options) {
       updateWhileAnimating: true,
       updateWhileInteracting: true,
       renderBuffer: 0,
-      style: styleFunction
+      style: styleFunction,
+      zIndex: orderIds.grid
     })
   }
   return new ChartLayer(context, Object.assign(defaults, options))

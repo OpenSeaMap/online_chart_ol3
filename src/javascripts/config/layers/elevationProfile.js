@@ -8,6 +8,7 @@ import ol from 'openlayers'
 import ChartLayer from '../chartlayer'
 import { layerTileLoadStateChange } from '../../store/actions'
 import controlIds from '../../controls/ol3/controls'
+import orderIds from '../layerOrderNumbers'
 
 import { defineMessages } from 'react-intl'
 export const messages = defineMessages({
@@ -46,11 +47,13 @@ module.exports = function (context, options) {
       layers: [
         new ol.layer.Tile({
           source: sourceHillshade,
-          opacity: 0.5
+          opacity: 0.5,
+          zIndex: orderIds.user_under_structures
         }),
         new ol.layer.Tile({
           source: sourceLines,
-          maxResolution: 9.55 // zoom 14, see https://msdn.microsoft.com/en-us/library/aa940990.aspx
+          maxResolution: 9.55, // zoom 14, see https://msdn.microsoft.com/en-us/library/aa940990.aspx
+          zIndex: orderIds.user_under_structures
         })
       ]
     }),

@@ -18,6 +18,7 @@ import Download from './layers/downloadBundles'
 import MarineProfile from './layers/marineProfile'
 import ElevationProfile from './layers/elevationProfile'
 import BingBase from './layers/bingBase'
+import DebugTiles from './layers/tilesDebug'
 
 /**
 for the old (2013) layers format see:
@@ -131,6 +132,12 @@ export const availibleOverlayLayers = [
     id: 'overlay_download',
     urlIndex2013: 8,
     urlIndex2016: 7,
+    visibleDefault: false
+  },
+  {
+    LayerConstructor: DebugTiles,
+    id: 'overlay_debug',
+    urlIndex2016: 10,
     visibleDefault: false
   }
 ]

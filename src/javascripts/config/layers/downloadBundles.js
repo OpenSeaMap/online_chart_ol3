@@ -11,6 +11,7 @@ import ol from 'openlayers'
 import ChartLayer from '../chartlayer'
 import { ClickOnMarkersMessage, hashCode } from 'utils'
 import MdDownload from 'react-icons/lib/md/file-download'
+import orderIds from '../layerOrderNumbers'
 
 import DownloadTabControl from 'features/downloadBundles/downloadTabControl'
 import { setSidebarOpen, setSidebarActiveTab } from '../../controls/sidebar/store'
@@ -163,6 +164,7 @@ export default function (context, options) {
     style: styleFunction,
     updateWhileAnimating: true,
     updateWhileInteracting: true,
+    zIndex: orderIds.user_over_all,
     renderOrder: (f1, f2) => {
       return new Date(f2.get('date')).getTime() - new Date(f1.get('date')).getTime()
     }
