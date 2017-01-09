@@ -6,7 +6,6 @@
 
 import React, { PropTypes } from 'react'
 import { connect } from 'react-redux'
-import { ListGroup } from 'react-bootstrap'
 
 import { DownloadDisplay } from './downloadDisplay'
 
@@ -18,27 +17,16 @@ import {
 } from '../../store/actions'
 
 const ResultList = ({
-  clickedId, hoveredId,
-  onResultClicked, onResultHovered, onResultUnhover,
+  clickedId,
   features
-}) => (
-  <div>
-    <ListGroup>
-      {features.map(feature => (
-        <DownloadDisplay
-          key={feature._id}
-
-          isClicked={feature._id === clickedId}
-          isHovered={feature._id === hoveredId}
-          onResultClicked={() => { onResultClicked(feature._id) }}
-          onResultHovered={() => { onResultHovered(feature._id) }}
-          onResultUnhover={onResultUnhover}
-          feature={feature} />
-              ))
-            }
-    </ListGroup>
-  </div>
-      )
+}) => {
+  var activeFeature = features.find(feature => feature._id === clickedId)
+  if (!activeFeature) return (<div />)
+  return (
+    <DownloadDisplay
+      feature={activeFeature} /
+    >)
+}
 
 ResultList.propTypes = {
   clickedId: PropTypes.number,

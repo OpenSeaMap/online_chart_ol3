@@ -3,9 +3,8 @@
 * @author aAXEe (https://github.com/aAXEe)
 */
 'use strict'
-var ol = require('openlayers')
-
 import Marker from './mapMarker.svg'
+var ol = require('openlayers')
 
 const maxWidth = 48
 const maxHeight = 48

@@ -3,8 +3,9 @@
 * @author aAXEe (https://github.com/aAXEe)
 */
 import Map from './Map'
-
+import { connect } from 'react-redux'
 import { setViewPosition } from './store/actions'
+
 const mapStateToProps = (state) => {
   return {
     layerVisible: state.layerVisible,
@@ -18,8 +19,6 @@ const mapDispatchToProps = (dispatch) => {
     }
   }
 }
-
-import { connect } from 'react-redux'
 
 const VisibleLayers = connect(
   mapStateToProps,

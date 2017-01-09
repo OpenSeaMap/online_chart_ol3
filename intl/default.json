@@ -36,6 +36,7 @@
   "download-file-date": "Date: {rawDate, date, short} ({formatedRelative})",
   "download-file-format": "Format: {format}",
   "download-file-application": "Application: {app}",
+  "download-file-filesize": "Size: {size}",
   "download-file-download": "Download file",
   "download-choose-type": "Download type:",
   "layerlist-baselayer": "Base map",

@@ -7,7 +7,6 @@
 import React from 'react'
 import { ClickOnMarkersMessage } from 'utils'
 import {TabSidebarDetails} from 'features/tabs'
-var $ = require('jquery')
 import ol from 'openlayers'
 import ChartLayer from '../chartlayer'
 import orderIds from '../layerOrderNumbers'
@@ -17,6 +16,8 @@ import { setSidebarOpen, setSidebarActiveTab } from '../../controls/sidebar/stor
 import warning from 'fbjs/lib/warning'
 
 import { defineMessages } from 'react-intl'
+var $ = require('jquery')
+
 export const messages = defineMessages({
   layerName: {
     id: 'layer-name-marinetraffic',

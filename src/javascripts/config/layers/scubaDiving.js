@@ -15,13 +15,13 @@ import mapMarker from 'components/mapMarker'
 import ScubaDivingSvg from './sport-scuba_diving.svg'
 import DiveCentreSvg from './amenity-dive_centre.svg'
 
-var SimpleImageSvgStyle = require('ol-style-simpleImageSvgStyle')
-var OverpassApi = require('ol-source-overpassApi')
-
 import { featureClicked, layerTileLoadStateChange } from '../../store/actions'
 import { setSidebarOpen, setSidebarActiveTab } from '../../controls/sidebar/store'
 
 import { defineMessages } from 'react-intl'
+var SimpleImageSvgStyle = require('ol-style-simpleImageSvgStyle')
+var OverpassApi = require('ol-source-overpassApi')
+
 export const messages = defineMessages({
   layerName: {
     id: 'layer-name-scuba_diving',

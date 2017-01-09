@@ -4,13 +4,13 @@
 */
 'use strict'
 
-let $ = require('jquery')
 import React, { PropTypes } from 'react'
 import { connect } from 'react-redux'
 
 import { searchEnd } from 'store/actions'
 
 import {SEARCH_STATE_IDLE, SEARCH_STATE_ERROR, SEARCH_STATE_RUNNING, SEARCH_STATE_COMPLETE} from 'store/reducers'
+let $ = require('jquery')
 
 class SearchProviderComponent extends React.Component {
   constructor (props) {

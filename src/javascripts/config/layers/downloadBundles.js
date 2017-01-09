@@ -60,17 +60,17 @@ export default function (context, options) {
   const textStrokeStyle = new ol.style.Stroke({color: 'rgba(255,255,255,0.8)', width: 2})
   const textFillStyle = new ol.style.Fill({color: '#222'})
   const defaultPolygonFill = new ol.style.Fill({
-    color: 'rgba(255, 100, 0, 0.3)'
+    color: 'rgba(255, 165, 45, 0.3)'
   })
   const defaultPolygonStroke = new ol.style.Stroke({
-    color: '#f60',
+    color: 'rgba(255, 165, 45, 1)',
     width: 1
   })
   const clickedPolygonFill = new ol.style.Fill({
-    color: 'rgba(255, 30, 0, 0.3)'
+    color: 'rgba(0, 30, 200, 0.3)'
   })
   const clickedPolygonStroke = new ol.style.Stroke({
-    color: '#f30',
+    color: 'rgba(0, 30, 200, 1)',
     width: 2
   })
   const hoveredPolygonStroke = new ol.style.Stroke({
@@ -84,7 +84,7 @@ export default function (context, options) {
 
     const clicked = feature.get(FEATURE_CLICKED_PROPERTY_NAME)
     const hovered = feature.get(FEATURE_HOVERED_PROPERTY_NAME)
-    let name = feature.get('name')
+    let name = feature.get('name:en')
     let nameElement = new ol.style.Text({
       font: hovered ? 'bold 14px sans-serif' : '14px sans-serif',
       text: name,
@@ -105,6 +105,7 @@ export default function (context, options) {
     url: 'https://t1.openseamap.org/bundles/overview.geojson',
     format: new ol.format.GeoJSON(),
     strategy: ol.loadingstrategy.all,
+    wrapX: false,
     loader: function (extent, resolution, projection) {
       $.ajax({
         url: this.getUrl(),
@@ -114,7 +115,7 @@ export default function (context, options) {
           let format = this.getFormat()
           let features = format.readFeatures(data, {featureProjection: projection})
           for (let f of features) {
-            const id = hashCode(f.get('downloadUrl') + f.get('date') + f.get('filesize'))
+            const id = hashCode(f.get('url') + f.get('date') + f.get('filesize'))
             f.setId(id)
             if (f.getId() === clickedId) {
               f.set(FEATURE_CLICKED_PROPERTY_NAME, true)

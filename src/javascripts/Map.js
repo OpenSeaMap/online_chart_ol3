@@ -21,8 +21,9 @@ import OL3Zoom from './controls/ol3/OL3Zoom'
 import { alwaysOnControls } from './SETTINGS'
 import { Tabs } from './features/tabs'
 
-class Ol3Map extends React.Component {
+import { LayerType } from './config/chartlayer'
 
+class Ol3Map extends React.Component {
   constructor (props) {
     super(props)
 
@@ -331,8 +332,6 @@ Ol3Map.propTypes = {
     extent: PropTypes.arrayOf(PropTypes.number)
   }).isRequired
 }
-
-import { LayerType } from './config/chartlayer'
 
 Ol3Map.contextTypes = {
   layers: PropTypes.arrayOf(LayerType)
