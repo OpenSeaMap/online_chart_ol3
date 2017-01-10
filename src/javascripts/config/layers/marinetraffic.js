@@ -79,7 +79,7 @@ module.exports = function (context, options) {
       const name = feature.get('SHIPNAME') || feature.get('MMSI')
       const nameElement = new ol.style.Text({
         font: hovered ? 'bold 12px sans-serif' : '10px sans-serif',
-        offsetY: 12,
+        offsetY: defaults.iconSize * scale / 2,
         text: name,
         textAlign: 'center',
         textBaseline: 'top'
@@ -177,7 +177,9 @@ module.exports = function (context, options) {
   let layer = new ol.layer.Vector({
     source: source,
     style: styleFunction,
-    zIndex: orderIds.user_overlay
+    zIndex: orderIds.user_overlay,
+    updateWhileAnimating: false,
+    updateWhileInteracting: true
   })
 
   layer.on('selectFeature', function (e) {
