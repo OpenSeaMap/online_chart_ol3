@@ -101,7 +101,7 @@
     "karma-mocha": "^1.1.1",
     "karma-phantomjs-launcher": "^1.0.1",
     "karma-sinon-chai": "^1.2.0",
-    "karma-webpack": "1.8.1",
+    "karma-webpack": "^2.0.1",
     "lodash.compact": "^3.0.0",
     "lolex": "^1.4.0",
     "main-bower-files": "^2.5.0",
