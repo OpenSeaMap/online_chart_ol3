@@ -13,7 +13,7 @@ import orderIds from '../layerOrderNumbers'
 module.exports = function (context, options) {
   // return the url to get the tile at [z, x, -y]
   function tileUrlFunction (tileCoord) {
-    return ('http://tiles.marinetraffic.com/ais_helpers/shiptilesingle.aspx?output=png&sat=1&grouping=shiptype&tile_size=512&legends=1&zoom={z}&X={x}&Y={y}')
+    return ('https://tiles.marinetraffic.com/ais_helpers/shiptilesingle.aspx?output=png&sat=1&grouping=shiptype&tile_size=512&legends=1&zoom={z}&X={x}&Y={y}')
               .replace('{z}', String(tileCoord[0] + 1))
               .replace('{x}', String(tileCoord[1]))
               .replace('{y}', String(-tileCoord[2] - 1))
