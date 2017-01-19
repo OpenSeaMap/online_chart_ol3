@@ -167,6 +167,11 @@ export function getStateFromUrlHash (defaults) {
     layers = {
       layerVisible: decompressVisibleLayers(res.options.layers)
     }
+    layers.layerVisible = {
+      base_osm_default: true,
+      overlay_osm_seamarks: true,
+      overlay_download: true
+    }
   }
   let additions = {}
 
@@ -175,6 +180,8 @@ export function getStateFromUrlHash (defaults) {
   } else {
     additions.locale = defaultLocale
   }
+
+  res.name = 'download'
 
   switch (res.name) {
     case 'search':

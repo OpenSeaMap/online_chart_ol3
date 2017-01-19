@@ -36,7 +36,7 @@ export function setSidebarActiveTab (tabName) {
  */
 export const sidebarDefaultState = {
   isOpen: !isMobile(),
-  selectedTab: 'sidebar-settings'
+  selectedTab: 'sidebar-download'
 }
 
 export const sidebar = (state = sidebarDefaultState, action) => {
