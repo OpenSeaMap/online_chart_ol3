@@ -60,17 +60,17 @@ export default function (context, options) {
   const textStrokeStyle = new ol.style.Stroke({color: 'rgba(255,255,255,0.8)', width: 2})
   const textFillStyle = new ol.style.Fill({color: '#222'})
   const defaultPolygonFill = new ol.style.Fill({
-    color: 'rgba(255, 100, 0, 0.3)'
+    color: 'rgba(255, 165, 45, 0.3)'
   })
   const defaultPolygonStroke = new ol.style.Stroke({
-    color: '#f60',
+    color: 'rgba(255, 165, 45, 1)',
     width: 1
   })
   const clickedPolygonFill = new ol.style.Fill({
-    color: 'rgba(255, 30, 0, 0.3)'
+    color: 'rgba(0, 30, 200, 0.3)'
   })
   const clickedPolygonStroke = new ol.style.Stroke({
-    color: '#f30',
+    color: 'rgba(0, 30, 200, 1)',
     width: 2
   })
   const hoveredPolygonStroke = new ol.style.Stroke({
