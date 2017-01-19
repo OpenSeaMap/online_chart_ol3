@@ -6,7 +6,7 @@
 
 import React, { PropTypes } from 'react'
 import { connect } from 'react-redux'
-import { ListGroup } from 'react-bootstrap'
+import { PanelGroup } from 'react-bootstrap'
 
 import { DownloadDisplay } from './downloadDisplay'
 
@@ -23,7 +23,7 @@ const ResultList = ({
   features
 }) => (
   <div>
-    <ListGroup>
+    <PanelGroup>
       {features.map(feature => (
         <DownloadDisplay
           key={feature._id}
@@ -36,7 +36,7 @@ const ResultList = ({
           feature={feature} />
               ))
             }
-    </ListGroup>
+    </PanelGroup>
   </div>
       )
 
