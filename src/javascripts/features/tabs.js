@@ -5,8 +5,8 @@
 'use strict'
 import React from 'react'
 
-import LayerConfig from './layerConfig/featureLayerConfig'
-import MdLayers from 'react-icons/lib/md/layers'
+// import LayerConfig from './layerConfig/featureLayerConfig'
+// import MdLayers from 'react-icons/lib/md/layers'
 
 import FeatureDevelopment from './development/featureDevelopment'
 import FaInfoCircle from 'react-icons/lib/fa/info-circle'
@@ -31,17 +31,18 @@ export const messages = defineMessages({
   }
 })
 
-export const Tabs = [{
+export const Tabs = [/* {
   name: 'sidebar-settings',
   align: 'top',
   icon: <MdLayers />,
   content: <LayerConfig />
-}, {
-  name: 'sidebar-development',
-  align: 'bottom',
-  icon: <FaInfoCircle />,
-  content: <FeatureDevelopment />
-}]
+  }, */
+  {
+    name: 'sidebar-development',
+    align: 'bottom',
+    icon: <FaInfoCircle />,
+    content: <FeatureDevelopment />
+  }]
 
 export const TabSidebarDetails = {
   name: 'sidebar-details',

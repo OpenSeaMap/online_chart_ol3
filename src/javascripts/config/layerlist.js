@@ -7,18 +7,7 @@ import _ from 'lodash'
 
 import Seamarks from './layers/seamarks'
 import OsmBase from './layers/openStreetMapBase'
-import BasemapVector from './layers/basemapVector'
-import DeMvDepth from './layers/germany_mv_depth'
-import ScubaDiving from './layers/scubaDiving'
-import SeamarksDebug from './layers/seamarkDebug'
-import Search from './layers/search'
-import GridWgs from './layers/grid_wgs'
 import Download from './layers/downloadBundles'
-import MarineProfile from './layers/marineProfile'
-import ElevationProfile from './layers/elevationProfile'
-import BingBase from './layers/bingBase'
-import DebugTiles from './layers/tilesDebug'
-import MarinetrafficImages from './layers/marinetraffic-imageLayer'
 
 /**
 for the old (2013) layers format see:
@@ -55,90 +44,22 @@ export const availibleBaseLayers = [
     urlIndex2013: 1,
     urlIndex2016BaseLayer: 'A',
     visibleDefault: true
-  },
-  {
-    LayerConstructor: BasemapVector,
-    id: 'base_vector',
-    isBaseLayer: true,
-    urlIndex2016BaseLayer: 'B',
-    visibleDefault: false
-  },
-  {
-    LayerConstructor: BingBase,
-    id: 'base_bing',
-    isBaseLayer: true,
-    urlIndex2013: 12,
-    urlIndex2016BaseLayer: 'C',
-    visibleDefault: false
   }
 ]
 
 export const availibleOverlayLayers = [
   {
-    LayerConstructor: MarineProfile,
-    id: 'overlay_marineProfile',
-    urlIndex2016: 8,
-    urlIndex2013: 6,
-    visibleDefault: false
-  }, {
-    LayerConstructor: ElevationProfile,
-    id: 'overlay_elevationProfile',
-    urlIndex2016: 9,
-    urlIndex2013: 20,
-    visibleDefault: false
-  }, {
-    LayerConstructor: GridWgs,
-    id: 'overlay_grid_wgs',
-    urlIndex2016: 6,
-    urlIndex2013: 10,
-    visibleDefault: true
-  }, {
     LayerConstructor: Seamarks,
     id: 'overlay_osm_seamarks',
     urlIndex2016: 0,
     urlIndex2013: 3,
     visibleDefault: true
   }, {
-    LayerConstructor: SeamarksDebug,
-    id: 'overlay_osm_seamarks_debug',
-    urlIndex2016: 1,
-    visibleDefault: false
-  }, {
-    LayerConstructor: DeMvDepth,
-    id: 'overlay_demvdepth',
-    urlIndex2016: 2,
-    visibleDefault: false
-  }, {
-    LayerConstructor: ScubaDiving,
-    id: 'overlay_osm_scubadiving',
-    urlIndex2016: 3,
-    urlIndex2013: 4,
-    visibleDefault: false
-  },
-  {
-    LayerConstructor: Search,
-    id: 'overlay_search',
-    urlIndex2016: 4,
-    visibleDefault: true
-  },
-  {
     LayerConstructor: Download,
     id: 'overlay_download',
     urlIndex2013: 8,
     urlIndex2016: 7,
-    visibleDefault: false
-  },
-  {
-    LayerConstructor: DebugTiles,
-    id: 'overlay_debug',
-    urlIndex2016: 10,
-    visibleDefault: false
-  },
-  {
-    LayerConstructor: MarinetrafficImages,
-    id: 'overlay_marinetraffic-imageLayer',
-    urlIndex2016: 11,
-    visibleDefault: false
+    visibleDefault: true
   }
 ]
 
