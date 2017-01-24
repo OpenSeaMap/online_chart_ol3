@@ -28,15 +28,7 @@ module.exports = function (env) {
     resolve: {
       root: jsSrc,
       extensions: [''].concat(extensions),
-      modulesDirectories: ['bower_components', 'node_modules'],
-      alias: {
-        jquerySidebar: 'sidebar-v2/js/jquery-sidebar.js',
-
-        bootstrap: 'bootstrap-sass/assets/javascripts/bootstrap/',
-        loadimage: 'javascript-load-image/js/load-image.js',
-        'bootstrap-toggle': 'bootstrap-toggle/js/bootstrap-toggle.js',
-        'knockout-bootstrap-toggle': 'knockout-bootstrap-toggle/ko.bindingHandlers.bootstrapToggle.js'
-      }
+      modulesDirectories: ['node_modules']
     },
     module: {
       loaders: [
