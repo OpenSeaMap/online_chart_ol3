@@ -69,7 +69,7 @@
     "gulp": "^3.9.0",
     "gulp-autoprefixer": "^3.1.0",
     "gulp-changed": "^1.2.1",
-    "gulp-clean-css": "^2.2.0",
+    "gulp-clean-css": "^3.0.2",
     "gulp-concat-css": "^2.2.0",
     "gulp-cssimport": "^5.0.0",
     "gulp-eslint": "^3.0.1",
@@ -78,7 +78,7 @@
     "gulp-htmlmin": "~3.0.0",
     "gulp-if": "~2.0.0",
     "gulp-imagemin": "^3.0.2",
-    "gulp-notify": "^2.2.0",
+    "gulp-notify": "^3.0.0",
     "gulp-nunjucks-render": "^2.0.0",
     "gulp-rename": "^1.2.2",
     "gulp-rev": "^7.1.0",
@@ -93,9 +93,9 @@
     "gulp-util": "^3.0.6",
     "gulp-watch": "^4.3.3",
     "json-loader": "^0.5.4",
-    "karma": "1.4.0",
+    "karma": "^1.4.1",
     "karma-chrome-launcher": "^2.0.0",
-    "karma-cli": "1.0.1",
+    "karma-cli": "^1.0.1",
     "karma-firefox-launcher": "^1.0.0",
     "karma-mocha": "^1.1.1",
     "karma-phantomjs-launcher": "^1.0.1",
@@ -121,6 +121,6 @@
     "through2": "^2.0.1",
     "valid-url": "^1.0.9",
     "vinyl-source-stream": "~1.1.0",
-    "webpack": "1.14.0"
+    "webpack": "2.2.1"
   }
 }
