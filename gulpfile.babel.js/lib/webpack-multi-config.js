@@ -10,9 +10,9 @@ module.exports = function (env) {
   var jsDest = path.resolve(config.root.dest, config.tasks.js.dest)
   var publicPath = path.join(config.tasks.js.dest, '/')
   var filenamePattern = '[name].js'
-  var extensions = config.tasks.js.extensions.map(function (extension) {
+/*  var extensions = config.tasks.js.extensions.map(function (extension) {
     return '.' + extension
-  })
+  }) */
 
   var webpackConfig = {
     context: jsSrc,
@@ -26,41 +26,31 @@ module.exports = function (env) {
       new webpack.optimize.LimitChunkCountPlugin({maxChunks: 1})
     ],
     resolve: {
-      root: jsSrc,
-      extensions: [''].concat(extensions),
-      modulesDirectories: ['bower_components', 'node_modules'],
-      alias: {
-        jquerySidebar: 'sidebar-v2/js/jquery-sidebar.js',
-
-        bootstrap: 'bootstrap-sass/assets/javascripts/bootstrap/',
-        loadimage: 'javascript-load-image/js/load-image.js',
-        'bootstrap-toggle': 'bootstrap-toggle/js/bootstrap-toggle.js',
-        'knockout-bootstrap-toggle': 'knockout-bootstrap-toggle/ko.bindingHandlers.bootstrapToggle.js'
-      }
+      modules: [
+        jsSrc,
+        'node_modules'
+      ]
     },
     module: {
-      loaders: [
+      rules: [
         {
           test: /\.js$/,
-          loader: 'babel-loader',
+          use: 'babel-loader',
           exclude: [/node_modules/, /bower_components/]
         }, {
           test: /AUTHORS$/,
-          loader: 'raw-loader',
+          use: 'raw-loader',
           exclude: [/node_modules/, /bower_components/]
         }, {
           test: /\.svg$/,
-          loader: 'raw-loader',
+          use: 'raw-loader',
           exclude: [/node_modules/, /bower_components/]
         }, {
-          test: /\.json$/,
-          loader: 'json'
-        }, {
           test: /\.scss$/,
-          loaders: ['style', 'css', 'sass']
+          use: ['style-loader', 'css-loader', 'sass-loader']
         }, {
           test: /\.css$/,
-          loaders: ['style', 'css']
+          use: ['style-loader', 'css-loader']
         }
       ],
       noParse: /node_modules\/openlayers\/dist\/ol-debug.js/
@@ -93,7 +83,9 @@ module.exports = function (env) {
     webpack.debug = true
 
     // load debug version of openlayers
-    webpackConfig.resolve.alias.openlayers = 'openlayers/dist/ol-debug.js'
+    webpackConfig.resolve.alias = {
+      openlayers: 'openlayers/dist/ol-debug.js'
+    }
   }
 
   if (env === 'production') {
