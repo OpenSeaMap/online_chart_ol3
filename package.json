@@ -117,7 +117,7 @@
     "sass-loader": "5.0.1",
     "sinon": "^1.17.3",
     "sinon-chai": "^2.8.0",
-    "style-loader": "^0.13.1",
+    "style-loader": "^0.14.0",
     "through2": "^2.0.1",
     "valid-url": "^1.0.9",
     "vinyl-source-stream": "~1.1.0",
