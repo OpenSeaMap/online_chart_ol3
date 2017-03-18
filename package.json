@@ -69,7 +69,7 @@
     "gulp": "^3.9.0",
     "gulp-autoprefixer": "^3.1.0",
     "gulp-changed": "^1.2.1",
-    "gulp-clean-css": "^3.0.2",
+    "gulp-clean-css": "3.0.3",
     "gulp-concat-css": "^2.2.0",
     "gulp-cssimport": "^5.0.0",
     "gulp-eslint": "^3.0.1",
