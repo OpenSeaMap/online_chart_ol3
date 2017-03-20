@@ -89,7 +89,7 @@
     "gulp-sizereport": "^1.1.2",
     "gulp-sourcemaps": "^2.1.1",
     "gulp-svgstore": "^6.0.0",
-    "gulp-uglify": "^2.0.0",
+    "gulp-uglify": "2.1.0",
     "gulp-util": "^3.0.6",
     "gulp-watch": "^4.3.3",
     "json-loader": "^0.5.4",
