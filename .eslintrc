@@ -9,5 +9,6 @@
             "ignoreRefs": true
         }],
         "react/jsx-no-literals": 2,
+        "react/no-unused-prop-types": 0
     }
 }
