@@ -22,7 +22,6 @@ import { alwaysOnControls } from './SETTINGS'
 import { Tabs } from './features/tabs'
 
 class Ol3Map extends React.Component {
-
   constructor (props) {
     super(props)
 

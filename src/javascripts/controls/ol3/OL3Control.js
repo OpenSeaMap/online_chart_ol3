@@ -8,7 +8,6 @@ import React from 'react'
 import ol from 'openlayers'
 
 class OL3Control extends React.Component {
-
   componentDidMount () {
     this.props.addControlToMap(this.props.id, this.getControl())
   }
