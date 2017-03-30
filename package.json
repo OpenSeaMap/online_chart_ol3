@@ -54,7 +54,7 @@
     "browser-sync": "^2.18.8",
     "chai": "^3.5.0",
     "compression": "^1.6.2",
-    "css-loader": "^0.27.3",
+    "css-loader": "^0.28.0",
     "del": "^2.2.2",
     "eslint": "^3.18.0",
     "eslint-config-standard": "^7.1.0",
