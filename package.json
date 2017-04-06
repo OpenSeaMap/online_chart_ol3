@@ -58,7 +58,7 @@
     "del": "^2.2.2",
     "eslint": "^3.18.0",
     "eslint-config-standard": "^7.1.0",
-    "eslint-config-standard-jsx": "^3.3.0",
+    "eslint-config-standard-jsx": "^4.0.0",
     "eslint-config-standard-react": "^4.3.0",
     "eslint-plugin-promise": "^3.5.0",
     "eslint-plugin-react": "^6.10.3",
