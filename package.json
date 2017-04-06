@@ -99,7 +99,7 @@
     "karma-firefox-launcher": "^1.0.1",
     "karma-mocha": "^1.3.0",
     "karma-phantomjs-launcher": "^1.0.4",
-    "karma-sinon-chai": "^1.2.4",
+    "karma-sinon-chai": "1.2.4",
     "karma-webpack": "^2.0.3",
     "lodash.compact": "^3.0.1",
     "lolex": "^1.6.0",
