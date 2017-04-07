@@ -79,7 +79,7 @@
     "gulp-if": "~2.0.2",
     "gulp-imagemin": "^3.2.0",
     "gulp-notify": "^3.0.0",
-    "gulp-nunjucks-render": "^2.0.0",
+    "gulp-nunjucks-render": "2.0.0",
     "gulp-rename": "^1.2.2",
     "gulp-rev": "^7.1.2",
     "gulp-rev-napkin": "^0.1.0",
