@@ -7,6 +7,7 @@ import _ from 'lodash'
 import {SearchTab} from 'config/layers/search'
 import {DownloadTab} from 'config/layers/downloadBundles'
 import {getExistingLocaleForCode, defaultLocale} from '../intlProvider'
+import {availibleBaseLayers, availibleOverlayLayers} from '../config/layerlist'
 
 import {
   searchDefaultState, SEARCH_STATE_RUNNING,
@@ -39,7 +40,6 @@ function compressPosition (position, numDecimals = 4) {
   }
 }
 
-import {availibleBaseLayers, availibleOverlayLayers} from '../config/layerlist'
 function compressVisibleLayers (visibleLayers) {
   let baseLayerCode = '_'
   let arr = new Array(availibleOverlayLayers.length)

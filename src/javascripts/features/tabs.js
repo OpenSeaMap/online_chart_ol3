@@ -13,6 +13,9 @@ import FaInfoCircle from 'react-icons/lib/fa/info-circle'
 import FaTags from 'react-icons/lib/fa/tags'
 
 import { defineMessages } from 'react-intl'
+
+import FeatureDetails from 'features/details/featureDetails'
+
 export const messages = defineMessages({
   sidebarSettings: {
     id: 'sidebar-settings',
@@ -39,8 +42,6 @@ export const Tabs = [{
   icon: <FaInfoCircle />,
   content: <FeatureDevelopment />
 }]
-
-import FeatureDetails from 'features/details/featureDetails'
 
 export const TabSidebarDetails = {
   name: 'sidebar-details',

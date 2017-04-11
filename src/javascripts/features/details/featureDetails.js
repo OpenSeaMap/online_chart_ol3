@@ -4,8 +4,9 @@
 */
 'use strict'
 
-var $ = require('jquery')
+import { connect } from 'react-redux'
 import TagList from '../../components/tagList/tagList'
+var $ = require('jquery')
 
 const ignoredTags = ['geometry', '_clicked', '_hovered']
 
@@ -29,8 +30,6 @@ const mapStateToProps = (state) => {
     tags: taglist
   }
 }
-
-import { connect } from 'react-redux'
 
 const FeatureDetails = connect(
   mapStateToProps

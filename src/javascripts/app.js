@@ -18,9 +18,12 @@ import { initLayerVisible } from './store/actions'
 import { getStateFromUrlHash, initHashChangeHandling } from './store/urlHashHandling'
 import { defaultViewPosition } from './SETTINGS'
 
+import { Provider } from 'react-redux'
+import { LayerType } from './config/chartlayer'
+
 import enLocaleData from 'react-intl/locale-data/en'
-addLocaleData(enLocaleData)
 import deLocaleData from 'react-intl/locale-data/de'
+addLocaleData(enLocaleData)
 addLocaleData(deLocaleData)
 
 let hashState = getStateFromUrlHash({
@@ -41,9 +44,6 @@ if (hashState.layerVisible) { // use layer state from url if provided
 store.dispatch(initLayerVisible(defaultVisibleList))
 
 initHashChangeHandling(store)
-
-import { Provider } from 'react-redux'
-import { LayerType } from './config/chartlayer'
 
 class MapLayerProvider extends React.Component {
   getChildContext () {

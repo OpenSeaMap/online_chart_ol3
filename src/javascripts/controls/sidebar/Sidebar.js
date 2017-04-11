@@ -8,6 +8,8 @@ import React from 'react'
 import { FormattedMessage } from 'react-intl'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
+import {TabType} from 'features/tabs'
+import { setSidebarOpen, setSidebarActiveTab } from './store'
 
 import FaAngleDoubleLeft from 'react-icons/lib/fa/angle-double-left'
 
@@ -97,8 +99,6 @@ class Sidebar extends React.Component {
   }
 }
 
-import {TabType} from 'features/tabs'
-
 Sidebar.propTypes = {
   isOpen: React.PropTypes.bool.isRequired,
   position: React.PropTypes.string.isRequired,
@@ -114,8 +114,6 @@ function mapStateToProps (state) {
     sidebarSelectedTab: state.sidebar.selectedTab
   }
 }
-
-import { setSidebarOpen, setSidebarActiveTab } from './store'
 
 function mapDispatchToProps (dispatch) {
   return bindActionCreators({

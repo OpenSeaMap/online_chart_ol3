@@ -4,6 +4,8 @@
 */
 'use strict'
 
+import { PropTypes } from 'react'
+import TabType from 'features/tabs'
 var warning = require('fbjs/lib/warning')
 
 export default function (context, options) {
@@ -42,9 +44,6 @@ export default function (context, options) {
   self.additionalControls = options.additionalControls
   return self
 }
-
-import { PropTypes } from 'react'
-import TabType from 'features/tabs'
 
 export const LayerType = PropTypes.shape({
   id: PropTypes.string.required, // index for internal handling

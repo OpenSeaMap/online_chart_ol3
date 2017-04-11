@@ -31,6 +31,8 @@ import {
 import { sidebar } from '../controls/sidebar/store'
 import {defaultLocale, getExistingLocaleForCode} from 'intlProvider'
 
+import { writeToUrlHash } from './urlHashHandling'
+
 function layerVisible (state = {}, action) {
   switch (action.type) {
     case SET_LAYER_VISIBLE:
@@ -229,8 +231,6 @@ const mapApp = combineReducers({
   downloadBundles,
   locale
 })
-
-import { writeToUrlHash } from './urlHashHandling'
 
 export default function configureStore (initialState) {
   const store = createStore(mapApp, initialState, compose(
