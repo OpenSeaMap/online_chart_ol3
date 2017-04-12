@@ -2,6 +2,10 @@
 * @license AGPL-3.0
 * @author aAXEe (https://github.com/aAXEe)
 */
+import viewSize from 'screen-size'
+
+import React from 'react'
+import { FormattedMessage } from 'react-intl'
 
 export function floatEqual (num1, num2, eps = 0.0001) {
   if (num1 === num2) return true
@@ -16,7 +20,6 @@ export function positionsEqual (pos1, pos2) {
     floatEqual(pos1.zoom, pos2.zoom, epsilon)
 }
 
-import viewSize from 'screen-size'
 export function isMobile () {
   return (viewSize().x <= 768)
 }
@@ -25,9 +28,6 @@ export function hashCode (str) {
   return str.split('').reduce((prevHash, currVal) =>
     ((prevHash << 5) - prevHash) + currVal.charCodeAt(0), 0)
 }
-
-import React from 'react'
-import { FormattedMessage } from 'react-intl'
 export const ClickOnMarkersMessage = () => (
   <FormattedMessage
     id='click-on-markers'

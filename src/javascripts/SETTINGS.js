@@ -1,4 +1,6 @@
 
+import controlIds from './controls/ol3/controls'
+
 export const defaultViewPosition = {
   position: {
     lon: 12.0561,
@@ -7,7 +9,6 @@ export const defaultViewPosition = {
   }
 }
 
-import controlIds from './controls/ol3/controls'
 export const alwaysOnControls = [
   controlIds.zoom, controlIds.fullscreen, controlIds.scaleline_metric
 ]

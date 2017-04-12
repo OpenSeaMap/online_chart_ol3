@@ -5,11 +5,11 @@
 */
 'use strict'
 
-var $ = require('jquery')
 import React, { PropTypes } from 'react'
 import LanguageCodePropTypes from '../../propTypes/langCodes'
 import { Button, FormGroup, InputGroup, FormControl, ProgressBar, Label } from 'react-bootstrap'
 import FaInfo from 'react-icons/lib/fa/info-circle'
+var $ = require('jquery')
 
 class TagInfo extends React.Component {
   constructor (props) {
