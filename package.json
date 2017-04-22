@@ -70,7 +70,7 @@
     "glob": "^7.1.1",
     "gulp": "^3.9.1",
     "gulp-autoprefixer": "^3.1.1",
-    "gulp-changed": "^2.0.0",
+    "gulp-changed": "^3.0.0",
     "gulp-clean-css": "^3.0.4",
     "gulp-concat-css": "^2.3.0",
     "gulp-cssimport": "^5.0.0",
