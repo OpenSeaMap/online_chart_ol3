@@ -32,7 +32,7 @@
     "parse-repo": "^1.0.1",
     "rc-progress": "^2.1.0",
     "react": "^15.5.3",
-    "react-addons-shallow-compare": "^15.5.2",
+    "react-addons-shallow-compare": "^15.6.0",
     "react-bootstrap": "^0.30.8",
     "react-dom": "^15.5.3",
     "react-icons": "^2.2.3",
