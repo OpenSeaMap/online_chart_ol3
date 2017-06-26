@@ -56,7 +56,7 @@
     "compression": "^1.6.2",
     "css-loader": "^0.28.0",
     "del": "^2.2.2",
-    "eslint": "^3.19.0",
+    "eslint": "^4.1.1",
     "eslint-config-standard": "^10.2.0",
     "eslint-config-standard-jsx": "^4.0.1",
     "eslint-config-standard-react": "^4.3.0",
