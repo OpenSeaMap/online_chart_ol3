@@ -20,7 +20,7 @@ export const messages = defineMessages({
 
 module.exports = function (context, options) {
   let source = new ol.source.OSM({
-    url: '//t1.openseamap.org/seamark/{z}/{x}/{y}.png',
+    url: '//t1.openseamap.org/seamark2/{z}/{x}/{y}.png',
     crossOrigin: 'Anonymous'
   })
 
