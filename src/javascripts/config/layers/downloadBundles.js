@@ -102,7 +102,7 @@ export default function (context, options) {
   }
 
   let source = new ol.source.Vector({
-    url: 'https://t1.openseamap.org/bundles/overview.geojson',
+    url: 'https://github.com/stevo01/OSM_pmd4dl/raw/master/sample/dl.geojson',
     format: new ol.format.GeoJSON(),
     strategy: ol.loadingstrategy.all,
     loader: function (extent, resolution, projection) {
