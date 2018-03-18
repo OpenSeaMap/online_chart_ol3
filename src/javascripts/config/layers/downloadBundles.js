@@ -84,7 +84,7 @@ export default function (context, options) {
 
     const clicked = feature.get(FEATURE_CLICKED_PROPERTY_NAME)
     const hovered = feature.get(FEATURE_HOVERED_PROPERTY_NAME)
-    let name = feature.get('name')
+    let name = feature.get('name:en')
     let nameElement = new ol.style.Text({
       font: hovered ? 'bold 14px sans-serif' : '14px sans-serif',
       text: name,
@@ -114,7 +114,7 @@ export default function (context, options) {
           let format = this.getFormat()
           let features = format.readFeatures(data, {featureProjection: projection})
           for (let f of features) {
-            const id = hashCode(f.get('downloadUrl') + f.get('date') + f.get('filesize'))
+            const id = hashCode(f.get('url') + f.get('date') + f.get('filesize'))
             f.setId(id)
             if (f.getId() === clickedId) {
               f.set(FEATURE_CLICKED_PROPERTY_NAME, true)
