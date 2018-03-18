@@ -22,7 +22,7 @@ export const DownloadDisplay = ({
     onMouseOut={onResultUnhover}
     onMouseOver={onResultHovered} >
     <h4 className='list-group-item-heading'>
-      {feature.name}
+      {feature['name:en']}
     </h4>
     <Collapse in={isClicked}>
       <div className='list-group-item-text'>
@@ -47,7 +47,7 @@ export const DownloadDisplay = ({
           description='Display an application name'
           values={{app: feature.app}} />
         <br />
-        <DownloadLink href={feature.downloadUrl}>
+        <DownloadLink href={feature.url}>
           <FormattedMessage
             id='download-file-download'
             defaultMessage='Download file' />
