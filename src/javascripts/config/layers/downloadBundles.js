@@ -105,6 +105,7 @@ export default function (context, options) {
     url: 'https://t1.openseamap.org/bundles/overview.geojson',
     format: new ol.format.GeoJSON(),
     strategy: ol.loadingstrategy.all,
+    wrapX: false,
     loader: function (extent, resolution, projection) {
       $.ajax({
         url: this.getUrl(),
