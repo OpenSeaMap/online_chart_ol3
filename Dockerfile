@@ -2,7 +2,8 @@ FROM node:4
 
 RUN mkdir -p /app && mkdir -p /home/node && \
     chown -R node:node /app && \
-        chown -R node:node /home/node
+    chown -R node:node /home/node
+
 WORKDIR /app
 
 USER node
@@ -10,5 +11,8 @@ COPY *.json /app/
 RUN npm install  --loglevel=warn
 
 COPY . /app
+
+USER root
+RUN chown node:node -R /app/intl
 
 CMD [ "npm", "start" ]
