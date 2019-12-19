@@ -3,9 +3,9 @@ import controlIds from './controls/ol3/controls'
 
 export const defaultViewPosition = {
   position: {
-    lon: 12.0561,
-    lat: 54.1910,
-    zoom: 14
+    lon: 0,
+    lat: 0,
+    zoom: 3
   }
 }
 
