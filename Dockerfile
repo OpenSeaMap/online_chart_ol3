@@ -1,4 +1,4 @@
-FROM node:4
+FROM node:18
 
 RUN mkdir -p /app && mkdir -p /home/node && \
     chown -R node:node /app && \
